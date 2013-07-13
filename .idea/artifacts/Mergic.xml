@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="Mergic">
+    <output-path>$PROJECT_DIR$/../out</output-path>
+    <root id="archive" name="Mergic.jar">
+      <element id="module-output" name="Mergic" />
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="file-copy" path="$PROJECT_DIR$/src/plugin.yml" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/defaults.yml" />
+    </root>
+  </artifact>
+</component>

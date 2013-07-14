@@ -1,8 +1,7 @@
 name: Mergic
 main: no.runsafe.mergic.Plugin
 version: 1.0.@BUILD@
-authors: []
-depend: []
+author: Kruithne
 description:
 commands:
   something:

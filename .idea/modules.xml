@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Mergic.iml" filepath="$PROJECT_DIR$/PluginName.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Mergic.iml" filepath="$PROJECT_DIR$/Mergic.iml" />
     </modules>
   </component>
 </project>

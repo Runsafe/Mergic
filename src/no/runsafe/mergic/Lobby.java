@@ -1,5 +1,6 @@
 package no.runsafe.mergic;
 
+import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import no.runsafe.framework.api.IConfiguration;
 import no.runsafe.framework.api.IOutput;
 import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
@@ -46,7 +47,8 @@ public class Lobby implements IConfigurationChanged
 			return;
 		}
 
-		if (this.worldGuard.getRegion(this.lobbyWorld, this.lobbyRegion) == null)
+		ProtectedRegion region = this.worldGuard.getRegion(this.lobbyWorld, this.lobbyRegion);
+		if (region == null)
 			this.output.logWarning("Lobby region invalid in configuration.");
 		else
 			this.lobbySetup = true;

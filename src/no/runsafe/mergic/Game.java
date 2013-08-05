@@ -19,13 +19,16 @@ public class Game implements IConfigurationChanged
 
 	public boolean launchGame()
 	{
+		if (!this.lobby.isAvailable())
+			return false;
+
 		if (this.preMatchDelay != -1 && this.preMatchLength != -1)
 		{
 			this.gameInProgress = true;
 			this.currentPreMatchStep = this.preMatchLength;
 			this.preMatchStep();
 		}
-		return this.gameInProgress;
+		return true;
 	}
 
 	private void preMatchStep()

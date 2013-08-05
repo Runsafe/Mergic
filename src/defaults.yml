@@ -1,1 +1,6 @@
-option: value
+lobby:
+  world: wizpvp
+  region: lobby
+preMatch:
+  length: 30
+  delay: 5

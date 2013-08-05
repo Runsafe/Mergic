@@ -27,14 +27,14 @@ public class Lobby implements IConfigurationChanged
 		this.location = configuration.getConfigValueAsLocation("lobby.location");
 		if (this.location == null)
 		{
-			this.output.logWarning("Lobby location missing or invalid in configuration.");
+			this.output.logError("Lobby location missing or invalid in configuration.");
 			return;
 		}
 
 		this.lobbyWorld = configuration.getConfigValueAsWorld("lobby.world");
 		if (this.lobbyWorld == null)
 		{
-			this.output.logWarning("Lobby world missing or invalid in configuration.");
+			this.output.logError("Lobby world missing or invalid in configuration.");
 			return;
 		}
 
@@ -42,12 +42,12 @@ public class Lobby implements IConfigurationChanged
 
 		if (this.lobbyRegion == null)
 		{
-			this.output.logWarning("Lobby region missing in configuration.");
+			this.output.logError("Lobby region missing in configuration.");
 			return;
 		}
 
 		if (this.worldGuard.getRegion(this.lobbyWorld, this.lobbyRegion) == null)
-			this.output.logWarning("Lobby region invalid in configuration.");
+			this.output.logError("Lobby region invalid in configuration.");
 		else
 			this.lobbySetup = true;
 	}

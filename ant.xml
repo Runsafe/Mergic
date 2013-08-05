@@ -1,5 +1,6 @@
 <project name="Mergic" basedir="." default="jar">
 
+	<property name="local-lib.dir" value="lib"/>
     <property name="src.dir" value="src"/>
     <property name="build.dir" value="build"/>
     <property name="classes.dir" value="${build.dir}/classes"/>
@@ -7,14 +8,12 @@
     <property name="framework.dir" value="../../Framework"/>
     <property name="runsafe.dir" value="${framework.dir}/lastStable/archive/build/jar"/>
     <property name="lib.dir" value="${framework.dir}/workspace/lib"/>
-	<property name="worldedit.dir" value="../../WorldEditBridge"/>
-	<property name="worldedit-lib.dir" value="${worldedit.dir}/workspace/lib"/>
 	<property name="worldguard.dir" value="../../WorldGuardBridge/lastStable/archive/build/jar"/>
 
     <path id="classpath">
         <fileset dir="${runsafe.dir}" includes="framework.jar"/>
         <fileset dir="${lib.dir}" includes="*.jar"/>
-		<fileset dir="${worldedit-lib.dir}" includes="*.jar"/>
+		<fileset dir="${local-lib.dir}" includes="*.jar"/>
 		<fileset dir="${worldguard.dir}" includes="*.jar"/>
     </path>
 

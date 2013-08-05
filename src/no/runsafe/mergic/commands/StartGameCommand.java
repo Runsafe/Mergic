@@ -20,8 +20,7 @@ public class StartGameCommand extends ExecutableCommand
 		if (this.game.gameInProgress())
 			return "&cThe game is already in progress.";
 
-		this.game.launchGame();
-		return "&2The game has been started.";
+		return this.game.launchGame() ? "&2The game has been started." : "&cUnable to start the game.";
 	}
 
 	private Game game;

@@ -30,9 +30,11 @@ public class Game implements IConfigurationChanged
 
 	private void preMatchStep()
 	{
+		// If we are lower than zero, the pre-match was cancelled.
 		if (this.currentPreMatchStep < 0)
 			return;
 
+		// If we are at zero, the pre-match expired, we can push into a match.
 		if (this.currentPreMatchStep == 0)
 		{
 			this.startGame();

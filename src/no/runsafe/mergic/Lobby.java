@@ -1,6 +1,5 @@
 package no.runsafe.mergic;
 
-import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import no.runsafe.framework.api.IConfiguration;
 import no.runsafe.framework.api.IOutput;
 import no.runsafe.framework.api.event.plugin.IConfigurationChanged;

@@ -47,8 +47,7 @@ public class Lobby implements IConfigurationChanged
 			return;
 		}
 
-		ProtectedRegion region = this.worldGuard.getRegion(this.lobbyWorld, this.lobbyRegion);
-		if (region == null)
+		if (this.worldGuard.getRegion(this.lobbyWorld, this.lobbyRegion) == null)
 			this.output.logWarning("Lobby region invalid in configuration.");
 		else
 			this.lobbySetup = true;

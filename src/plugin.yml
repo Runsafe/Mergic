@@ -5,6 +5,5 @@ author: Kruithne
 depend: [RunsafeWorldGuardBridge]
 description:
 commands:
-  something:
-    description:
-    aliases: []
+  mergic:
+    description: Wizard PvP commands

@@ -3,18 +3,18 @@ package no.runsafe.mergic.spells;
 import no.runsafe.framework.minecraft.entity.ProjectileEntity;
 import no.runsafe.framework.minecraft.player.RunsafePlayer;
 
-public class Fireball implements Spell
+public class BasicFireball implements Spell
 {
 	@Override
 	public int getCooldown()
 	{
-		return 5;
+		return 2;
 	}
 
 	@Override
 	public String getName()
 	{
-		return "Fireball";
+		return "Basic Fireball";
 	}
 
 	@Override
@@ -26,6 +26,6 @@ public class Fireball implements Spell
 	@Override
 	public void onCast(RunsafePlayer player)
 	{
-		player.Fire(ProjectileEntity.Fireball);
+		player.Fire(ProjectileEntity.SmallFireball);
 	}
 }

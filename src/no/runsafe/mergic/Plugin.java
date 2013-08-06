@@ -5,6 +5,7 @@ import no.runsafe.framework.api.command.Command;
 import no.runsafe.mergic.commands.CreateSpellBook;
 import no.runsafe.mergic.commands.StartGameCommand;
 import no.runsafe.mergic.commands.StopGameCommand;
+import no.runsafe.mergic.spells.BasicFireball;
 import no.runsafe.mergic.spells.Fireball;
 import no.runsafe.mergic.spells.SpellHandler;
 import no.runsafe.worldguardbridge.WorldGuardInterface;
@@ -27,6 +28,7 @@ public class Plugin extends RunsafeConfigurablePlugin
 		this.addComponent(SpellHandler.class);
 
 		// Spell list
+		this.addComponent(BasicFireball.class);
 		this.addComponent(Fireball.class);
 
 		// Commands

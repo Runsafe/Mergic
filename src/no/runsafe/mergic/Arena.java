@@ -69,6 +69,9 @@ public class Arena implements IConfigurationChanged
 
 	public void teleportPlayerIntoArena(RunsafePlayer player)
 	{
+		// Register the player as in-game in the arena instance.
+		this.players.add(player.getName());
+
 		// Create random X and Z co-ordinates within the region.
 		int randomX = getRandomBetween(region.getMinimumPoint().getBlockX(), region.getMaximumPoint().getBlockX());
 		int randomZ = getRandomBetween(region.getMinimumPoint().getBlockZ(), region.getMaximumPoint().getBlockZ());

@@ -17,6 +17,7 @@ public class StopGameCommand extends ExecutableCommand
 	@Override
 	public String OnExecute(ICommandExecutor executor, Map<String, String> parameters)
 	{
+		// Check if the game is running, if not throw an error back.
 		if (!this.game.gameInProgress())
 			return "&cThere is no game in progress to stop.";
 

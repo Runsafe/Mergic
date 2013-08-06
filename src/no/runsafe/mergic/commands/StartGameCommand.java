@@ -18,9 +18,11 @@ public class StartGameCommand extends ExecutableCommand
 	@Override
 	public String OnExecute(ICommandExecutor executor, Map<String, String> parameters)
 	{
+		// Check if the game is running, if it is, throw an error back.
 		if (this.game.gameInProgress())
 			return "&cThe game is already in progress.";
 
+		// Attempt to launch the game.
 		try
 		{
 			this.game.launchGame();
@@ -28,6 +30,7 @@ public class StartGameCommand extends ExecutableCommand
 		}
 		catch (GameException exception)
 		{
+			// We failed, throw the exception message to console.
 			return "&cFailed to launch game: " + exception.getMessage();
 		}
 	}

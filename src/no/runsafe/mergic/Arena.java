@@ -64,22 +64,25 @@ public class Arena implements IConfigurationChanged
 	public void teleportPlayersIntoArena(List<RunsafePlayer> playerList)
 	{
 		for (RunsafePlayer player : playerList)
-		{
-			// Create random X and Z co-ordinates within the region.
-			int randomX = getRandomBetween(region.getMinimumPoint().getBlockX(), region.getMaximumPoint().getBlockX());
-			int randomZ = getRandomBetween(region.getMinimumPoint().getBlockZ(), region.getMaximumPoint().getBlockZ());
+			this.teleportPlayerIntoArena(player);
+	}
+
+	public void teleportPlayerIntoArena(RunsafePlayer player)
+	{
+		// Create random X and Z co-ordinates within the region.
+		int randomX = getRandomBetween(region.getMinimumPoint().getBlockX(), region.getMaximumPoint().getBlockX());
+		int randomZ = getRandomBetween(region.getMinimumPoint().getBlockZ(), region.getMaximumPoint().getBlockZ());
 
 
-			// Get a safe spot at the co-ordinates we generated.
-			RunsafeLocation loc = getSafeSpot(new RunsafeLocation(this.world, randomX, this.teleportY, randomZ));
+		// Get a safe spot at the co-ordinates we generated.
+		RunsafeLocation loc = getSafeSpot(new RunsafeLocation(this.world, randomX, this.teleportY, randomZ));
 
-			// Adjust the location to be at the centre of the block.
-			loc.incrementX(0.5D);
-			loc.incrementZ(0.5D);
+		// Adjust the location to be at the centre of the block.
+		loc.incrementX(0.5D);
+		loc.incrementZ(0.5D);
 
-			// Teleport the player to the location.
-			player.teleport(loc);
-		}
+		// Teleport the player to the location.
+		player.teleport(loc);
 	}
 
 	private RunsafeLocation getSafeSpot(RunsafeLocation location)

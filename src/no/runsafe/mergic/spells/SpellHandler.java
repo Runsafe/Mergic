@@ -4,6 +4,7 @@ import no.runsafe.framework.minecraft.Item;
 import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
 import no.runsafe.framework.minecraft.player.RunsafePlayer;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -11,6 +12,9 @@ public class SpellHandler
 {
 	public SpellHandler(Spell[] spells)
 	{
+		this.spellList = new ArrayList<Spell>();
+
+		// Add all the spells the plug-in has loaded into the handler.
 		this.spellList.addAll(Arrays.asList(spells));
 	}
 
@@ -23,6 +27,7 @@ public class SpellHandler
 
 	public Spell getSpellByName(String spellName)
 	{
+		// Loop every spell we know of, if we find one with a matching name, return it.
 		for (Spell spell : this.spellList)
 			if (spellName.equalsIgnoreCase(spell.getName()))
 				return spell;

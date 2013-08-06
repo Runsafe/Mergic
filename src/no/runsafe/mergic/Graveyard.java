@@ -14,8 +14,9 @@ import java.util.List;
 
 public class Graveyard implements IConfigurationChanged
 {
-	public Graveyard(IScheduler scheduler, IOutput output, WorldGuardInterface worldGuard)
+	public Graveyard(Arena arena, IScheduler scheduler, IOutput output, WorldGuardInterface worldGuard)
 	{
+		this.arena = arena;
 		this.scheduler = scheduler;
 		this.output = output;
 		this.worldGuard = worldGuard;
@@ -84,6 +85,7 @@ public class Graveyard implements IConfigurationChanged
 		{
 			this.scheduler.cancelTask(this.deadTimers.get(playerName)); // Cancel the timer.
 			this.deadTimers.remove(playerName); // Remove the players timer.
+			this.arena.teleportPlayerIntoArena(player); // Teleport the player back into the arena.
 		}
 	}
 
@@ -111,6 +113,7 @@ public class Graveyard implements IConfigurationChanged
 		return this.isSetup;
 	}
 
+	private Arena arena;
 	private IScheduler scheduler;
 	private HashMap<String, Integer> deadTimers = new HashMap<String, Integer>();
 	private int deadTime = -1;

@@ -99,6 +99,23 @@ public class Arena implements IConfigurationChanged
 		return location;
 	}
 
+	public boolean playerIsInPhysicalArena(RunsafePlayer player)
+	{
+		// Check if the player is in the correct world, if not we can be sure they are not in the arena.
+		if (!player.getWorld().getName().equals(this.world.getName()))
+			return false;
+
+		// Grab a list of the regions the player is currently in.
+		List<String> playerRegions = this.worldGuard.getApplicableRegions(player);
+
+		// If the list is null, there are no regions, so it's false!
+		if (playerRegions == null)
+			return false;
+
+		// Return if we have the player in the correct region.
+		return playerRegions.contains(this.region.getId());
+	}
+
 	public boolean playerIsInGame(RunsafePlayer player)
 	{
 		return this.players.contains(player.getName());

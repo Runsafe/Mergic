@@ -4,18 +4,15 @@ import no.runsafe.framework.minecraft.Item;
 import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
 import no.runsafe.framework.minecraft.player.RunsafePlayer;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.HashMap;
 
 public class SpellHandler
 {
 	public SpellHandler(Spell[] spells)
 	{
-		this.spellList = new ArrayList<Spell>();
-
-		// Add all the spells the plug-in has loaded into the handler.
-		this.spellList.addAll(Arrays.asList(spells));
+		// Populate the spell handler with every spell the plug-in has injected.
+		for (Spell spell : spells)
+			this.spellList.put(spell.getName().toLowerCase(), spell);
 	}
 
 	public void givePlayerSpellBook(RunsafePlayer player, Spell spell)
@@ -27,13 +24,14 @@ public class SpellHandler
 
 	public Spell getSpellByName(String spellName)
 	{
-		// Loop every spell we know of, if we find one with a matching name, return it.
-		for (Spell spell : this.spellList)
-			if (spellName.equalsIgnoreCase(spell.getName()))
-				return spell;
+		spellName = spellName.toLowerCase(); // Convert provided name to lower-case.
+
+		// Check if we have a spell with the requested name.
+		if (this.spellList.containsKey(spellName))
+			return this.spellList.get(spellName);
 
 		return null;
 	}
 
-	private List<Spell> spellList;
+	private HashMap<String, Spell> spellList = new HashMap<String, Spell>();
 }

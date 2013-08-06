@@ -24,6 +24,9 @@ public class SpellHandler
 
 	public Spell getSpellByName(String spellName)
 	{
+		if (spellName == null)
+			return null;
+
 		spellName = spellName.toLowerCase(); // Convert provided name to lower-case.
 
 		// Check if we have a spell with the requested name.

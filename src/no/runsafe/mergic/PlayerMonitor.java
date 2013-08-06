@@ -1,27 +1,25 @@
 package no.runsafe.mergic;
 
-import no.runsafe.framework.api.event.player.IPlayerCustomEvent;
-import no.runsafe.framework.api.event.player.IPlayerDeathEvent;
-import no.runsafe.framework.api.event.player.IPlayerJoinEvent;
-import no.runsafe.framework.api.event.player.IPlayerQuitEvent;
-import no.runsafe.framework.minecraft.event.player.RunsafeCustomEvent;
-import no.runsafe.framework.minecraft.event.player.RunsafePlayerDeathEvent;
-import no.runsafe.framework.minecraft.event.player.RunsafePlayerJoinEvent;
-import no.runsafe.framework.minecraft.event.player.RunsafePlayerQuitEvent;
+import no.runsafe.framework.api.event.player.*;
+import no.runsafe.framework.minecraft.Item;
+import no.runsafe.framework.minecraft.event.player.*;
 import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
 import no.runsafe.framework.minecraft.player.RunsafePlayer;
+import no.runsafe.mergic.spells.Spell;
+import no.runsafe.mergic.spells.SpellHandler;
 
 import java.util.ArrayList;
 import java.util.Map;
 
-public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPlayerQuitEvent, IPlayerDeathEvent
+public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPlayerQuitEvent, IPlayerDeathEvent, IPlayerInteractEvent
 {
-	public PlayerMonitor(Graveyard graveyard, Arena arena, Game game, Lobby lobby)
+	public PlayerMonitor(Graveyard graveyard, Arena arena, Game game, Lobby lobby, SpellHandler spellHandler)
 	{
 		this.graveyard = graveyard;
 		this.arena = arena;
 		this.game = game;
 		this.lobby = lobby;
+		this.spellHandler = spellHandler;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -77,8 +75,31 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 		}
 	}
 
+	@Override
+	public void OnPlayerInteractEvent(RunsafePlayerInteractEvent event)
+	{
+		RunsafePlayer player = event.getPlayer();
+
+		// Check the player is registered as playing the game.
+		if (this.arena.playerIsInGame(player))
+		{
+			RunsafeMeta item = event.getItemStack();
+			if (item == null)
+				return;
+
+			// Check if we are holding a spell book!
+			if (item.is(Item.Special.Crafted.EnchantedBook))
+			{
+				Spell spell = this.spellHandler.getSpellByName(item.getDisplayName()); // Grab the spell.
+				if (spell != null)
+					spell.onCast(player); // Make the player cast the spell.
+			}
+		}
+	}
+
 	private Graveyard graveyard;
 	private Arena arena;
 	private Game game;
 	private Lobby lobby;
+	private SpellHandler spellHandler;
 }

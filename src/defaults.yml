@@ -4,3 +4,7 @@ lobby:
 preMatch:
   length: 30
   delay: 5
+arena:
+  world: wizpvp
+  region: arena
+  teleportY: 4

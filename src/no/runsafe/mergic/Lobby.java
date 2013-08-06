@@ -65,7 +65,7 @@ public class Lobby implements IConfigurationChanged
 		return this.lobbySetup;
 	}
 
-	private List<RunsafePlayer> getPlayersInLobby()
+	public List<RunsafePlayer> getPlayersInLobby()
 	{
 		// Check if the lobby is set-up, if so return a list of players inside the region.
 		if (this.isAvailable())

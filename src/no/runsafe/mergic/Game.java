@@ -6,9 +6,10 @@ import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
 
 public class Game implements IConfigurationChanged
 {
-	public Game(Lobby lobby, IScheduler scheduler)
+	public Game(Lobby lobby, Arena arena, IScheduler scheduler)
 	{
 		this.lobby = lobby;
+		this.arena = arena;
 		this.scheduler = scheduler;
 	}
 
@@ -22,6 +23,10 @@ public class Game implements IConfigurationChanged
 		// Check if the lobby has been set-up without problems.
 		if (!this.lobby.isAvailable())
 			throw new GameException("Lobby is not available. Check errors on startup.");
+
+		// Check if the arena has been set-up without problems.
+		if (!this.arena.isAvailable())
+			throw new GameException("Arena is not available. Check errors on startup.");
 
 		// Check if the pre-match timings were defined correctly.
 		if (this.preMatchDelay == -1 || this.preMatchLength == -1)
@@ -72,7 +77,8 @@ public class Game implements IConfigurationChanged
 
 	private void startGame()
 	{
-		this.lobby.broadcastToLobby("This would be the part where you get teleported inside..");
+		// Teleport all the players from the lobby into the arena.
+		this.arena.teleportPlayersIntoArena(this.lobby.getPlayersInLobby());
 	}
 
 	@Override
@@ -83,6 +89,7 @@ public class Game implements IConfigurationChanged
 	}
 
 	private Lobby lobby;
+	private Arena arena;
 	private boolean gameInProgress = false;
 	private int preMatchLength = -1;
 	private int preMatchDelay = -1;

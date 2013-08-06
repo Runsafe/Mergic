@@ -4,11 +4,6 @@ import no.runsafe.framework.api.IConfiguration;
 import no.runsafe.framework.api.IScheduler;
 import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
 import no.runsafe.framework.minecraft.player.RunsafePlayer;
-import org.bukkit.Bukkit;
-import org.bukkit.scoreboard.DisplaySlot;
-import org.bukkit.scoreboard.Objective;
-import org.bukkit.scoreboard.Score;
-import org.bukkit.scoreboard.Scoreboard;
 
 public class Game implements IConfigurationChanged
 {
@@ -22,15 +17,6 @@ public class Game implements IConfigurationChanged
 	public boolean gameInProgress()
 	{
 		return this.gameInProgress;
-	}
-
-	private void setupNewBoard()
-	{
-		// Setup a Bukkit scoreboard for the arena.
-		this.board = Bukkit.getScoreboardManager().getNewScoreboard();
-		this.objective = this.board.registerNewObjective("Wizard PvP", "dummy");
-		this.objective.setDisplaySlot(DisplaySlot.SIDEBAR);
-		this.objective.setDisplayName("Wizard PvP Score");
 	}
 
 	public void launchGame() throws GameException
@@ -50,7 +36,6 @@ public class Game implements IConfigurationChanged
 		this.gameInProgress = true; // Flag the game as in progress.
 		this.currentPreMatchStep = this.preMatchLength; // Set the pre-match timer to it's full length.
 		this.preMatchStep(); // Begin the pre-match timer.
-		this.setupNewBoard(); // Set-up the Bukkit scoreboard.
 	}
 
 	private void preMatchStep()
@@ -86,8 +71,6 @@ public class Game implements IConfigurationChanged
 		this.lobby.teleportPlayerToLobby(player); // Teleport them to the lobby.
 		this.arena.removePlayer(player); // Remove them from the arena list.
 		player.sendColouredMessage("You have been removed from the match."); // Send them a message explaining.
-		player.getRawPlayer().setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard()); // Remove scoreboard.
-
 	}
 
 	public void cancelGame()
@@ -104,14 +87,6 @@ public class Game implements IConfigurationChanged
 	{
 		// Teleport all the players from the lobby into the arena.
 		this.arena.teleportPlayersIntoArena(this.lobby.getPlayersInLobby());
-
-		// Loop every player and set their scoreboard to the one for this match.
-		for (RunsafePlayer player : this.lobby.getPlayersInLobby())
-		{
-			player.getRawPlayer().setScoreboard(this.board);
-			Score playerScore = this.objective.getScore(player.getRawPlayer());
-			playerScore.setScore(20);
-		}
 	}
 
 	@Override
@@ -128,6 +103,4 @@ public class Game implements IConfigurationChanged
 	private int preMatchDelay = -1;
 	private int currentPreMatchStep = 0;
 	private IScheduler scheduler;
-	private Scoreboard board;
-	private Objective objective;
 }

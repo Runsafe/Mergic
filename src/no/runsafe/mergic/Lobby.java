@@ -22,8 +22,10 @@ public class Lobby implements IConfigurationChanged
 	@Override
 	public void OnConfigurationChanged(IConfiguration configuration)
 	{
+		// Flag the lobby as not set-up to begin with.
 		this.lobbySetup = false;
 
+		// Grab the location from configuration, throw an error if we can't.
 		this.location = configuration.getConfigValueAsLocation("lobby.location");
 		if (this.location == null)
 		{
@@ -31,6 +33,7 @@ public class Lobby implements IConfigurationChanged
 			return;
 		}
 
+		// Grab the world from configuration, throw an error if we can't.
 		this.lobbyWorld = configuration.getConfigValueAsWorld("lobby.world");
 		if (this.lobbyWorld == null)
 		{
@@ -38,18 +41,23 @@ public class Lobby implements IConfigurationChanged
 			return;
 		}
 
+		// Grab the region from configuration, throw an error if we can't.
 		this.lobbyRegion = configuration.getConfigValueAsString("lobby.region");
-
 		if (this.lobbyRegion == null)
 		{
 			this.output.logError("Lobby region missing in configuration.");
 			return;
 		}
 
+		// Check that the region exists, if not, throw an error.
 		if (this.worldGuard.getRegion(this.lobbyWorld, this.lobbyRegion) == null)
+		{
 			this.output.logError("Lobby region invalid in configuration.");
-		else
-			this.lobbySetup = true;
+			return;
+		}
+
+		// Everything went fine, flag the lobby as set-up correctly.
+		this.lobbySetup = true;
 	}
 
 	public boolean isAvailable()
@@ -59,26 +67,31 @@ public class Lobby implements IConfigurationChanged
 
 	private List<RunsafePlayer> getPlayersInLobby()
 	{
+		// Check if the lobby is set-up, if so return a list of players inside the region.
 		if (this.isAvailable())
 			return this.worldGuard.getPlayersInRegion(this.lobbyWorld, this.lobbyRegion);
 
+		// We are not set-up correctly, throw an empty list to prevent errors.
 		return new ArrayList<RunsafePlayer>();
 	}
 
 	public void broadcastToLobby(String message)
 	{
+		// Loop every player in the lobby and send them the message.
 		for (RunsafePlayer player : this.getPlayersInLobby())
 			player.sendColouredMessage(message);
 	}
 
 	public void teleportPlayersToLobby(List<RunsafePlayer> playerList)
 	{
+		// Loop every player in the list given and teleport them into the lobby.
 		for (RunsafePlayer player : playerList)
 			player.teleport(this.location);
 	}
 
 	public void teleportLobbyPlayers(RunsafeLocation location)
 	{
+		// Loop every player in the lobby and teleport them to the given location.
 		for (RunsafePlayer player : this.getPlayersInLobby())
 			player.teleport(location);
 	}

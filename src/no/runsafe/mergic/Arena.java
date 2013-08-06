@@ -35,7 +35,7 @@ public class Arena implements IConfigurationChanged
 
 		// Grab the arena region from configuration, throw an error and return if we fail.
 		String region = configuration.getConfigValueAsString("arena.region");
-		if (this.region == null)
+		if (region == null)
 		{
 			this.output.logError("Arena region missing from configuration.");
 			return;

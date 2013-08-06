@@ -1,17 +1,22 @@
 package no.runsafe.mergic;
 
 import no.runsafe.framework.api.event.player.IPlayerCustomEvent;
+import no.runsafe.framework.api.event.player.IPlayerJoinEvent;
+import no.runsafe.framework.api.event.player.IPlayerQuitEvent;
 import no.runsafe.framework.minecraft.event.player.RunsafeCustomEvent;
+import no.runsafe.framework.minecraft.event.player.RunsafePlayerJoinEvent;
+import no.runsafe.framework.minecraft.event.player.RunsafePlayerQuitEvent;
 import no.runsafe.framework.minecraft.player.RunsafePlayer;
 
 import java.util.Map;
 
-public class PlayerMonitor implements IPlayerCustomEvent
+public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPlayerQuitEvent
 {
-	public PlayerMonitor(Arena arena, Game game)
+	public PlayerMonitor(Arena arena, Game game, Lobby lobby)
 	{
 		this.arena = arena;
 		this.game = game;
+		this.lobby = lobby;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -34,6 +39,27 @@ public class PlayerMonitor implements IPlayerCustomEvent
 		}
 	}
 
+	@Override
+	public void OnPlayerJoinEvent(RunsafePlayerJoinEvent event)
+	{
+		RunsafePlayer player = event.getPlayer();
+
+		// Check if the player is inside the arena when they shouldn't be.
+		if (!this.arena.playerIsInGame(player) && this.arena.playerIsInPhysicalArena(player))
+			this.lobby.teleportPlayerToLobby(player); // Teleport them to the lobby!
+	}
+
+	@Override
+	public void OnPlayerQuit(RunsafePlayerQuitEvent event)
+	{
+		RunsafePlayer player = event.getPlayer();
+
+		// The player is logging out whilst still in the arena, drop their in-game status.
+		if (this.arena.playerIsInGame(player))
+			this.arena.removePlayer(player);
+	}
+
 	private Arena arena;
 	private Game game;
+	private Lobby lobby;
 }

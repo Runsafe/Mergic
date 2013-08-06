@@ -4,7 +4,9 @@ import no.runsafe.framework.minecraft.Item;
 import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
 import no.runsafe.framework.minecraft.player.RunsafePlayer;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class SpellHandler
 {
@@ -19,6 +21,12 @@ public class SpellHandler
 	{
 		RunsafeMeta item = Item.Special.Crafted.EnchantedBook.getItem(); // Create a new, blank book.
 		item.setDisplayName(spell.getName()); // Rename the book to match the spell.
+
+		List<String> lore = new ArrayList<String>(); // Create en empty holder for the lore text.
+		lore.add("School: " + spell.getSchool().name());
+		lore.add(String.format("Cooldown: %d seconds", spell.getCooldown()));
+		item.setLore(lore);
+
 		player.give(item); // Give the spell book to the player.
 	}
 

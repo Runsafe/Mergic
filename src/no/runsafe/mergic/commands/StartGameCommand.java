@@ -11,7 +11,7 @@ public class StartGameCommand extends ExecutableCommand
 {
 	public StartGameCommand(Game game)
 	{
-		super("start", "Starts the Wizard PvP game.", "runsafe.mergic.start");
+		super("start", "Starts a match.", "runsafe.mergic.start");
 		this.game = game;
 	}
 

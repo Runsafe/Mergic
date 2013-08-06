@@ -15,6 +15,7 @@ public class Plugin extends RunsafeConfigurablePlugin
 		this.addComponent(Arena.class);
 		this.addComponent(Lobby.class);
 		this.addComponent(Game.class);
+		this.addComponent(PlayerMonitor.class);
 
 		Command mergic = new Command("mergic", "A collection of commands to control Wizard PvP", null);
 		mergic.addSubCommand(getInstance(StartGameCommand.class));

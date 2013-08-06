@@ -86,7 +86,13 @@ public class Lobby implements IConfigurationChanged
 	{
 		// Loop every player in the list given and teleport them into the lobby.
 		for (RunsafePlayer player : playerList)
-			player.teleport(this.location);
+			this.teleportPlayerToLobby(player);
+	}
+
+	public void teleportPlayerToLobby(RunsafePlayer player)
+	{
+		// Teleport the player into the lobby, simple!
+		player.teleport(this.location);
 	}
 
 	public void teleportLobbyPlayers(RunsafeLocation location)

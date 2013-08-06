@@ -92,6 +92,21 @@ public class Arena implements IConfigurationChanged
 		return location;
 	}
 
+	public boolean playerIsInGame(RunsafePlayer player)
+	{
+		return this.players.contains(player.getName());
+	}
+
+	public void removePlayer(RunsafePlayer player)
+	{
+		this.players.remove(player.getName());
+	}
+
+	public String getArenaRegionString()
+	{
+		return String.format("%s-%s", this.world.getName(), this.region.getId());
+	}
+
 	private int getRandomBetween(int low, int high)
 	{
 		return low + (int)(Math.random() * ((high - low) + 1));
@@ -108,4 +123,5 @@ public class Arena implements IConfigurationChanged
 	private IOutput output;
 	private WorldGuardInterface worldGuard;
 	private ProtectedRegion region;
+	private List<String> players;
 }

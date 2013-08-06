@@ -3,6 +3,7 @@ package no.runsafe.mergic;
 import no.runsafe.framework.api.IConfiguration;
 import no.runsafe.framework.api.IScheduler;
 import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
+import no.runsafe.framework.minecraft.player.RunsafePlayer;
 
 public class Game implements IConfigurationChanged
 {
@@ -63,6 +64,13 @@ public class Game implements IConfigurationChanged
 
 		// Lower the current step by the delay amount.
 		this.currentPreMatchStep = this.currentPreMatchStep - this.preMatchDelay;
+	}
+
+	public void removePlayerFromGame(RunsafePlayer player)
+	{
+		this.lobby.teleportPlayerToLobby(player); // Teleport them to the lobby.
+		this.arena.removePlayer(player); // Remove them from the arena list.
+		player.sendColouredMessage("You have been removed from the match."); // Send them a message explaining.
 	}
 
 	public void cancelGame()

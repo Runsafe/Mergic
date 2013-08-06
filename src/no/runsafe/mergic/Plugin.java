@@ -12,6 +12,7 @@ public class Plugin extends RunsafeConfigurablePlugin
 	protected void PluginSetup()
 	{
 		addComponent(getFirstPluginAPI(WorldGuardInterface.class));
+		this.addComponent(Arena.class);
 		this.addComponent(Lobby.class);
 		this.addComponent(Game.class);
 

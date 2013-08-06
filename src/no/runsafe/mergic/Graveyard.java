@@ -29,8 +29,8 @@ public class Graveyard implements IConfigurationChanged
 		this.isSetup = false;
 
 		// Grab the deadTime from configuration, throw an error and return if we failed.
-		this.deadTime = configuration.getConfigValueAsInt("graveyard.deadtime");
-		if (this.deadTime == -1)
+		this.deadTime = configuration.getConfigValueAsInt("graveyard.deadTime");
+		if (this.deadTime < 0)
 		{
 			this.output.logError("Graveyard deadTime invalid or missing in configuration.");
 			return;

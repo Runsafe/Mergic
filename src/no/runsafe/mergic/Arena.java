@@ -9,6 +9,7 @@ import no.runsafe.framework.minecraft.RunsafeWorld;
 import no.runsafe.framework.minecraft.player.RunsafePlayer;
 import no.runsafe.worldguardbridge.WorldGuardInterface;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Arena implements IConfigurationChanged
@@ -123,5 +124,5 @@ public class Arena implements IConfigurationChanged
 	private IOutput output;
 	private WorldGuardInterface worldGuard;
 	private ProtectedRegion region;
-	private List<String> players;
+	private List<String> players = new ArrayList<String>();
 }

@@ -3,6 +3,7 @@ package no.runsafe.mergic.commands;
 import no.runsafe.framework.api.command.ExecutableCommand;
 import no.runsafe.framework.api.command.ICommandExecutor;
 import no.runsafe.mergic.Game;
+import no.runsafe.mergic.GameException;
 
 import java.util.Map;
 
@@ -20,7 +21,15 @@ public class StartGameCommand extends ExecutableCommand
 		if (this.game.gameInProgress())
 			return "&cThe game is already in progress.";
 
-		return this.game.launchGame() ? "&2The game has been started." : "&cUnable to start the game.";
+		try
+		{
+			this.game.launchGame();
+			return "&2The game has been launched.";
+		}
+		catch (GameException exception)
+		{
+			return "&cFailed to launch game: " + exception.getMessage();
+		}
 	}
 
 	private Game game;

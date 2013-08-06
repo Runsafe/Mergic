@@ -7,6 +7,7 @@ import no.runsafe.framework.minecraft.player.RunsafePlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
+import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
 
 public class Game implements IConfigurationChanged
@@ -106,7 +107,11 @@ public class Game implements IConfigurationChanged
 
 		// Loop every player and set their scoreboard to the one for this match.
 		for (RunsafePlayer player : this.lobby.getPlayersInLobby())
+		{
 			player.getRawPlayer().setScoreboard(this.board);
+			Score playerScore = this.objective.getScore(player.getRawPlayer());
+			playerScore.setScore(20);
+		}
 	}
 
 	@Override

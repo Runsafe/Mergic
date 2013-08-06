@@ -7,8 +7,9 @@ import no.runsafe.framework.minecraft.player.RunsafePlayer;
 
 public class Game implements IConfigurationChanged
 {
-	public Game(Lobby lobby, Arena arena, IScheduler scheduler)
+	public Game(Graveyard graveyard, Lobby lobby, Arena arena, IScheduler scheduler)
 	{
+		this.graveyard = graveyard;
 		this.lobby = lobby;
 		this.arena = arena;
 		this.scheduler = scheduler;
@@ -28,6 +29,10 @@ public class Game implements IConfigurationChanged
 		// Check if the arena has been set-up without problems.
 		if (!this.arena.isAvailable())
 			throw new GameException("Arena is not available. Check errors on startup.");
+
+		// Check if the graveyard has been set-up without problems.
+		if (!this.graveyard.isAvailable())
+			throw new GameException("Graveyard is not available. Check errors on startup");
 
 		// Check if the pre-match timings were defined correctly.
 		if (this.preMatchDelay == -1 || this.preMatchLength == -1)
@@ -80,6 +85,8 @@ public class Game implements IConfigurationChanged
 		{
 			this.currentPreMatchStep = -1; // Signal for the pre-match countdown (if running) to cancel.
 			this.gameInProgress = false; // Flag the game as not running.
+			this.arena.removeAllPlayers(); // Remove all players from the game.
+			this.lobby.teleportPlayersToLobby(this.arena.getPlayers()); // Move players from arena to lobby.
 		}
 	}
 
@@ -96,6 +103,7 @@ public class Game implements IConfigurationChanged
 		this.preMatchDelay = configuration.getConfigValueAsInt("preMatch.delay");
 	}
 
+	private Graveyard graveyard;
 	private Lobby lobby;
 	private Arena arena;
 	private boolean gameInProgress = false;

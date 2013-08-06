@@ -99,8 +99,16 @@ public class Arena implements IConfigurationChanged
 		return location;
 	}
 
+	public List<RunsafePlayer> getPlayers()
+	{
+		return this.worldGuard.getPlayersInRegion(this.world, this.region.getId());
+	}
+
 	public boolean playerIsInPhysicalArena(RunsafePlayer player)
 	{
+		// Note: If a player is in the graveyard, they will also be in the arena as
+		// the graveyard should be a sub-region of the arena if set-up right.
+
 		// Check if the player is in the correct world, if not we can be sure they are not in the arena.
 		if (!player.getWorld().getName().equals(this.world.getName()))
 			return false;
@@ -124,6 +132,11 @@ public class Arena implements IConfigurationChanged
 	public void removePlayer(RunsafePlayer player)
 	{
 		this.players.remove(player.getName());
+	}
+
+	public void removeAllPlayers()
+	{
+		this.players.clear();
 	}
 
 	public String getArenaRegionString()

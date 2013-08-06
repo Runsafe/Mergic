@@ -8,3 +8,7 @@ arena:
   world: wizpvp
   region: arena
   teleportY: 4
+graveyard:
+  world: wizpvp
+  region: graveyard
+  deadTime: 20

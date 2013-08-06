@@ -1,19 +1,22 @@
 package no.runsafe.mergic;
 
 import no.runsafe.framework.api.event.player.IPlayerCustomEvent;
+import no.runsafe.framework.api.event.player.IPlayerDeathEvent;
 import no.runsafe.framework.api.event.player.IPlayerJoinEvent;
 import no.runsafe.framework.api.event.player.IPlayerQuitEvent;
 import no.runsafe.framework.minecraft.event.player.RunsafeCustomEvent;
+import no.runsafe.framework.minecraft.event.player.RunsafePlayerDeathEvent;
 import no.runsafe.framework.minecraft.event.player.RunsafePlayerJoinEvent;
 import no.runsafe.framework.minecraft.event.player.RunsafePlayerQuitEvent;
 import no.runsafe.framework.minecraft.player.RunsafePlayer;
 
 import java.util.Map;
 
-public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPlayerQuitEvent
+public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPlayerQuitEvent, IPlayerDeathEvent
 {
-	public PlayerMonitor(Arena arena, Game game, Lobby lobby)
+	public PlayerMonitor(Graveyard graveyard, Arena arena, Game game, Lobby lobby)
 	{
+		this.graveyard = graveyard;
 		this.arena = arena;
 		this.game = game;
 		this.lobby = lobby;
@@ -59,6 +62,19 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 			this.arena.removePlayer(player);
 	}
 
+	@Override
+	public void OnPlayerDeathEvent(RunsafePlayerDeathEvent event)
+	{
+		RunsafePlayer player = event.getEntity();
+		if (this.arena.playerIsInGame(player))
+		{
+			player.setHealth(20D); // Keep the player alive?
+			this.graveyard.teleportPlayerToGraveyard(player); // Teleport player to graveyard.
+			player.sendColouredMessage("You have died! You will respawn shortly.");
+		}
+	}
+
+	private Graveyard graveyard;
 	private Arena arena;
 	private Game game;
 	private Lobby lobby;

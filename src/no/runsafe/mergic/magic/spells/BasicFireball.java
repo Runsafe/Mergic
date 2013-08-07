@@ -11,7 +11,7 @@ public class BasicFireball implements Spell
 	@Override
 	public int getCooldown()
 	{
-		return 2;
+		return 1;
 	}
 
 	@Override

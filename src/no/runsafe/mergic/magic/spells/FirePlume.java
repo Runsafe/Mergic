@@ -13,7 +13,7 @@ public class FirePlume implements Spell
 	@Override
 	public int getCooldown()
 	{
-		return 10;
+		return 6;
 	}
 
 	@Override

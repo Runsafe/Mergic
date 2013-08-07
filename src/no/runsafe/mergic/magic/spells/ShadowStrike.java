@@ -11,7 +11,7 @@ public class ShadowStrike implements Spell
 	@Override
 	public int getCooldown()
 	{
-		return 3;
+		return 1;
 	}
 
 	@Override

@@ -41,7 +41,7 @@ public class FirePlume implements Spell
 		int currentStep = 1;
 
 		// Loop three times, each time spawning a timer to construct the next plume stage in 1 second intervals.
-		while (currentStep < 3)
+		while (currentStep < 4)
 		{
 			final int step = currentStep - 1;
 			SpellHandler.scheduler.startSyncTask(new Runnable() {

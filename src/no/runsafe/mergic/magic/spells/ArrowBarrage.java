@@ -45,7 +45,7 @@ public class ArrowBarrage implements Spell
 			SpellHandler.scheduler.startSyncTask(new Runnable() {
 				@Override
 				public void run() {
-					player.Fire(ProjectileEntity.Arrow);
+					player.Launch(ProjectileEntity.Arrow);
 				}
 			}, time);
 			current++;

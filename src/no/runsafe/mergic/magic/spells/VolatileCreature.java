@@ -54,7 +54,7 @@ public class VolatileCreature implements Spell
 
 	private RunsafeEntityType getRandomEntityType()
 	{
-		return this.types[(int)(Math.random() * (types.length) + 1)];
+		return this.types[(int)(Math.random() * types.length)];
 	}
 
 	private RunsafeEntityType[] types = {

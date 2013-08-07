@@ -6,5 +6,6 @@ public enum MagicSchool
 	WATER,
 	SHADOW,
 	EARTH,
-	WIND
+	WIND,
+	ARCANE
 }

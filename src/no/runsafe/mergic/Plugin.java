@@ -5,12 +5,9 @@ import no.runsafe.framework.api.command.Command;
 import no.runsafe.mergic.commands.CreateSpellBook;
 import no.runsafe.mergic.commands.StartGameCommand;
 import no.runsafe.mergic.commands.StopGameCommand;
-import no.runsafe.mergic.magic.spells.ArrowBarrage;
-import no.runsafe.mergic.magic.spells.BasicFireball;
+import no.runsafe.mergic.magic.spells.*;
 import no.runsafe.mergic.magic.CooldownManager;
-import no.runsafe.mergic.magic.spells.Fireball;
 import no.runsafe.mergic.magic.SpellHandler;
-import no.runsafe.mergic.magic.spells.ShadowStrike;
 import no.runsafe.worldguardbridge.WorldGuardInterface;
 
 public class Plugin extends RunsafeConfigurablePlugin
@@ -37,6 +34,7 @@ public class Plugin extends RunsafeConfigurablePlugin
 		this.addComponent(Fireball.class);
 		this.addComponent(ShadowStrike.class);
 		this.addComponent(ArrowBarrage.class);
+		this.addComponent(WindJump.class);
 
 		// Commands
 		Command mergic = new Command("mergic", "A collection of commands to control Wizard PvP", null);

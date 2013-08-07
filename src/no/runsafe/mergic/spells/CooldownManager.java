@@ -17,7 +17,7 @@ public class CooldownManager
 	public boolean canCastSpell(RunsafePlayer player, Spell spell)
 	{
 		String playerName = player.getName();
-		return cooldowns.containsKey(playerName) && !this.cooldowns.get(playerName).contains(spell.getSchool());
+		return !cooldowns.containsKey(playerName) || !this.cooldowns.get(playerName).contains(spell.getSchool());
 	}
 
 	public void applySchoolCooldown(RunsafePlayer player, Spell spell)

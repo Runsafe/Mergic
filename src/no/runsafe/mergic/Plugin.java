@@ -37,6 +37,7 @@ public class Plugin extends RunsafeConfigurablePlugin
 		this.addComponent(WindJump.class);
 		this.addComponent(WindLeap.class);
 		this.addComponent(FirePlume.class);
+		this.addComponent(IceBlock.class);
 
 		// Commands
 		Command mergic = new Command("mergic", "A collection of commands to control Wizard PvP", null);

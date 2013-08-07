@@ -44,7 +44,7 @@ public class WindLeap implements Spell
 		SpellHandler.scheduler.startSyncTask(new Runnable() {
 			@Override
 			public void run() {
-				player.setVelocity(player.getLocation().getDirection().multiply(1));
+				player.setVelocity(player.getLocation().getDirection().multiply(2));
 			}
 		}, 1);
 	}

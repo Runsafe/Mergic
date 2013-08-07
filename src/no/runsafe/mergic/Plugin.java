@@ -6,6 +6,7 @@ import no.runsafe.mergic.commands.CreateSpellBook;
 import no.runsafe.mergic.commands.StartGameCommand;
 import no.runsafe.mergic.commands.StopGameCommand;
 import no.runsafe.mergic.spells.BasicFireball;
+import no.runsafe.mergic.spells.CooldownManager;
 import no.runsafe.mergic.spells.Fireball;
 import no.runsafe.mergic.spells.SpellHandler;
 import no.runsafe.worldguardbridge.WorldGuardInterface;
@@ -22,6 +23,8 @@ public class Plugin extends RunsafeConfigurablePlugin
 		this.addComponent(Lobby.class);
 		this.addComponent(Graveyard.class);
 		this.addComponent(Game.class);
+
+		this.addComponent(CooldownManager.class);
 		this.addComponent(PlayerMonitor.class);
 
 		// Spell related things.

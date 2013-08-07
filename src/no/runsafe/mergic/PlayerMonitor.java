@@ -4,23 +4,21 @@ import no.runsafe.framework.api.event.player.*;
 import no.runsafe.framework.minecraft.event.player.*;
 import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
 import no.runsafe.framework.minecraft.player.RunsafePlayer;
-import no.runsafe.mergic.spells.InteractType;
-import no.runsafe.mergic.spells.Spell;
-import no.runsafe.mergic.spells.SpellHandler;
-import no.runsafe.mergic.spells.SpellType;
+import no.runsafe.mergic.spells.*;
 
 import java.util.ArrayList;
 import java.util.Map;
 
 public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPlayerQuitEvent, IPlayerDeathEvent, IPlayerInteractEvent
 {
-	public PlayerMonitor(Graveyard graveyard, Arena arena, Game game, Lobby lobby, SpellHandler spellHandler)
+	public PlayerMonitor(Graveyard graveyard, Arena arena, Game game, Lobby lobby, SpellHandler spellHandler, CooldownManager cooldownManager)
 	{
 		this.graveyard = graveyard;
 		this.arena = arena;
 		this.game = game;
 		this.lobby = lobby;
 		this.spellHandler = spellHandler;
+		this.cooldownManager = cooldownManager;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -101,9 +99,12 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 				if (type.getInteractType() == InteractType.RIGHT_CLICK && !event.isRightClick())
 					return;
 
-				// Check if the item matches the spell cast-item.
-				if (item.is(type.getCastItem()))
+				// Check if we have the right item and are not on cooldown for that school.
+				if (item.is(type.getCastItem()) && this.cooldownManager.canCastSpell(player, spell))
+				{
 					spell.onCast(player); // Make the player cast the spell.
+					this.cooldownManager.applySchoolCooldown(player, spell); // Apply school cooldown.
+				}
 			}
 		}
 	}
@@ -113,4 +114,5 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 	private Game game;
 	private Lobby lobby;
 	private SpellHandler spellHandler;
+	private CooldownManager cooldownManager;
 }

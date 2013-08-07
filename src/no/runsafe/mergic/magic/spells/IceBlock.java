@@ -89,6 +89,6 @@ public class IceBlock implements Spell
 	private int[][] formation = {
 			{1, 0, 0}, {0, 0, 1}, {-1, 0, 0}, {0, 0, -1}, // First layer
 			{1, 1, 0}, {0, 1, 1}, {-1, 1, 0}, {0, 1, -1}, // Second layer
-			{0, 2, 0} // Top cap of the block
+			{0, 2, 0}, {0, -1, 0} // Top and bottom
 	};
 }

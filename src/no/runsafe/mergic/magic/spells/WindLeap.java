@@ -40,7 +40,7 @@ public class WindLeap implements Spell
 		final Vector vector = player.getLocation().getDirection();
 
 		// Throw the player in the air to begin.
-		player.setVelocity(vector.add(new Vector(0, 10, 0)));
+		player.setVelocity(vector.add(new Vector(0, 2, 0)));
 
 		// Throw the player forward two seconds later.
 		SpellHandler.scheduler.startSyncTask(new Runnable() {

@@ -44,7 +44,7 @@ public class FirePlume implements Spell
 		while (currentStep < 3)
 		{
 			final int step = currentStep - 1;
-			SpellHandler.scheduler.startAsyncTask(new Runnable() {
+			SpellHandler.scheduler.startSyncTask(new Runnable() {
 				@Override
 				public void run() {
 					createPlume(location, step);

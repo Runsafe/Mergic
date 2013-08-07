@@ -52,6 +52,14 @@ public class FirePlume implements Spell
 			}, currentStep);
 			currentStep++;
 		}
+
+		// Teleport the player to the middle of the block they are stood on to prevent them catching fire.
+		player.teleport(new RunsafeLocation(
+				location.getWorld(),
+				location.getBlockX() + 0.5D,
+				location.getY(),
+				location.getBlockZ() + 0.5D
+		));
 	}
 
 	private void createPlume(RunsafeLocation loc, int stage)

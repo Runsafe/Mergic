@@ -1,6 +1,7 @@
 package no.runsafe.mergic;
 
 import no.runsafe.framework.api.event.player.*;
+import no.runsafe.framework.api.event.plugin.IPluginDisabled;
 import no.runsafe.framework.minecraft.event.player.*;
 import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
 import no.runsafe.framework.minecraft.player.RunsafePlayer;
@@ -9,7 +10,7 @@ import no.runsafe.mergic.spells.*;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPlayerQuitEvent, IPlayerDeathEvent, IPlayerInteractEvent
+public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPlayerQuitEvent, IPlayerDeathEvent, IPlayerInteractEvent, IPluginDisabled
 {
 	public PlayerMonitor(Graveyard graveyard, Arena arena, Game game, Lobby lobby, SpellHandler spellHandler, CooldownManager cooldownManager)
 	{
@@ -107,6 +108,13 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 				}
 			}
 		}
+	}
+
+	@Override
+	public void OnPluginDisabled()
+	{
+		// If the server shuts down, we should cancel the game just to make sure.
+		this.game.cancelGame();
 	}
 
 	private Graveyard graveyard;

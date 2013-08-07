@@ -4,13 +4,14 @@ import no.runsafe.framework.minecraft.Item;
 
 public enum SpellType
 {
-	PROJECTILE("Right click to attack with this wand.", Item.Materials.Stick),
-	GUARDIAN("Right click to summon this guardian.", Item.Special.Crafted.EnchantedBook);
+	PROJECTILE("Left click to attack with this wand.", Item.Materials.Stick, InteractType.LEFT_CLICK),
+	GUARDIAN("Right click to summon this guardian.", Item.Special.Crafted.EnchantedBook, InteractType.RIGHT_CLICK);
 
-	private SpellType(String text, Item castItem)
+	private SpellType(String text, Item castItem, InteractType type)
 	{
 		this.text = text;
 		this.castItem = castItem;
+		this.type = type;
 	}
 
 	public String getText()
@@ -23,6 +24,12 @@ public enum SpellType
 		return this.castItem;
 	}
 
+	public InteractType getInteractType()
+	{
+		return this.type;
+	}
+
 	private String text;
 	private Item castItem;
+	private InteractType type;
 }

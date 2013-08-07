@@ -4,8 +4,10 @@ import no.runsafe.framework.api.event.player.*;
 import no.runsafe.framework.minecraft.event.player.*;
 import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
 import no.runsafe.framework.minecraft.player.RunsafePlayer;
+import no.runsafe.mergic.spells.InteractType;
 import no.runsafe.mergic.spells.Spell;
 import no.runsafe.mergic.spells.SpellHandler;
+import no.runsafe.mergic.spells.SpellType;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -89,8 +91,18 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 			Spell spell = this.spellHandler.getSpellByName(item.getDisplayName()); // Grab the spell.
 			if (spell != null)
 			{
+				SpellType type = spell.getType(); // Get the spell type.
+
+				// If we want a left click but we're not getting it, return to cancel processing here.
+				if (type.getInteractType() == InteractType.LEFT_CLICK && !event.isLeftClick())
+					return;
+
+				// If we want a right click but we're not getting it, return to cancel processing here.
+				if (type.getInteractType() == InteractType.RIGHT_CLICK && !event.isRightClick())
+					return;
+
 				// Check if the item matches the spell cast-item.
-				if (item.is(spell.getType().getCastItem()))
+				if (item.is(type.getCastItem()))
 					spell.onCast(player); // Make the player cast the spell.
 			}
 		}

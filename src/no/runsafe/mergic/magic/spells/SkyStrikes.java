@@ -17,7 +17,7 @@ public class SkyStrikes implements Spell
 	@Override
 	public String getName()
 	{
-		return "Lightning Storm";
+		return "Sky Strikes";
 	}
 
 	@Override

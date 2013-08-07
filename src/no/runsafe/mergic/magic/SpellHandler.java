@@ -1,5 +1,6 @@
-package no.runsafe.mergic.spells;
+package no.runsafe.mergic.magic;
 
+import no.runsafe.framework.api.IScheduler;
 import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
 import no.runsafe.framework.minecraft.player.RunsafePlayer;
 
@@ -9,11 +10,14 @@ import java.util.List;
 
 public class SpellHandler
 {
-	public SpellHandler(Spell[] spells)
+	public SpellHandler(Spell[] spells, IScheduler scheduler)
 	{
 		// Populate the spell handler with every spell the plug-in has injected.
 		for (Spell spell : spells)
 			this.spellList.put(spell.getName().toLowerCase(), spell);
+
+		// Provide a static scheduler for the spells.
+		SpellHandler.scheduler = scheduler;
 	}
 
 	public void givePlayerSpellBook(RunsafePlayer player, Spell spell)
@@ -46,4 +50,5 @@ public class SpellHandler
 	}
 
 	private HashMap<String, Spell> spellList = new HashMap<String, Spell>();
+	public static IScheduler scheduler;
 }

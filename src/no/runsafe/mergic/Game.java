@@ -4,7 +4,7 @@ import no.runsafe.framework.api.IConfiguration;
 import no.runsafe.framework.api.IScheduler;
 import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
 import no.runsafe.framework.minecraft.player.RunsafePlayer;
-import no.runsafe.mergic.spells.CooldownManager;
+import no.runsafe.mergic.magic.CooldownManager;
 
 public class Game implements IConfigurationChanged
 {

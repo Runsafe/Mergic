@@ -1,7 +1,10 @@
-package no.runsafe.mergic.spells;
+package no.runsafe.mergic.magic.spells;
 
 import no.runsafe.framework.minecraft.entity.ProjectileEntity;
 import no.runsafe.framework.minecraft.player.RunsafePlayer;
+import no.runsafe.mergic.magic.MagicSchool;
+import no.runsafe.mergic.magic.Spell;
+import no.runsafe.mergic.magic.SpellType;
 
 public class Fireball implements Spell
 {

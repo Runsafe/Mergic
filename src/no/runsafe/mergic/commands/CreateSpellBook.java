@@ -3,8 +3,8 @@ package no.runsafe.mergic.commands;
 import no.runsafe.framework.api.command.argument.TrailingArgument;
 import no.runsafe.framework.api.command.player.PlayerCommand;
 import no.runsafe.framework.minecraft.player.RunsafePlayer;
-import no.runsafe.mergic.spells.Spell;
-import no.runsafe.mergic.spells.SpellHandler;
+import no.runsafe.mergic.magic.Spell;
+import no.runsafe.mergic.magic.SpellHandler;
 
 import java.util.Map;
 

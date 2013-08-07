@@ -5,7 +5,7 @@ import no.runsafe.framework.api.event.plugin.IPluginDisabled;
 import no.runsafe.framework.minecraft.event.player.*;
 import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
 import no.runsafe.framework.minecraft.player.RunsafePlayer;
-import no.runsafe.mergic.spells.*;
+import no.runsafe.mergic.magic.*;
 
 import java.util.ArrayList;
 import java.util.Map;

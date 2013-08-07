@@ -1,4 +1,4 @@
-package no.runsafe.mergic.spells;
+package no.runsafe.mergic.magic;
 
 import no.runsafe.framework.minecraft.player.RunsafePlayer;
 

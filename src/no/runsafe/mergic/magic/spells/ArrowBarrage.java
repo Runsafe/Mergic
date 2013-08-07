@@ -24,7 +24,7 @@ public class ArrowBarrage implements Spell
 	@Override
 	public MagicSchool getSchool()
 	{
-		return MagicSchool.WIND;
+		return MagicSchool.ARCANE;
 	}
 
 	@Override

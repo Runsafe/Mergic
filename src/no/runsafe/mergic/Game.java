@@ -4,15 +4,17 @@ import no.runsafe.framework.api.IConfiguration;
 import no.runsafe.framework.api.IScheduler;
 import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
 import no.runsafe.framework.minecraft.player.RunsafePlayer;
+import no.runsafe.mergic.spells.CooldownManager;
 
 public class Game implements IConfigurationChanged
 {
-	public Game(Graveyard graveyard, Lobby lobby, Arena arena, IScheduler scheduler)
+	public Game(Graveyard graveyard, Lobby lobby, Arena arena, IScheduler scheduler, CooldownManager cooldownManager)
 	{
 		this.graveyard = graveyard;
 		this.lobby = lobby;
 		this.arena = arena;
 		this.scheduler = scheduler;
+		this.cooldownManager = cooldownManager;
 	}
 
 	public boolean gameInProgress()
@@ -88,6 +90,7 @@ public class Game implements IConfigurationChanged
 			this.arena.removeAllPlayers(); // Remove all players from the game.
 			this.lobby.teleportPlayersToLobby(this.arena.getPlayers()); // Move players from arena to lobby.
 			this.graveyard.removeAllTimers(); // Cancel any outstanding graveyard timers.
+			this.cooldownManager.resetCooldowns(); // Reset all cooldowns.
 		}
 	}
 
@@ -112,4 +115,5 @@ public class Game implements IConfigurationChanged
 	private int preMatchDelay = -1;
 	private int currentPreMatchStep = 0;
 	private IScheduler scheduler;
+	private CooldownManager cooldownManager;
 }

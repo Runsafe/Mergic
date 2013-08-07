@@ -7,5 +7,6 @@ public interface Spell
 	public int getCooldown();
 	public String getName();
 	public MagicSchool getSchool();
+	public SpellType getType();
 	public void onCast(RunsafePlayer player);
 }

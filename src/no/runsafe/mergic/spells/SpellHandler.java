@@ -1,6 +1,5 @@
 package no.runsafe.mergic.spells;
 
-import no.runsafe.framework.minecraft.Item;
 import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
 import no.runsafe.framework.minecraft.player.RunsafePlayer;
 
@@ -19,12 +18,14 @@ public class SpellHandler
 
 	public void givePlayerSpellBook(RunsafePlayer player, Spell spell)
 	{
-		RunsafeMeta item = Item.Special.Crafted.EnchantedBook.getItem(); // Create a new, blank book.
+		SpellType spellType = spell.getType();
+		RunsafeMeta item = spellType.getCastItem().getItem(); // Create whatever item we cast with.
 		item.setDisplayName(spell.getName()); // Rename the book to match the spell.
 
 		List<String> lore = new ArrayList<String>(); // Create en empty holder for the lore text.
-		lore.add("School: " + spell.getSchool().name());
-		lore.add(String.format("Cooldown: %d seconds", spell.getCooldown()));
+		lore.add("School: " + spell.getSchool().name()); // Add the magic school.
+		lore.add(String.format("Cooldown: %d seconds", spell.getCooldown())); // Add the cooldown.
+		lore.add(spellType.getText()); // Add information on the spell.
 		item.setLore(lore);
 
 		player.give(item); // Give the spell book to the player.

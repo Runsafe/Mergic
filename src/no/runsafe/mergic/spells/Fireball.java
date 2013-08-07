@@ -24,6 +24,12 @@ public class Fireball implements Spell
 	}
 
 	@Override
+	public SpellType getType()
+	{
+		return SpellType.PROJECTILE;
+	}
+
+	@Override
 	public void onCast(RunsafePlayer player)
 	{
 		player.Fire(ProjectileEntity.Fireball);

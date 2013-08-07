@@ -1,7 +1,6 @@
 package no.runsafe.mergic;
 
 import no.runsafe.framework.api.event.player.*;
-import no.runsafe.framework.minecraft.Item;
 import no.runsafe.framework.minecraft.event.player.*;
 import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
 import no.runsafe.framework.minecraft.player.RunsafePlayer;
@@ -87,11 +86,11 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 			if (item == null)
 				return;
 
-			// Check if we are holding a spell book!
-			if (item.is(Item.Special.Crafted.EnchantedBook))
+			Spell spell = this.spellHandler.getSpellByName(item.getDisplayName()); // Grab the spell.
+			if (spell != null)
 			{
-				Spell spell = this.spellHandler.getSpellByName(item.getDisplayName()); // Grab the spell.
-				if (spell != null)
+				// Check if the item matches the spell cast-item.
+				if (item.is(spell.getType().getCastItem()))
 					spell.onCast(player); // Make the player cast the spell.
 			}
 		}

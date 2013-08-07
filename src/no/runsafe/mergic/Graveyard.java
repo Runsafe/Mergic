@@ -11,6 +11,7 @@ import no.runsafe.worldguardbridge.WorldGuardInterface;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Graveyard implements IConfigurationChanged
 {
@@ -92,6 +93,16 @@ public class Graveyard implements IConfigurationChanged
 	public List<RunsafePlayer> getPlayers()
 	{
 		return this.worldGuard.getPlayersInRegion(this.world, this.region);
+	}
+
+	public void removeAllTimers()
+	{
+		// Loop every timer, cancel it and remove it.
+		for (Map.Entry<String, Integer> node : this.deadTimers.entrySet())
+		{
+			this.scheduler.cancelTask(node.getValue()); // Cancel the timer.
+			this.deadTimers.remove(node.getKey()); // Remove the timer node.
+		}
 	}
 
 	public void teleportPlayerToGraveyard(final RunsafePlayer player)

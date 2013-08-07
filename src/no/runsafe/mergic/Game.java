@@ -87,6 +87,7 @@ public class Game implements IConfigurationChanged
 			this.gameInProgress = false; // Flag the game as not running.
 			this.arena.removeAllPlayers(); // Remove all players from the game.
 			this.lobby.teleportPlayersToLobby(this.arena.getPlayers()); // Move players from arena to lobby.
+			this.graveyard.removeAllTimers(); // Cancel any outstanding graveyard timers.
 		}
 	}
 

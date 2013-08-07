@@ -41,12 +41,13 @@ public class ArrowBarrage implements Spell
 		// Shoot 6 arrows, 1 second after each other.
 		while (current < 6)
 		{
+			long time = current * 5;
 			SpellHandler.scheduler.startSyncTask(new Runnable() {
 				@Override
 				public void run() {
 					player.Fire(ProjectileEntity.Arrow);
 				}
-			}, current);
+			}, time);
 			current++;
 		}
 	}

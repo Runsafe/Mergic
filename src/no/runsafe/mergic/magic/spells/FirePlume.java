@@ -49,7 +49,7 @@ public class FirePlume implements Spell
 				public void run() {
 					createPlume(location, step);
 				}
-			}, 1);
+			}, currentStep);
 			currentStep++;
 		}
 	}

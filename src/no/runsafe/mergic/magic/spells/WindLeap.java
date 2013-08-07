@@ -37,16 +37,14 @@ public class WindLeap implements Spell
 	@Override
 	public void onCast(final RunsafePlayer player)
 	{
-		final Vector vector = player.getLocation().getDirection();
-
 		// Throw the player in the air to begin.
-		player.setVelocity(vector.add(new Vector(0, 2, 0)));
+		player.setVelocity(player.getLocation().getDirection().add(new Vector(0, 1, 0)));
 
 		// Throw the player forward two seconds later.
 		SpellHandler.scheduler.startSyncTask(new Runnable() {
 			@Override
 			public void run() {
-				player.setVelocity(vector.multiply(3));
+				player.setVelocity(player.getLocation().getDirection().multiply(1));
 			}
 		}, 2);
 	}

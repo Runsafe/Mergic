@@ -27,9 +27,9 @@ public class SpellHandler
 		item.setDisplayName(spell.getName()); // Rename the book to match the spell.
 
 		List<String> lore = new ArrayList<String>(); // Create en empty holder for the lore text.
-		lore.add("School: " + spell.getSchool().name()); // Add the magic school.
-		lore.add(String.format("Cooldown: %d seconds", spell.getCooldown())); // Add the cooldown.
-		lore.add(spellType.getText()); // Add information on the spell.
+		lore.add("§8School:§7 " + spell.getSchool().name()); // Add the magic school.
+		lore.add(String.format("§8Cooldown:§7 %d seconds", spell.getCooldown())); // Add the cooldown.
+		lore.add("§7" + spellType.getText()); // Add information on the spell.
 		item.setLore(lore);
 
 		player.give(item); // Give the spell book to the player.

@@ -35,10 +35,18 @@ public class Arena implements IConfigurationChanged
 		}
 
 		// Grab the arena region from configuration, throw an error and return if we fail.
-		String region = configuration.getConfigValueAsString("arena.region");
-		if (region == null)
+		this.region = configuration.getConfigValueAsString("arena.region");
+		if (this.region == null)
 		{
 			this.output.logError("Arena region missing from configuration.");
+			return;
+		}
+
+		// Grab the arena teleport region from configuration, throw an error and return if we fail.
+		String teleportRegion = configuration.getConfigValueAsString("arena.teleportRegion");
+		if (teleportRegion == null)
+		{
+			this.output.logError("Arena teleport region missing from configuration.");
 			return;
 		}
 
@@ -49,11 +57,11 @@ public class Arena implements IConfigurationChanged
 			return;
 		}
 
-		// Grab the region, throw an error and return if we fail like idiots.
-		this.region = this.worldGuard.getRegion(world, region);
-		if (this.region == null)
+		// Grab the teleport region, throw an error and return if we fail like idiots.
+		this.teleportRegion = this.worldGuard.getRegion(world, teleportRegion);
+		if (this.teleportRegion == null)
 		{
-			this.output.logError("Arena region from configuration does not exist.");
+			this.output.logError("Arena teleport region from configuration does not exist.");
 			return;
 		}
 
@@ -73,8 +81,8 @@ public class Arena implements IConfigurationChanged
 		this.players.add(player.getName());
 
 		// Create random X and Z co-ordinates within the region.
-		int randomX = getRandomBetween(region.getMinimumPoint().getBlockX(), region.getMaximumPoint().getBlockX());
-		int randomZ = getRandomBetween(region.getMinimumPoint().getBlockZ(), region.getMaximumPoint().getBlockZ());
+		int randomX = getRandomBetween(teleportRegion.getMinimumPoint().getBlockX(), teleportRegion.getMaximumPoint().getBlockX());
+		int randomZ = getRandomBetween(teleportRegion.getMinimumPoint().getBlockZ(), teleportRegion.getMaximumPoint().getBlockZ());
 
 
 		// Get a safe spot at the co-ordinates we generated.
@@ -101,7 +109,7 @@ public class Arena implements IConfigurationChanged
 
 	public List<RunsafePlayer> getPlayers()
 	{
-		return this.worldGuard.getPlayersInRegion(this.world, this.region.getId());
+		return this.worldGuard.getPlayersInRegion(this.world, this.region);
 	}
 
 	public boolean playerIsInPhysicalArena(RunsafePlayer player)
@@ -121,7 +129,7 @@ public class Arena implements IConfigurationChanged
 			return false;
 
 		// Return if we have the player in the correct region.
-		return playerRegions.contains(this.region.getId());
+		return playerRegions.contains(this.region);
 	}
 
 	public boolean playerIsInGame(RunsafePlayer player)
@@ -141,7 +149,7 @@ public class Arena implements IConfigurationChanged
 
 	public String getArenaRegionString()
 	{
-		return String.format("%s-%s", this.world.getName(), this.region.getId());
+		return String.format("%s-%s", this.world.getName(), this.region);
 	}
 
 	private int getRandomBetween(int low, int high)
@@ -159,6 +167,7 @@ public class Arena implements IConfigurationChanged
 	private int teleportY;
 	private IOutput output;
 	private WorldGuardInterface worldGuard;
-	private ProtectedRegion region;
+	private ProtectedRegion teleportRegion;
+	private String region;
 	private List<String> players = new ArrayList<String>();
 }

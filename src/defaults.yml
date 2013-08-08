@@ -6,6 +6,7 @@ preMatch:
   delay: 5
 arena:
   world: wizpvp
+  teleportRegion: arenaTeleport
   region: arena
   teleportY: 4
 graveyard:

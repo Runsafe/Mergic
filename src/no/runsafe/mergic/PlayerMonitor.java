@@ -2,6 +2,7 @@ package no.runsafe.mergic;
 
 import no.runsafe.framework.api.event.player.*;
 import no.runsafe.framework.api.event.plugin.IPluginDisabled;
+import no.runsafe.framework.minecraft.event.entity.RunsafeEntityDamageEvent;
 import no.runsafe.framework.minecraft.event.player.*;
 import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
 import no.runsafe.framework.minecraft.player.RunsafePlayer;
@@ -10,7 +11,7 @@ import no.runsafe.mergic.magic.*;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPlayerQuitEvent, IPlayerDeathEvent, IPlayerInteractEvent, IPluginDisabled
+public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPlayerQuitEvent, IPlayerInteractEvent, IPluginDisabled, IPlayerDamageEvent
 {
 	public PlayerMonitor(Graveyard graveyard, Arena arena, Game game, Lobby lobby, SpellHandler spellHandler, CooldownManager cooldownManager)
 	{
@@ -63,15 +64,14 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 	}
 
 	@Override
-	public void OnPlayerDeathEvent(RunsafePlayerDeathEvent event)
+	public void OnPlayerDamage(RunsafePlayer player, RunsafeEntityDamageEvent event)
 	{
-		RunsafePlayer player = event.getEntity();
-		if (this.arena.playerIsInGame(player))
+		if (this.arena.playerIsInGame(player) && player.getHealth() - event.getDamage() <= 0D)
 		{
-			player.setHealth(20D); // Keep the player alive.
-			event.setDrops(new ArrayList<RunsafeMeta>()); // Drop no items!
 			this.graveyard.teleportPlayerToGraveyard(player); // Teleport player to graveyard.
-			player.sendColouredMessage("You have died! You will respawn shortly.");
+			player.setHealth(20D); // Heal the player to full.
+			player.setFireTicks(0); // Stop the fire from burning if they are.
+			player.sendColouredMessage("You have died! You will respawn shortly."); // Explain to them.
 		}
 	}
 

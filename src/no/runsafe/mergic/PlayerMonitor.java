@@ -67,6 +67,7 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 	{
 		if (this.arena.playerIsInGame(player) && player.getHealth() - event.getDamage() <= 0D)
 		{
+			event.setDamage(0); // Cancel the incoming damage.
 			this.graveyard.teleportPlayerToGraveyard(player); // Teleport player to graveyard.
 			player.setHealth(20D); // Heal the player to full.
 			player.setFireTicks(0); // Stop the fire from burning if they are.

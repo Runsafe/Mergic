@@ -2,6 +2,7 @@ package no.runsafe.mergic.magic.spells;
 
 import no.runsafe.framework.minecraft.Item;
 import no.runsafe.framework.minecraft.RunsafeLocation;
+import no.runsafe.framework.minecraft.block.RunsafeBlock;
 import no.runsafe.framework.minecraft.player.RunsafePlayer;
 import no.runsafe.mergic.magic.MagicSchool;
 import no.runsafe.mergic.magic.Spell;
@@ -70,12 +71,16 @@ public class FirePlume implements Spell
 		for (int[] plumeStage : plumeStages)
 		{
 			// Work out a relative location for this plume stage.
-			new RunsafeLocation(
+			RunsafeBlock block = new RunsafeLocation(
 					loc.getWorld(),
 					loc.getX() + plumeStage[0],
 					loc.getY(),
 					loc.getZ() + plumeStage[1]
-			).getBlock().set(Item.Unavailable.Fire); // and then set the world on fiyyyaaaa!
+			).getBlock();
+
+			// Check if the block is air.
+			if (block.is(Item.Unavailable.Air))
+				block.set(Item.Unavailable.Fire); // and then set the world on fiyyyaaaa!
 		}
 	}
 

@@ -10,7 +10,7 @@ import no.runsafe.mergic.magic.*;
 
 import java.util.Map;
 
-public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPlayerQuitEvent, IPlayerInteractEvent, IPluginDisabled, IPlayerDamageEvent
+public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPlayerInteractEvent, IPluginDisabled, IPlayerDamageEvent
 {
 	public PlayerMonitor(Graveyard graveyard, Arena arena, Game game, Lobby lobby, SpellHandler spellHandler, CooldownManager cooldownManager)
 	{
@@ -50,16 +50,6 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 		// Check if the player is inside the arena when they shouldn't be.
 		if (!this.arena.playerIsInGame(player) && this.arena.playerIsInPhysicalArena(player))
 			this.lobby.teleportPlayerToLobby(player); // Teleport them to the lobby!
-	}
-
-	@Override
-	public void OnPlayerQuit(RunsafePlayerQuitEvent event)
-	{
-		RunsafePlayer player = event.getPlayer();
-
-		// The player is logging out whilst still in the arena, drop their in-game status.
-		if (this.arena.playerIsInGame(player))
-			this.arena.removePlayer(player);
 	}
 
 	@Override

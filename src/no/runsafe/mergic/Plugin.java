@@ -52,7 +52,5 @@ public class Plugin extends RunsafeConfigurablePlugin
 		mergic.addSubCommand(getInstance(StopGameCommand.class));
 		mergic.addSubCommand(getInstance(CreateSpellBook.class));
 		this.addComponent(mergic);
-
-		this.getComponent(IOutput.class).write(Bukkit.getServer().getClass().getPackage().getName());
 	}
 }

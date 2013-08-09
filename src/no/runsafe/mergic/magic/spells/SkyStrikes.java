@@ -4,6 +4,7 @@ import no.runsafe.framework.minecraft.entity.RunsafeEntity;
 import no.runsafe.framework.minecraft.player.RunsafePlayer;
 import no.runsafe.mergic.magic.MagicSchool;
 import no.runsafe.mergic.magic.Spell;
+import no.runsafe.mergic.magic.SpellHandler;
 import no.runsafe.mergic.magic.SpellType;
 
 public class SkyStrikes implements Spell
@@ -36,7 +37,12 @@ public class SkyStrikes implements Spell
 	public void onCast(RunsafePlayer player)
 	{
 		for (RunsafeEntity entity : player.getNearbyEntities(20, 20, 20))
+		{
 			if (entity instanceof RunsafePlayer)
-				entity.strikeWithLightning(false);
+			{
+				entity.strikeWithLightning(false); // Hit the player with lightning.
+				SpellHandler.killManager.registerAttack((RunsafePlayer) entity, player); // Register the attack.
+			}
+		}
 	}
 }

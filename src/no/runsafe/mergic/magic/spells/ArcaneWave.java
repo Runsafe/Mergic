@@ -57,7 +57,7 @@ public class ArcaneWave implements Spell
 			data.put("f", 0F);
 			data.put("g", 0F);
 			data.put("h", 1F);
-			data.put("i", 0);
+			data.put("i", 10);
 
 			player.sendPacket(PacketHelper.stuffPacket(PacketHelper.getPacket("Packet63WorldParticles"), data));
 		}

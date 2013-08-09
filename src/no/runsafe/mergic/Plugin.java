@@ -23,6 +23,7 @@ public class Plugin extends RunsafeConfigurablePlugin
 		this.addComponent(Graveyard.class);
 		this.addComponent(Game.class);
 
+		this.addComponent(KillManager.class);
 		this.addComponent(CooldownManager.class);
 		this.addComponent(PlayerMonitor.class);
 

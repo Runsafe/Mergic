@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPlayerInteractEvent, IPluginDisabled, IPlayerDamageEvent
 {
-	public PlayerMonitor(Graveyard graveyard, Arena arena, Game game, Lobby lobby, SpellHandler spellHandler, CooldownManager cooldownManager)
+	public PlayerMonitor(Graveyard graveyard, Arena arena, Game game, Lobby lobby, SpellHandler spellHandler, CooldownManager cooldownManager, KillManager killManager)
 	{
 		this.graveyard = graveyard;
 		this.arena = arena;
@@ -20,6 +20,7 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 		this.lobby = lobby;
 		this.spellHandler = spellHandler;
 		this.cooldownManager = cooldownManager;
+		this.killManager = killManager;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -63,6 +64,7 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 			player.setFireTicks(0); // Stop the fire from burning if they are.
 			player.setFoodLevel(20); // Fill the hunger bar back to full.
 			player.sendColouredMessage("You have died! You will respawn shortly."); // Explain to them.
+			this.killManager.OnPlayerKilled(player); // Trigger event in kill manager to tally score.
 		}
 	}
 
@@ -114,4 +116,5 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 	private Lobby lobby;
 	private SpellHandler spellHandler;
 	private CooldownManager cooldownManager;
+	private KillManager killManager;
 }

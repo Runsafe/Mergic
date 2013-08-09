@@ -6,15 +6,18 @@ import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
 import no.runsafe.framework.minecraft.player.RunsafePlayer;
 import no.runsafe.mergic.magic.CooldownManager;
 
+import java.util.Map;
+
 public class Game implements IConfigurationChanged
 {
-	public Game(Graveyard graveyard, Lobby lobby, Arena arena, IScheduler scheduler, CooldownManager cooldownManager)
+	public Game(Graveyard graveyard, Lobby lobby, Arena arena, IScheduler scheduler, CooldownManager cooldownManager, KillManager killManager)
 	{
 		this.graveyard = graveyard;
 		this.lobby = lobby;
 		this.arena = arena;
 		this.scheduler = scheduler;
 		this.cooldownManager = cooldownManager;
+		this.killManager = killManager;
 	}
 
 	public boolean gameInProgress()
@@ -91,6 +94,27 @@ public class Game implements IConfigurationChanged
 			this.lobby.teleportPlayersToLobby(this.arena.getPlayers()); // Move players from arena to lobby.
 			this.graveyard.removeAllTimers(); // Cancel any outstanding graveyard timers.
 			this.cooldownManager.resetCooldowns(); // Reset all cooldowns.
+
+			// We don't want to reset data for the tournament.
+			//this.killManager.wipeAllData();
+
+			// Everything reset, let's give the players now in the lobby a list of what just went down.
+
+			// Generate the top 5 score list.
+			Map<String, Integer> top = this.killManager.getTopWinners(5);
+
+			// Loop every player now in the lobby and give them their score and the top 5.
+			for (RunsafePlayer player : this.lobby.getPlayersInLobby())
+			{
+				player.sendColouredMessage("The match has ended!");
+				int current = 1;
+				for (Map.Entry<String, Integer> node : top.entrySet())
+				{
+					player.sendColouredMessage("%d. %s - %d kills.", current, node.getKey(), node.getValue());
+					current++;
+				}
+				player.sendColouredMessage("You are currently at %d kills.", this.killManager.getPlayerKills(player));
+			}
 		}
 	}
 
@@ -116,4 +140,5 @@ public class Game implements IConfigurationChanged
 	private int currentPreMatchStep = 0;
 	private IScheduler scheduler;
 	private CooldownManager cooldownManager;
+	private KillManager killManager;
 }

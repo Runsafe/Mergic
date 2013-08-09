@@ -43,7 +43,7 @@ public class MoltenFlurry implements Spell
 		if (location == null)
 			return; // We don't want to continue if our location is borked.
 
-		location.incrementY(3); // Go up two blocks from the players head.
+		location.incrementY(2); // Go up one blocks from the players head.
 		final RunsafeLocation loc = location; // Make a final version for the timers.
 
 		// Loop four times, triggering fireBalls() once per second.
@@ -73,9 +73,9 @@ public class MoltenFlurry implements Spell
 	}
 
 	private Vector[] fireVectors = {
-			new Vector(2, 0, 0),
-			new Vector(0, 0, 2),
-			new Vector(-2, 0, 0),
-			new Vector(0, 0, -2)
+			new Vector(1, 0, 0),
+			new Vector(0, 0, 1),
+			new Vector(-1, 0, 0),
+			new Vector(0, 0, -1)
 	};
 }

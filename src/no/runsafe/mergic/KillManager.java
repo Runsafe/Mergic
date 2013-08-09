@@ -1,6 +1,5 @@
 package no.runsafe.mergic;
 
-import no.runsafe.framework.api.IOutput;
 import no.runsafe.framework.api.event.entity.IEntityDamageByEntityEvent;
 import no.runsafe.framework.minecraft.RunsafeServer;
 import no.runsafe.framework.minecraft.entity.RunsafeEntity;
@@ -13,55 +12,28 @@ import java.util.Map;
 
 public class KillManager implements IEntityDamageByEntityEvent
 {
-	public KillManager(IOutput output)
-	{
-		this.output = output;
-	}
-
 	@Override
 	public void OnEntityDamageByEntity(RunsafeEntityDamageByEntityEvent event)
 	{
 		RunsafeEntity entity = event.getEntity();
 
-		// DEBUG
-		int entityID = entity.getEntityId();
-		this.output.fine("[%d] Took damage from another entity.", entityID);
-
 		if (entity instanceof RunsafePlayer)
 		{
-			// DEBUG
-			this.output.fine("[%d] Confirmed to be a player.", entityID);
-
 			RunsafePlayer victim = (RunsafePlayer) entity;
 			RunsafeEntity attackingEntity = event.getDamageActor();
-
-			// DEBUG
-			int attackingEntityID = attackingEntity.getEntityId();
-			this.output.fine("[%d] Attacked by %d", entityID, attackingEntityID);
 
 			if (attackingEntity instanceof RunsafePlayer)
 			{
 				RunsafePlayer attacker = (RunsafePlayer) attackingEntity;
 				this.registerAttack(victim, attacker);
-
-				// DEBUG
-				this.output.fine("[%d] Confirmed to be a player", attackingEntityID);
 			}
 			else if (attackingEntity instanceof RunsafeProjectile)
 			{
 				RunsafeProjectile projectile = (RunsafeProjectile) attackingEntity;
 				RunsafePlayer shooterPlayer = projectile.getShooterPlayer();
 
-				// DEBUG
-				this.output.fine("[%d] Confirmed to be a projectile.", attackingEntityID);
 				if (shooterPlayer != null)
-				{
-					// DEBUG
-					this.output.fine("[%d] Projectile was shot by a player.", attackingEntityID);
-
 					this.registerAttack(victim, shooterPlayer);
-					this.output.fine("[%d] Projectile shooter was %s", attackingEntityID, shooterPlayer.getName());
-				}
 			}
 		}
 	}
@@ -76,7 +48,7 @@ public class KillManager implements IEntityDamageByEntityEvent
 		this.lastDamage.remove(player.getName());
 	}
 
-	private void registerAttack(RunsafePlayer victim, RunsafePlayer attacker)
+	public void registerAttack(RunsafePlayer victim, RunsafePlayer attacker)
 	{
 		this.lastDamage.put(victim.getName(),  attacker.getName());
 	}
@@ -111,5 +83,4 @@ public class KillManager implements IEntityDamageByEntityEvent
 
 	private HashMap<String, String> lastDamage = new HashMap<String, String>();
 	private HashMap<String, Integer> killCount = new HashMap<String, Integer>();
-	private IOutput output;
 }

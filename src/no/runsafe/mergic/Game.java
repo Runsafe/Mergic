@@ -62,7 +62,7 @@ public class Game implements IConfigurationChanged
 		}
 
 		// Send a message to all the players, be like, yo.. match starting.
-		this.lobby.broadcastToLobby(String.format("New match starting in %d seconds.", this.currentPreMatchStep));
+		this.lobby.broadcastToLobby(String.format("&3New match starting in %d seconds.", this.currentPreMatchStep));
 
 		// Start a timer for the next pre-match step. This could be a repeating timer, but it's not for now.
 		this.scheduler.startAsyncTask(new Runnable() {
@@ -106,14 +106,14 @@ public class Game implements IConfigurationChanged
 			// Loop every player now in the lobby and give them their score and the top 5.
 			for (RunsafePlayer player : this.lobby.getPlayersInLobby())
 			{
-				player.sendColouredMessage("The match has ended!");
+				player.sendColouredMessage("&cThe match has ended!");
 				int current = 1;
 				for (Map.Entry<String, Integer> node : top.entrySet())
 				{
-					player.sendColouredMessage("%d. %s - %d kills.", current, node.getKey(), node.getValue());
+					player.sendColouredMessage("%d. &b%s &f- &a%d&f kills.", current, node.getKey(), node.getValue());
 					current++;
 				}
-				player.sendColouredMessage("You are currently at %d kills.", this.killManager.getPlayerKills(player));
+				player.sendColouredMessage("You are currently at &a%d&f kills.", this.killManager.getPlayerKills(player));
 			}
 		}
 	}

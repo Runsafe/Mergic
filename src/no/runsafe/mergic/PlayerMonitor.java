@@ -63,7 +63,7 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 			player.setHealth(20D); // Heal the player to full.
 			player.setFireTicks(0); // Stop the fire from burning if they are.
 			player.setFoodLevel(20); // Fill the hunger bar back to full.
-			player.sendColouredMessage("You have died! You will respawn shortly."); // Explain to them.
+			player.sendColouredMessage("&cYou have died! You will respawn shortly."); // Explain to them.
 			this.killManager.OnPlayerKilled(player); // Trigger event in kill manager to tally score.
 		}
 	}

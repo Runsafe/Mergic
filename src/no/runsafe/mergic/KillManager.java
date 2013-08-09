@@ -31,7 +31,7 @@ public class KillManager implements IEntityDamageByEntityEvent
 		if (entity instanceof RunsafePlayer)
 		{
 			// DEBUG
-			this.output.fine("[%d] Confirmed to be a player.");
+			this.output.fine("[%d] Confirmed to be a player.", entityID);
 
 			RunsafePlayer victim = (RunsafePlayer) entity;
 			RunsafeEntity attackingEntity = event.getDamageActor();

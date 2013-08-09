@@ -1,6 +1,7 @@
 package no.runsafe.mergic;
 
 import no.runsafe.framework.api.event.entity.IEntityDamageByEntityEvent;
+import no.runsafe.framework.minecraft.RunsafeServer;
 import no.runsafe.framework.minecraft.entity.RunsafeEntity;
 import no.runsafe.framework.minecraft.entity.RunsafeLivingEntity;
 import no.runsafe.framework.minecraft.entity.RunsafeProjectile;
@@ -8,7 +9,6 @@ import no.runsafe.framework.minecraft.event.entity.RunsafeEntityDamageByEntityEv
 import no.runsafe.framework.minecraft.player.RunsafePlayer;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class KillManager implements IEntityDamageByEntityEvent
@@ -60,7 +60,17 @@ public class KillManager implements IEntityDamageByEntityEvent
 	{
 		String playerName = player.getName();
 		if (this.lastDamage.containsKey(playerName))
-			this.killCount.put(this.lastDamage.get(playerName), this.getPlayerKills(player) + 1);
+		{
+			String killerName = this.lastDamage.get(playerName);
+			RunsafePlayer killer = RunsafeServer.Instance.getPlayerExact(killerName);
+
+			if (killer != null)
+			{
+				int newKills = this.getPlayerKills(killer) + 1;
+				this.killCount.put(killerName, newKills);
+				killer.setLevel(newKills);
+			}
+		}
 	}
 
 	public int getPlayerKills(RunsafePlayer player)

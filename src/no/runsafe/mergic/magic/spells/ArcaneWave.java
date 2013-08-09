@@ -66,7 +66,7 @@ public class ArcaneWave implements Spell
 			e.printStackTrace();
 		}
 
-		return;
+		/*return;
 		int current = 1;
 		while (current < 11)
 		{
@@ -78,7 +78,7 @@ public class ArcaneWave implements Spell
 				}
 			}, 5 * current);
 			current++;
-		}
+		}*/
 	}
 
 	private void createSpellLine(RunsafeLocation location, int step)

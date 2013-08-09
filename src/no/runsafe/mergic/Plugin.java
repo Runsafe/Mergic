@@ -1,6 +1,7 @@
 package no.runsafe.mergic;
 
 import no.runsafe.framework.RunsafeConfigurablePlugin;
+import no.runsafe.framework.api.IOutput;
 import no.runsafe.framework.api.command.Command;
 import no.runsafe.mergic.commands.CreateSpellBook;
 import no.runsafe.mergic.commands.StartGameCommand;
@@ -9,6 +10,7 @@ import no.runsafe.mergic.magic.spells.*;
 import no.runsafe.mergic.magic.CooldownManager;
 import no.runsafe.mergic.magic.SpellHandler;
 import no.runsafe.worldguardbridge.WorldGuardInterface;
+import org.bukkit.Bukkit;
 
 public class Plugin extends RunsafeConfigurablePlugin
 {
@@ -50,5 +52,7 @@ public class Plugin extends RunsafeConfigurablePlugin
 		mergic.addSubCommand(getInstance(StopGameCommand.class));
 		mergic.addSubCommand(getInstance(CreateSpellBook.class));
 		this.addComponent(mergic);
+
+		this.getComponent(IOutput.class).write(Bukkit.getServer().getClass().getPackage().getName());
 	}
 }

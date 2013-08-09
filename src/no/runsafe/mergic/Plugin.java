@@ -41,6 +41,7 @@ public class Plugin extends RunsafeConfigurablePlugin
 		this.addComponent(FirePlume.class);
 		this.addComponent(IceBlock.class);
 		this.addComponent(SkyStrikes.class);
+		this.addComponent(MoltenFlurry.class);
 		//this.addComponent(VolatileCreature.class);
 
 		// Commands

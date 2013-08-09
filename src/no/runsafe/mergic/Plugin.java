@@ -47,7 +47,7 @@ public class Plugin extends RunsafeConfigurablePlugin
 		this.addComponent(ArcaneWave.class);
 		//this.addComponent(VolatileCreature.class);
 
-		this.getComponent(IOutput.class).fine(Bukkit.getVersion());
+		this.getComponent(IOutput.class).fine(Bukkit.getBukkitVersion());
 
 		// Commands
 		Command mergic = new Command("mergic", "A collection of commands to control Wizard PvP", null);

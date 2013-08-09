@@ -24,7 +24,7 @@ public class SkyStrikes implements Spell
 	@Override
 	public MagicSchool getSchool()
 	{
-		return MagicSchool.EARTH;
+		return MagicSchool.NATURE;
 	}
 
 	@Override

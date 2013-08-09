@@ -51,19 +51,16 @@ public class KillManager implements IEntityDamageByEntityEvent
 			else if (attackingEntity instanceof RunsafeProjectile)
 			{
 				RunsafeProjectile projectile = (RunsafeProjectile) attackingEntity;
-				RunsafeLivingEntity shooter = projectile.getShooter();
+				RunsafePlayer shooterPlayer = projectile.getShooterPlayer();
 
 				// DEBUG
 				this.output.fine("[%d] Confirmed to be a projectile.", attackingEntityID);
-
-				if (shooter instanceof RunsafePlayer)
+				if (shooterPlayer != null)
 				{
 					// DEBUG
 					this.output.fine("[%d] Projectile was shot by a player.", attackingEntityID);
 
-					RunsafePlayer shooterPlayer = (RunsafePlayer) shooter;
 					this.registerAttack(victim, shooterPlayer);
-
 					this.output.fine("[%d] Projectile shooter was %s", attackingEntityID, shooterPlayer.getName());
 				}
 			}

@@ -38,10 +38,10 @@ public class ArrowBarrage implements Spell
 	{
 		int current = 1;
 
-		// Shoot 6 arrows, 1 second after each other.
-		while (current < 6)
+		// Shoot X arrows at the time provided.
+		while (current < 15)
 		{
-			long time = current * 5;
+			long time = current * 7;
 			SpellHandler.scheduler.startSyncTask(new Runnable() {
 				@Override
 				public void run() {

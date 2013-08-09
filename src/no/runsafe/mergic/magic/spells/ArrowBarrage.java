@@ -39,7 +39,7 @@ public class ArrowBarrage implements Spell
 		int current = 1;
 
 		// Shoot X arrows at the time provided.
-		while (current < 15)
+		while (current < 10)
 		{
 			long time = current * 7;
 			SpellHandler.scheduler.startSyncTask(new Runnable() {

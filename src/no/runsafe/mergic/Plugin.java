@@ -18,12 +18,13 @@ public class Plugin extends RunsafeConfigurablePlugin
 		addComponent(getFirstPluginAPI(WorldGuardInterface.class));
 
 		// Arena related things.
+		this.addComponent(KillManager.class);
+
 		this.addComponent(Arena.class);
 		this.addComponent(Lobby.class);
 		this.addComponent(Graveyard.class);
 		this.addComponent(Game.class);
 
-		this.addComponent(KillManager.class);
 		this.addComponent(CooldownManager.class);
 		this.addComponent(PlayerMonitor.class);
 

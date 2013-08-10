@@ -6,6 +6,7 @@ import no.runsafe.framework.minecraft.WorldEffect;
 import no.runsafe.framework.minecraft.player.RunsafePlayer;
 import no.runsafe.mergic.magic.MagicSchool;
 import no.runsafe.mergic.magic.Spell;
+import no.runsafe.mergic.magic.SpellHandler;
 import no.runsafe.mergic.magic.SpellType;
 
 public class RepulsiveGale implements Spell
@@ -52,6 +53,7 @@ public class RepulsiveGale implements Spell
 			// This is a test, it will act in opposite to what we want, but testing!
 			if (!victim.getName().equals(player.getName()))
 			{
+				SpellHandler.killManager.registerAttack(victim, player); // Register a hit.
 				victim.throwFromPoint(playerLocation); // Throw the player.
 
 				RunsafeLocation victimLocation = victim.getLocation();

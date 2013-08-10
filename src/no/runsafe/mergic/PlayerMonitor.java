@@ -33,8 +33,7 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 		{
 			// See if the region the player left is the arena region.
 			Map<String, String> data = (Map<String, String>) event.getData();
-			String eventRegion = String.format("%s-%s", data.get("world"), data.get("region"));
-			if (arena.getArenaRegionString().equals(eventRegion))
+			if (arena.getArenaRegionString().equals(String.format("%s-%s", data.get("world"), data.get("region"))))
 			{
 				RunsafePlayer player = event.getPlayer();
 
@@ -42,9 +41,15 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 				if (arena.playerIsInGame(player))
 					this.game.removePlayerFromGame(player); // Throw them from the game.
 			}
-			else if (lobby.getLobbyRegionString().equals(eventRegion))
+		}
+		else if (event.getEvent().equals("region.enter")) // Or maybe an enter?
+		{
+			// See if the region the player entered is the arena region.
+			Map<String, String> data = (Map<String, String>) event.getData();
+			if (lobby.getLobbyRegionString().equals(String.format("%s-%s", data.get("world"), data.get("region"))))
 			{
 				RunsafePlayer player = event.getPlayer();
+
 				player.getInventory().clear(); // Clear the players inventory.
 				this.spellHandler.givePlayerAllSpells(player); // Give the player all spells.
 				EquipmentManager.givePlayerWizardBoots(player); // Give the player some magic boots!

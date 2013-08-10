@@ -36,6 +36,12 @@ public class IceBlock implements Spell
 	}
 
 	@Override
+	public String getDescription()
+	{
+		return "Encase yourself in a shield of ice.";
+	}
+
+	@Override
 	public void onCast(RunsafePlayer player)
 	{
 		final RunsafeLocation playerLocation = player.getLocation();

@@ -35,6 +35,12 @@ public class WindLeap implements Spell
 	}
 
 	@Override
+	public String getDescription()
+	{
+		return "Use the wind to throw yourself forth.";
+	}
+
+	@Override
 	public void onCast(final RunsafePlayer player)
 	{
 		// Throw the player in the air to begin.

@@ -57,6 +57,12 @@ public class ArcaneWave implements Spell
 		}
 	}
 
+	@Override
+	public String getDescription()
+	{
+		return "Shoots arcane magic in all directions.";
+	}
+
 	private void createSpellLine(RunsafePlayer player, RunsafeLocation location, int step)
 	{
 		for (int[] node : this.offsets)

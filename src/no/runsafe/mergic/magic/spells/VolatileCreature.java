@@ -36,6 +36,12 @@ public class VolatileCreature implements Spell
 	}
 
 	@Override
+	public String getDescription()
+	{
+		return "Fling forth a conjured critter of doom.";
+	}
+
+	@Override
 	public void onCast(RunsafePlayer player)
 	{
 		final RunsafeEntity entity = player.Launch(this.getRandomEntityType()); // Spawn random creature.

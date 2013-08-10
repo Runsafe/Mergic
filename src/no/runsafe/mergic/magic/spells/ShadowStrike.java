@@ -33,6 +33,12 @@ public class ShadowStrike implements Spell
 	}
 
 	@Override
+	public String getDescription()
+	{
+		return "A basic shadow-based attack.";
+	}
+
+	@Override
 	public void onCast(RunsafePlayer player)
 	{
 		player.Fire(ProjectileEntity.WitherSkull);

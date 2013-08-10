@@ -36,6 +36,12 @@ public class FirePlume implements Spell
 	}
 
 	@Override
+	public String getDescription()
+	{
+		return "Summons a ring of fire around you.";
+	}
+
+	@Override
 	public void onCast(RunsafePlayer player)
 	{
 		final RunsafeLocation location = player.getLocation();

@@ -34,6 +34,12 @@ public class ArrowBarrage implements Spell
 	}
 
 	@Override
+	public String getDescription()
+	{
+		return "Fire an array of arrows in a stream.";
+	}
+
+	@Override
 	public void onCast(final RunsafePlayer player)
 	{
 		int current = 1;

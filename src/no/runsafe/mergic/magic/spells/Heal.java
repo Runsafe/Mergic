@@ -34,6 +34,12 @@ public class Heal implements Spell
 	}
 
 	@Override
+	public String getDescription()
+	{
+		return "Heals you for 7 hearts over 7 seconds.";
+	}
+
+	@Override
 	public void onCast(final RunsafePlayer player)
 	{
 		int current = 0;

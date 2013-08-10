@@ -33,6 +33,12 @@ public class BasicHeal implements Spell
 	}
 
 	@Override
+	public String getDescription()
+	{
+		return "Heals you for 3 hearts of damage.";
+	}
+
+	@Override
 	public void onCast(RunsafePlayer player)
 	{
 		player.heal(6); // Heal the player for 3 hearts.

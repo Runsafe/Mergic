@@ -32,6 +32,12 @@ public class WindJump implements Spell
 	}
 
 	@Override
+	public String getDescription()
+	{
+		return "Rush forward with the power of the wind.";
+	}
+
+	@Override
 	public void onCast(RunsafePlayer player)
 	{
 		player.setVelocity(player.getLocation().getDirection().multiply(3));

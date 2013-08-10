@@ -37,6 +37,12 @@ public class MoltenFlurry implements Spell
 	}
 
 	@Override
+	public String getDescription()
+	{
+		return "Shoot a volatile array of fireballs.";
+	}
+
+	@Override
 	public void onCast(final RunsafePlayer player)
 	{
 		RunsafeLocation location = player.getLocation();

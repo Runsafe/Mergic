@@ -35,6 +35,12 @@ public class SkyStrikes implements Spell
 	}
 
 	@Override
+	public String getDescription()
+	{
+		return "Channel the wrath of nature into nearby opponents.";
+	}
+
+	@Override
 	public void onCast(RunsafePlayer player)
 	{
 		for (RunsafeEntity entity : player.getNearbyEntities(20, 20, 20))

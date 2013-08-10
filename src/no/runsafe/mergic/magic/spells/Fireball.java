@@ -33,6 +33,12 @@ public class Fireball implements Spell
 	}
 
 	@Override
+	public String getDescription()
+	{
+		return "Fires a normal fireball.";
+	}
+
+	@Override
 	public void onCast(RunsafePlayer player)
 	{
 		player.Fire(ProjectileEntity.Fireball);

@@ -8,5 +8,6 @@ public interface Spell
 	public String getName();
 	public MagicSchool getSchool();
 	public SpellType getType();
+	public String getDescription();
 	public void onCast(RunsafePlayer player);
 }

@@ -9,9 +9,9 @@ import no.runsafe.framework.minecraft.RunsafeWorld;
 import no.runsafe.framework.minecraft.player.RunsafePlayer;
 import no.runsafe.worldguardbridge.WorldGuardInterface;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Graveyard implements IConfigurationChanged
 {
@@ -126,7 +126,7 @@ public class Graveyard implements IConfigurationChanged
 
 	private Arena arena;
 	private IScheduler scheduler;
-	private HashMap<String, Integer> deadTimers = new HashMap<String, Integer>();
+	private ConcurrentHashMap<String, Integer> deadTimers = new ConcurrentHashMap<String, Integer>();
 	private int deadTime = -1;
 	private RunsafeWorld world;
 	private String region;

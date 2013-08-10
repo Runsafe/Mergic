@@ -68,7 +68,7 @@ public class ArcaneWave implements Spell
 					).toLocation(world.getRaw())
 			);
 			position.offset(0.5D, 0.5D, 0.5D); // Offset to the center of the block.
-			location.playEffect(WorldEffect.CRIT, 1, 10, 30); // Play a sparkle at that location.
+			position.playEffect(WorldEffect.CRIT, 1, 10, 30); // Play a sparkle at that location.
 
 			for (RunsafePlayer victim : position.getPlayersInRange(1))
 			{

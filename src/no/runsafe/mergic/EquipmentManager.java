@@ -25,6 +25,6 @@ public class EquipmentManager
 		RunsafeLeatherArmor armour = (RunsafeLeatherArmor) boots;
 		armour.setColor(Integer.valueOf(randomColour, 16)); // Colour the boots!
 
-		player.getInventory().setHelmet(boots); // Put the boots on the player.
+		player.getInventory().setBoots(boots); // Put the boots on the player.
 	}
 }

@@ -36,7 +36,7 @@ public class ConjureArmour implements Spell
 	@Override
 	public String getDescription()
 	{
-		return "Protect yourself in some magical armour.";
+		return "Protect yourself in some magical armour for 5 seconds.";
 	}
 
 	@Override

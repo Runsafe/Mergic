@@ -78,10 +78,8 @@ public class ArcaneWave implements Spell
 			position.playEffect(WorldEffect.CRIT, 1, 30, 50); // Play a sparkle at the location.
 
 			for (RunsafePlayer victim : position.getPlayersInRange(1))
-			{
-				victim.damage(6D, player); // Damage the player for 3 hearts.
-				//SpellHandler.killManager.registerAttack(victim, player); // Register the hit.
-			}
+				if (!victim.getName().equals(player.getName()))
+					victim.damage(6D, player); // Damage the player for 3 hearts.
 		}
 	}
 

@@ -12,6 +12,9 @@ import no.runsafe.mergic.magic.SpellHandler;
 import no.runsafe.worldguardbridge.WorldGuardInterface;
 import org.bukkit.Bukkit;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Plugin extends RunsafeConfigurablePlugin
 {
 	@Override
@@ -55,5 +58,19 @@ public class Plugin extends RunsafeConfigurablePlugin
 		mergic.addSubCommand(getInstance(StopGameCommand.class));
 		mergic.addSubCommand(getInstance(CreateSpellBook.class));
 		this.addComponent(mergic);
+
+
+		HashMap<String, Integer> test = new HashMap<String, Integer>();
+		test.put("Kruithne", 55);
+		test.put("cybersplice", 2);
+		test.put("Solonari", 532);
+		test.put("kiiaz", 56);
+		test.put("JettKuso", 20);
+		test.put("Naxanria", 42);
+
+		Map<String, Integer> testSort = MapUtil.sortByValue(test);
+
+		for (Map.Entry<String, Integer> node : testSort.entrySet())
+			this.getComponent(IOutput.class).fine("%s - %d", node.getKey(), node.getValue());
 	}
 }

@@ -68,7 +68,7 @@ public class Plugin extends RunsafeConfigurablePlugin
 		test.put("JettKuso", 20);
 		test.put("Naxanria", 42);
 
-		Map<String, Integer> testSort = MapUtil.sortByValue(test);
+		Map<String, Integer> testSort = MapUtil.limitMap(MapUtil.sortByValue(test), 5);
 
 		for (Map.Entry<String, Integer> node : testSort.entrySet())
 			this.getComponent(IOutput.class).fine("%s - %d", node.getKey(), node.getValue());

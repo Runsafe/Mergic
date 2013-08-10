@@ -2,6 +2,7 @@ package no.runsafe.mergic.magic.spells;
 
 import no.runsafe.framework.api.event.entity.IEntityChangeBlockEvent;
 import no.runsafe.framework.minecraft.*;
+import no.runsafe.framework.minecraft.block.RunsafeBlock;
 import no.runsafe.framework.minecraft.entity.RunsafeEntity;
 import no.runsafe.framework.minecraft.entity.RunsafeFallingBlock;
 import no.runsafe.framework.minecraft.event.entity.RunsafeEntityChangeBlockEvent;
@@ -113,7 +114,7 @@ public class Blizzard implements Spell, IEntityChangeBlockEvent
 					if (player != null)
 					{
 						if (player.getName().equals(victim.getName()))
-							return;
+							continue;
 
 						SpellHandler.killManager.registerAttack(victim, player); // Register the hit for a player.
 					}
@@ -123,7 +124,7 @@ public class Blizzard implements Spell, IEntityChangeBlockEvent
 				}
 			}
 
-			ControlledEntityCleaner.unregisterEntity(entity); // Remove entity from cleaner.
+			ControlledEntityCleaner.unregisterEntity(entity); // Remove entity from cleaner
 
 			try
 			{
@@ -131,7 +132,7 @@ public class Blizzard implements Spell, IEntityChangeBlockEvent
 			}
 			catch (NullPointerException e)
 			{
-				event.getBlock().set(Item.Unavailable.Air); // For some odd reason we hit an NPE, set to air instead.
+				// Can we just ignore this?
 			}
 		}
 	}

@@ -77,7 +77,7 @@ public class ArcaneWave implements Spell
 			position.playEffect(WorldEffect.CRIT, 1, 30, 50); // Play a sparkle at the location.
 			position.Play(Sound.Environment.Fizz, 2, 1); // Play a sound effect for the spell!
 
-			for (RunsafePlayer victim : position.getPlayersInRange(1))
+			for (RunsafePlayer victim : position.getPlayersInRange(2))
 				if (!victim.getName().equals(player.getName()))
 					victim.damage(6D, player); // Damage the player for 3 hearts.
 		}

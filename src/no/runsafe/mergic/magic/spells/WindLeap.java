@@ -50,7 +50,6 @@ public class WindLeap implements Spell
 		player.setVelocity(loc.getDirection().add(new Vector(0, 2, 0)));
 		loc.Play(Sound.Creature.Golem.Death, 2, -1);
 
-
 		// Throw the player forward two seconds later.
 		SpellHandler.scheduler.startSyncTask(new Runnable() {
 			@Override

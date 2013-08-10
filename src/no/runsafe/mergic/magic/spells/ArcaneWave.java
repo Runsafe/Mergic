@@ -52,7 +52,7 @@ public class ArcaneWave implements Spell
 				public void run() {
 					createSpellLine(player, location, number);
 				}
-			}, 5 * current);
+			}, (long) (5 * current));
 			current++;
 		}
 	}

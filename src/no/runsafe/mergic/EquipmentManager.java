@@ -84,8 +84,9 @@ public class EquipmentManager
 		if (inventory == null)
 			return;
 
-		inventory.setChestplate(null);
-		inventory.setLeggings(null);
-		inventory.setHelmet(null);
+		RunsafeMeta air = Item.Unavailable.Air.getItem();
+		inventory.setChestplate(air);
+		inventory.setLeggings(air);
+		inventory.setHelmet(air);
 	}
 }

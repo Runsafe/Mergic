@@ -48,6 +48,9 @@ public class Plugin extends RunsafeConfigurablePlugin
 		this.addComponent(RepulsiveGale.class);
 		//this.addComponent(VolatileCreature.class);
 
+		// Util
+		this.addComponent(ControlledEntityCleaner.class);
+
 		// Commands
 		Command mergic = new Command("mergic", "A collection of commands to control Wizard PvP", null);
 		mergic.addSubCommand(getInstance(StartGameCommand.class));

@@ -110,16 +110,11 @@ public class HellStorm implements Spell, IEntityChangeBlockEvent
 				location.playEffect(WorldEffect.LAVA, 1, 20, 50); // Play a splash.
 				for (RunsafePlayer victim : location.getPlayersInRange(4))
 				{
-					if (player != null)
-					{
-						if (player.getName().equals(victim.getName()))
-							continue;
-
-						SpellHandler.killManager.registerAttack(victim, player); // Register the hit for a player.
-					}
+					if (player != null && player.getName().equals(victim.getName()))
+						continue;
 
 					victim.setFireTicks(5 * 20); // Set the player on fire for 5 seconds
-					victim.damage(6D); // Three hearts of damage.
+					victim.damage(6D, player); // Three hearts of damage.
 				}
 			}
 

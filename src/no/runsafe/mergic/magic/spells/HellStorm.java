@@ -108,6 +108,7 @@ public class HellStorm implements Spell, IEntityChangeBlockEvent
 				RunsafePlayer player = RunsafeServer.Instance.getPlayerExact(blocks.get(entityID));
 
 				location.playEffect(WorldEffect.LAVA, 1, 20, 50); // Play a splash.
+				location.Play(Sound.Environment.Explode, 2, 1);
 				for (RunsafePlayer victim : location.getPlayersInRange(4))
 				{
 					if (player != null && player.getName().equals(victim.getName()))

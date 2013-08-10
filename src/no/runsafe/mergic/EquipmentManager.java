@@ -14,7 +14,7 @@ public class EquipmentManager
 	{
 		// Get a random colour, how exciting.
 		String randomColour = String.format(
-				"#%02x%02x%02x",
+				"%02x%02x%02x",
 				(int)(Math.random() * 255),
 				(int)(Math.random() * 255),
 				(int)(Math.random() * 255)

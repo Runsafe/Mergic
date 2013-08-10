@@ -124,13 +124,14 @@ public class Blizzard implements Spell, IEntityChangeBlockEvent
 			}
 
 			ControlledEntityCleaner.unregisterEntity(entity); // Remove entity from cleaner.
+
 			try
 			{
-				event.cancel(); // Cancel the event, we don't want the block to turn to ice.
+				event.cancel(); // Try to cancel the event
 			}
 			catch (NullPointerException e)
 			{
-				// Fail silently.
+				event.getBlock().set(Item.Unavailable.Air); // For some odd reason we hit an NPE, set to air instead.
 			}
 		}
 	}

@@ -111,16 +111,11 @@ public class Blizzard implements Spell, IEntityChangeBlockEvent
 
 				for (RunsafePlayer victim : location.getPlayersInRange(4))
 				{
-					if (player != null)
-					{
-						if (player.getName().equals(victim.getName()))
-							continue;
-
-						SpellHandler.killManager.registerAttack(victim, player); // Register the hit for a player.
-					}
+					if (player != null && player.getName().equals(victim.getName()))
+						continue;
 
 					Buff.Utility.Movement.DecreaseSpeed.duration(10).applyTo(victim); // Slow the player.
-					victim.damage(6D); // Three hearts of damage.
+					victim.damage(6D, player); // Three hearts of damage.
 				}
 			}
 

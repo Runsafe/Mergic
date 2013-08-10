@@ -48,6 +48,7 @@ public class Plugin extends RunsafeConfigurablePlugin
 		this.addComponent(RepulsiveGale.class);
 		this.addComponent(Blizzard.class);
 		this.addComponent(HellStorm.class);
+		this.addComponent(ConjureArmour.class);
 		//this.addComponent(VolatileCreature.class);
 
 		// Util

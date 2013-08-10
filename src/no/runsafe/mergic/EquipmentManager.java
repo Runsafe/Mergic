@@ -2,6 +2,7 @@ package no.runsafe.mergic;
 
 import no.runsafe.framework.minecraft.Enchant;
 import no.runsafe.framework.minecraft.Item;
+import no.runsafe.framework.minecraft.inventory.RunsafePlayerInventory;
 import no.runsafe.framework.minecraft.item.meta.RunsafeLeatherArmor;
 import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
 import no.runsafe.framework.minecraft.player.RunsafePlayer;
@@ -32,5 +33,59 @@ public class EquipmentManager
 	public static void repairBoots(RunsafePlayer player)
 	{
 		player.getInventory().getBoots().setDurability((short) 0);
+	}
+
+	private static int getArmourColour(RunsafePlayer player)
+	{
+		RunsafeMeta boots = player.getInventory().getBoots();
+		RunsafeLeatherArmor armour = (RunsafeLeatherArmor) boots;
+
+		return armour.getColor();
+	}
+
+	public static void applyFullProtection(RunsafePlayer player)
+	{
+		RunsafePlayerInventory inventory = player.getInventory();
+		if (inventory == null)
+			return;
+
+		RunsafeMeta helmet = Item.Combat.Helmet.Leather.getItem();
+		RunsafeMeta chest = Item.Combat.Helmet.Leather.getItem();
+		RunsafeMeta leggings = Item.Combat.Leggings.Leather.getItem();
+
+		helmet.setDisplayName("Conjured Helmet");
+		chest.setDisplayName("Conjured Chestplate");
+		leggings.setDisplayName("Conjured Leggings");
+
+		RunsafeLeatherArmor leatherHelmet = (RunsafeLeatherArmor) helmet;
+		RunsafeLeatherArmor leatherChest = (RunsafeLeatherArmor) chest;
+		RunsafeLeatherArmor leatherLeggings = (RunsafeLeatherArmor) leggings;
+
+		int colour = getArmourColour(player);
+		leatherHelmet.setColor(colour);
+		leatherChest.setColor(colour);
+		leatherLeggings.setColor(colour);
+
+		Enchant.EnvironmentalProtection.applyTo(leatherHelmet).applyTo(leatherChest).applyTo(leatherLeggings);
+		Enchant.FireProtection.applyTo(leatherHelmet).applyTo(leatherChest).applyTo(leatherLeggings);
+		Enchant.Durability.applyTo(leatherHelmet).applyTo(leatherChest).applyTo(leatherLeggings);
+		Enchant.ProjectileProtection.applyTo(leatherHelmet).applyTo(leatherChest).applyTo(leatherLeggings);
+
+		inventory.setHelmet(leatherHelmet);
+		inventory.setChestplate(leatherChest);
+		inventory.setLeggings(leatherLeggings);
+
+		player.updateInventory();
+	}
+
+	public static void removeFullProtection(RunsafePlayer player)
+	{
+		RunsafePlayerInventory inventory = player.getInventory();
+		if (inventory == null)
+			return;
+
+		inventory.setChestplate(null);
+		inventory.setLeggings(null);
+		inventory.setHelmet(null);
 	}
 }

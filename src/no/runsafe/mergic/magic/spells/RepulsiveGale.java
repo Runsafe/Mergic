@@ -47,7 +47,7 @@ public class RepulsiveGale implements Spell
 		if (playerLocation == null)
 			return; // Drop here if we have a problem with the players location;
 
-		for (RunsafePlayer victim : playerLocation.getPlayersInRange(20))
+		for (RunsafePlayer victim : playerLocation.getPlayersInRange(15))
 		{
 			// This is a test, it will act in opposite to what we want, but testing!
 			if (!victim.getName().equals(player.getName()))

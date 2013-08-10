@@ -42,6 +42,6 @@ public class BasicHeal implements Spell
 	public void onCast(RunsafePlayer player)
 	{
 		player.heal(6); // Heal the player for 3 hearts.
-		player.getLocation().playEffect(WorldEffect.HEART, 1, 4, 50); // Play a heart effect for healing!
+		player.getEyeLocation().playEffect(WorldEffect.HEART, 1, 4, 50); // Play a heart effect for healing!
 	}
 }

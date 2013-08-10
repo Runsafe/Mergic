@@ -49,7 +49,7 @@ public class Heal implements Spell
 				@Override
 				public void run() {
 					player.heal(2); // Heal one heart of damage
-					player.getLocation().playEffect(WorldEffect.HEART, 1, 2, 50); // Play heart effect.
+					player.getEyeLocation().playEffect(WorldEffect.HEART, 1, 2, 50); // Play heart effect.
 				}
 			}, current);
 			current++;

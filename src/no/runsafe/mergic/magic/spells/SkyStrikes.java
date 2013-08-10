@@ -42,10 +42,16 @@ public class SkyStrikes implements Spell
 			if (entity instanceof RunsafePlayer)
 			{
 				RunsafeLocation strikeSpot = entity.getLocation().top(); // Get the strike location.
-				strikeSpot.getWorld().strikeLightning(strikeSpot); // Strike the spot with lightning.
 
 				if (entity.getLocation().distance(strikeSpot) <= 2)
+				{
+					entity.strikeWithLightning(false); // Strike the player with lightning.
 					SpellHandler.killManager.registerAttack((RunsafePlayer) entity, player); // Register the attack.
+				}
+				else
+				{
+					strikeSpot.getWorld().strikeLightningEffect(strikeSpot); // Strike with only the effect.
+				}
 			}
 		}
 	}

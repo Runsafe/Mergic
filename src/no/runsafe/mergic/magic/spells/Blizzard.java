@@ -48,7 +48,7 @@ public class Blizzard implements Spell, IEntityChangeBlockEvent
 	}
 
 	@Override
-	public void onCast(final RunsafePlayer player)
+	public void onCast(RunsafePlayer player)
 	{
 		int radius = 5; // Will be doubled in a square radius.
 		RunsafeLocation location = player.getLocation();
@@ -56,8 +56,6 @@ public class Blizzard implements Spell, IEntityChangeBlockEvent
 
 		if (location == null || world == null)
 			return; // If we've got an invalid location, cancel.
-
-		player.sendColouredMessage("We have valid location objects.");
 
 		final String playerName = player.getName();
 
@@ -83,18 +81,13 @@ public class Blizzard implements Spell, IEntityChangeBlockEvent
 
 				Blizzard.blocks.put(block.getEntityId(), playerName); // Track the block.
 				ControlledEntityCleaner.registerEntity(block); // Register for clean-up.
-				player.sendColouredMessage("Tick!");
-				player.sendColouredMessage(new RunsafeLocation(world, x, high, z).toString());
 			}
 		}, 5L, 5L);
-
-		player.sendColouredMessage("Repeating ticker registered: " + ticker);
 
 		SpellHandler.scheduler.startSyncTask(new Runnable() {
 			@Override
 			public void run() {
 				SpellHandler.scheduler.cancelTask(ticker); // Cancel the blizzard.
-				player.sendColouredMessage("Cancelling ticker now.");
 			}
 		}, 10);
 	}

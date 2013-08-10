@@ -35,7 +35,7 @@ public class BasicHeal implements Spell
 	@Override
 	public void onCast(RunsafePlayer player)
 	{
-		player.setHealth(player.getHealth() + 6); // Heal the player for 3 hearts.
+		player.heal(6); // Heal the player for 3 hearts.
 		player.getLocation().playEffect(WorldEffect.HEART, 1, 4, 50); // Play a heart effect for healing!
 	}
 }

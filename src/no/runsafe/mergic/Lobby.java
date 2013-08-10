@@ -5,6 +5,7 @@ import no.runsafe.framework.api.IOutput;
 import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
 import no.runsafe.framework.minecraft.RunsafeLocation;
 import no.runsafe.framework.minecraft.RunsafeWorld;
+import no.runsafe.framework.minecraft.Sound;
 import no.runsafe.framework.minecraft.player.RunsafePlayer;
 import no.runsafe.worldguardbridge.WorldGuardInterface;
 
@@ -105,6 +106,11 @@ public class Lobby implements IConfigurationChanged
 	public String getLobbyRegionString()
 	{
 		return String.format("%s-%s", this.lobbyWorld.getName(), this.lobbyRegion);
+	}
+
+	public void playStartSound()
+	{
+		this.location.Play(Sound.Creature.Wither.Spawn, 1000, 0); // Play a gong like sound when the match starts.
 	}
 
 	private boolean lobbySetup;

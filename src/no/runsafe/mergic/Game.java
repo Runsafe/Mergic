@@ -125,6 +125,7 @@ public class Game implements IConfigurationChanged
 	{
 		// Teleport all the players from the lobby into the arena.
 		this.arena.teleportPlayersIntoArena(this.lobby.getPlayersInLobby());
+		this.lobby.playStartSound(); // Play that funky gong, white boy!
 	}
 
 	@Override

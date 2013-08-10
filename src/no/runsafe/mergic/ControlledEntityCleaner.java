@@ -50,7 +50,7 @@ public class ControlledEntityCleaner implements IPluginDisabled
 		{
 			String worldName = world.getName();
 			if (entities.containsKey(worldName)) // Check if we have a container for this world.
-				entities.get(worldName).remove(entity.getEntityId()); // Remove the entity.
+				entities.get(worldName).remove((Object) entity.getEntityId()); // Remove the entity.
 		}
 	}
 

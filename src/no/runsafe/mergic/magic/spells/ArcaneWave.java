@@ -59,8 +59,19 @@ public class ArcaneWave implements Spell
 
 	private void createSpellLine(RunsafePlayer player, RunsafeLocation location, int step)
 	{
-		Vector vector = location.getDirection();
-		player.sendColouredMessage("%f, %f, %f", vector.getX(), vector.getY(), vector.getZ());
+		Vector viewVector = location.getDirection();
+		for (int[] node : this.offsets)
+		{
+			RunsafeLocation position = new RunsafeLocation(
+					location.getWorld(),
+					(viewVector.getX() * step) * node[0],
+					location.getY(),
+					(viewVector.getZ() * step) * node[1]
+			); // Get the relative position, hopefully.
+
+			position.offset(0.5D, 0.5D, 0.5D); // Offset to centre of the block.
+			position.playEffect(WorldEffect.CRIT, 1, 30, 50); // Play a sparkle at the location.
+		}
 	}
 
 	private int[][] offsets = {

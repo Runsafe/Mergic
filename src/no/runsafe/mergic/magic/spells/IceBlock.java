@@ -27,7 +27,7 @@ public class IceBlock implements Spell
 	@Override
 	public MagicSchool getSchool()
 	{
-		return MagicSchool.WATER;
+		return MagicSchool.FROST;
 	}
 
 	@Override

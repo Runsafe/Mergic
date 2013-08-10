@@ -43,8 +43,8 @@ public class ArcaneWave implements Spell
 		if (location == null)
 			return;
 
-		int current = 1;
-		while (current < 11)
+		int current = 2;
+		while (current < 22)
 		{
 			final int number = current;
 			SpellHandler.scheduler.startSyncTask(new Runnable() {

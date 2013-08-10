@@ -74,7 +74,7 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 		RunsafePlayer player = event.getPlayer();
 
 		// Check the player is registered as playing the game.
-		if (this.arena.playerIsInGame(player))
+		if (this.arena.playerIsInGame(player) && !this.graveyard.playerIsInGraveyard(player))
 		{
 			RunsafeMeta item = event.getItemStack();
 			if (item == null)

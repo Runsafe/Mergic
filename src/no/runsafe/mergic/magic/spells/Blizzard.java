@@ -70,8 +70,11 @@ public class Blizzard implements Spell, IEntityChangeBlockEvent
 		final int ticker = SpellHandler.scheduler.startSyncRepeatingTask(new Runnable() {
 			@Override
 			public void run() {
-				int x = random.nextInt(lowX - highX + 1) + lowX;
-				int z = random.nextInt(lowZ - highZ + 1) + lowZ;
+				//int x = lowX + (int)(Math.random() * ((highX - lowX) + 1));
+				//int z = lowZ + (int)(Math.random() * ((highZ - lowZ) + 1));
+
+				int x = random.nextInt(Math.abs(lowX) + Math.abs(highX)) - Math.abs(highX);
+				int z = random.nextInt(Math.abs(lowZ) + Math.abs(highZ)) - Math.abs(highZ);
 
 				// Spawn a falling ice block randomly within the radius.
 				RunsafeFallingBlock block = world.spawnFallingBlock(

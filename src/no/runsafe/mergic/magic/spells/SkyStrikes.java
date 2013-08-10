@@ -1,5 +1,6 @@
 package no.runsafe.mergic.magic.spells;
 
+import no.runsafe.framework.minecraft.RunsafeLocation;
 import no.runsafe.framework.minecraft.entity.RunsafeEntity;
 import no.runsafe.framework.minecraft.player.RunsafePlayer;
 import no.runsafe.mergic.magic.MagicSchool;
@@ -40,8 +41,11 @@ public class SkyStrikes implements Spell
 		{
 			if (entity instanceof RunsafePlayer)
 			{
-				entity.strikeWithLightning(false); // Hit the player with lightning.
-				SpellHandler.killManager.registerAttack((RunsafePlayer) entity, player); // Register the attack.
+				RunsafeLocation strikeSpot = entity.getLocation().top(); // Get the strike location.
+				strikeSpot.getWorld().strikeLightning(strikeSpot); // Strike the spot with lightning.
+
+				if (entity.getLocation().distance(strikeSpot) <= 2)
+					SpellHandler.killManager.registerAttack((RunsafePlayer) entity, player); // Register the attack.
 			}
 		}
 	}

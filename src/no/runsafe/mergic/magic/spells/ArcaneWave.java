@@ -40,33 +40,12 @@ public class ArcaneWave implements Spell
 	}
 
 	@Override
-	public void onCast(RunsafePlayer player)
+	public void onCast(final RunsafePlayer player)
 	{
 		final RunsafeLocation location = player.getLocation();
 		if (location == null)
 			return;
 
-		try
-		{
-			HashMap<String, Object> data = new HashMap<String, Object>();
-			data.put("a", WorldEffect.CRIT.getName());
-			data.put("b", (float) location.getX());
-			data.put("c", (float) location.getY());
-			data.put("d", (float) location.getZ());
-			data.put("e", 0F);
-			data.put("f", 0F);
-			data.put("g", 0F);
-			data.put("h", 1F);
-			data.put("i", 10);
-
-			player.sendPacket(PacketHelper.stuffPacket(PacketHelper.getPacket("Packet63WorldParticles"), data));
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-
-		/*return;
 		int current = 1;
 		while (current < 11)
 		{
@@ -74,14 +53,14 @@ public class ArcaneWave implements Spell
 			SpellHandler.scheduler.startSyncTask(new Runnable() {
 				@Override
 				public void run() {
-					createSpellLine(location, number);
+					createSpellLine(player, location, number);
 				}
 			}, 5 * current);
 			current++;
-		}*/
+		}
 	}
 
-	private void createSpellLine(RunsafeLocation location, int step)
+	private void createSpellLine(RunsafePlayer player, RunsafeLocation location, int step)
 	{
 		RunsafeWorld world = location.getWorld();
 		for (int[] node : this.offsets)
@@ -91,7 +70,14 @@ public class ArcaneWave implements Spell
 							new Vector(node[0] * step, 0, node[1] * step)
 					).toLocation(world.getRaw())
 			);
-			//world.playEffect(position, Effect.);
+			position.offset(0.5D, 0.5D, 0.5D); // Offset to the center of the block.
+			location.playEffect(WorldEffect.CRIT, 1, 10, 30); // Play a sparkle at that location.
+
+			for (RunsafePlayer victim : position.getPlayersInRange(1))
+			{
+				victim.damage(8D); // Hit the player for 4 hearts (8 halves)
+				SpellHandler.killManager.registerAttack(victim, player); // Register the hit for the attacker.
+			}
 		}
 	}
 

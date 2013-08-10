@@ -6,7 +6,7 @@ public enum SpellType
 {
 	PROJECTILE("Left click to attack with this wand.", Item.Materials.Stick, InteractType.LEFT_CLICK),
 	GENERIC("Right click to activate this spell.", Item.Special.Crafted.EnchantedBook, InteractType.RIGHT_CLICK),
-	WARD("Right click to activiate this protection/ward.", Item.Special.Crafted.EnchantedBook, InteractType.RIGHT_CLICK),
+	WARD("Right click to activate this protection/ward.", Item.Special.Crafted.EnchantedBook, InteractType.RIGHT_CLICK),
 	GUARDIAN("Right click to summon this guardian.", Item.Special.Crafted.EnchantedBook, InteractType.RIGHT_CLICK);
 
 	private SpellType(String text, Item castItem, InteractType type)

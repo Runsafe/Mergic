@@ -69,7 +69,7 @@ public class ArcaneWave implements Spell
 					(viewVector.getZ() * step) * node[1]
 			); // Get the relative position, hopefully.
 
-			position.offset(0.5D, 0.5D, 0.5D); // Offset to centre of the block.
+			position.offset(0.5D, 0, 0.5D); // Offset to centre of the block.
 			position.playEffect(WorldEffect.CRIT, 1, 30, 50); // Play a sparkle at the location.
 		}
 	}

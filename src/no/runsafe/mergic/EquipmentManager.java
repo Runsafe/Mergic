@@ -50,7 +50,7 @@ public class EquipmentManager
 			return;
 
 		RunsafeMeta helmet = Item.Combat.Helmet.Leather.getItem();
-		RunsafeMeta chest = Item.Combat.Helmet.Leather.getItem();
+		RunsafeMeta chest = Item.Combat.Chestplate.Leather.getItem();
 		RunsafeMeta leggings = Item.Combat.Leggings.Leather.getItem();
 
 		helmet.setDisplayName("Conjured Helmet");

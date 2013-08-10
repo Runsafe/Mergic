@@ -78,10 +78,12 @@ public class Blizzard implements Spell, IEntityChangeBlockEvent
 						Item.BuildingBlock.Ice.getType(),
 						(byte) 0
 				);
+				block.setDropItem(false);
 
 				Blizzard.blocks.put(block.getEntityId(), playerName); // Track the block.
 				ControlledEntityCleaner.registerEntity(block); // Register for clean-up.
 				player.sendColouredMessage("Tick!");
+				player.sendColouredMessage(new RunsafeLocation(world, x, high, z).toString());
 			}
 		}, 10L, 10L);
 

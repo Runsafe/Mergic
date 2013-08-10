@@ -74,8 +74,8 @@ public class ArcaneWave implements Spell
 
 			for (RunsafePlayer victim : position.getPlayersInRange(1))
 			{
-				victim.damage(6D); // Damage the player for 3 hearts.
-				SpellHandler.killManager.registerAttack(victim, player); // Register the hit.
+				victim.damage(6D, player); // Damage the player for 3 hearts.
+				//SpellHandler.killManager.registerAttack(victim, player); // Register the hit.
 			}
 		}
 	}

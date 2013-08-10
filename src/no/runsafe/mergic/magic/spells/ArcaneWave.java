@@ -1,6 +1,5 @@
 package no.runsafe.mergic.magic.spells;
 
-import no.runsafe.framework.internal.packets.PacketHelper;
 import no.runsafe.framework.minecraft.RunsafeLocation;
 import no.runsafe.framework.minecraft.RunsafeWorld;
 import no.runsafe.framework.minecraft.WorldEffect;
@@ -10,8 +9,6 @@ import no.runsafe.mergic.magic.Spell;
 import no.runsafe.mergic.magic.SpellHandler;
 import no.runsafe.mergic.magic.SpellType;
 import org.bukkit.util.Vector;
-
-import java.util.HashMap;
 
 public class ArcaneWave implements Spell
 {

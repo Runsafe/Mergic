@@ -59,7 +59,7 @@ public class Blizzard implements Spell, IEntityChangeBlockEvent
 		final String playerName = player.getName();
 
 		final int highX = location.getBlockX() + radius;
-		final int highZ = location.getBlockZ() + radius;
+		final int highZ = location.getBlockX() + radius;
 		final int lowX = location.getBlockZ() - radius;
 		final int lowZ = location.getBlockZ() - radius;
 		final int high = location.getBlockY() + 20;

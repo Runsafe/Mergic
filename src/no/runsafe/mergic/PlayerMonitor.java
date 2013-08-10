@@ -4,6 +4,7 @@ import no.runsafe.framework.api.event.player.*;
 import no.runsafe.framework.api.event.plugin.IPluginDisabled;
 import no.runsafe.framework.minecraft.event.entity.RunsafeEntityDamageEvent;
 import no.runsafe.framework.minecraft.event.player.*;
+import no.runsafe.framework.minecraft.inventory.RunsafePlayerInventory;
 import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
 import no.runsafe.framework.minecraft.player.RunsafePlayer;
 import no.runsafe.mergic.magic.*;
@@ -32,13 +33,21 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 		{
 			// See if the region the player left is the arena region.
 			Map<String, String> data = (Map<String, String>) event.getData();
-			if (arena.getArenaRegionString().equals(String.format("%s-%s", data.get("world"), data.get("region"))))
+			String eventRegion = String.format("%s-%s", data.get("world"), data.get("region"));
+			if (arena.getArenaRegionString().equals(eventRegion))
 			{
 				RunsafePlayer player = event.getPlayer();
 
 				// Check if the player is actually in the game.
 				if (arena.playerIsInGame(player))
 					this.game.removePlayerFromGame(player); // Throw them from the game.
+			}
+			else if (lobby.getLobbyRegionString().equals(eventRegion))
+			{
+				RunsafePlayer player = event.getPlayer();
+				player.getInventory().clear(); // Clear the players inventory.
+				this.spellHandler.givePlayerAllSpells(player); // Give the player all spells.
+				EquipmentManager.givePlayerWizardBoots(player); // Give the player some magic boots!
 			}
 		}
 	}

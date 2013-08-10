@@ -6,6 +6,7 @@ import no.runsafe.framework.minecraft.player.RunsafePlayer;
 import no.runsafe.mergic.KillManager;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -50,6 +51,13 @@ public class SpellHandler
 			return this.spellList.get(spellName);
 
 		return null;
+	}
+
+	public void givePlayerAllSpells(RunsafePlayer player)
+	{
+		// Loop every spell in the handler and give it to the player.
+		for (Spell spell : this.spellList.values())
+			this.givePlayerSpellBook(player, spell);
 	}
 
 	private HashMap<String, Spell> spellList = new HashMap<String, Spell>();

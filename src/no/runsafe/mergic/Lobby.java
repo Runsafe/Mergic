@@ -102,6 +102,11 @@ public class Lobby implements IConfigurationChanged
 			player.teleport(location);
 	}
 
+	public String getLobbyRegionString()
+	{
+		return String.format("%s-%s", this.lobbyWorld.getName(), this.lobbyRegion);
+	}
+
 	private boolean lobbySetup;
 	private RunsafeWorld lobbyWorld;
 	private String lobbyRegion;

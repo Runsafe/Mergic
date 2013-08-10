@@ -1,5 +1,6 @@
 package no.runsafe.mergic.magic.spells;
 
+import no.runsafe.framework.minecraft.Sound;
 import no.runsafe.framework.minecraft.entity.ProjectileEntity;
 import no.runsafe.framework.minecraft.player.RunsafePlayer;
 import no.runsafe.mergic.magic.MagicSchool;
@@ -52,6 +53,7 @@ public class ArrowBarrage implements Spell
 				@Override
 				public void run() {
 					player.Launch(ProjectileEntity.Arrow);
+					player.getLocation().Play(Sound.Creature.Enderman.Teleport, 10, 2); // Pew pew
 				}
 			}, time);
 			current++;

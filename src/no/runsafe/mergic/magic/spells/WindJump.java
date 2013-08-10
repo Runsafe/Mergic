@@ -1,5 +1,7 @@
 package no.runsafe.mergic.magic.spells;
 
+import no.runsafe.framework.minecraft.RunsafeLocation;
+import no.runsafe.framework.minecraft.Sound;
 import no.runsafe.framework.minecraft.player.RunsafePlayer;
 import no.runsafe.mergic.magic.MagicSchool;
 import no.runsafe.mergic.magic.Spell;
@@ -40,6 +42,8 @@ public class WindJump implements Spell
 	@Override
 	public void onCast(RunsafePlayer player)
 	{
-		player.setVelocity(player.getLocation().getDirection().multiply(3));
+		RunsafeLocation playerLoc = player.getLocation();
+		player.setVelocity(playerLoc.getDirection().multiply(3));
+		playerLoc.Play(Sound.Player.Breath, 10, -1);
 	}
 }

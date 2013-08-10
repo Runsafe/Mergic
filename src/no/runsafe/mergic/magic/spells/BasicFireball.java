@@ -1,5 +1,6 @@
 package no.runsafe.mergic.magic.spells;
 
+import no.runsafe.framework.minecraft.Sound;
 import no.runsafe.framework.minecraft.entity.ProjectileEntity;
 import no.runsafe.framework.minecraft.player.RunsafePlayer;
 import no.runsafe.mergic.magic.MagicSchool;
@@ -42,5 +43,6 @@ public class BasicFireball implements Spell
 	public void onCast(RunsafePlayer player)
 	{
 		player.Fire(ProjectileEntity.SmallFireball);
+		player.getLocation().Play(Sound.Creature.Ghast.Fireball, 10, 1); // Play a fireball sound.
 	}
 }

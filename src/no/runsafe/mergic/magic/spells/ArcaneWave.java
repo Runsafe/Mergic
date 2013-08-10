@@ -1,6 +1,7 @@
 package no.runsafe.mergic.magic.spells;
 
 import no.runsafe.framework.minecraft.RunsafeLocation;
+import no.runsafe.framework.minecraft.Sound;
 import no.runsafe.framework.minecraft.WorldEffect;
 import no.runsafe.framework.minecraft.player.RunsafePlayer;
 import no.runsafe.mergic.magic.MagicSchool;
@@ -74,6 +75,7 @@ public class ArcaneWave implements Spell
 
 			position.offset(0.5D, 0, 0.5D); // Offset to centre of the block.
 			position.playEffect(WorldEffect.CRIT, 1, 30, 50); // Play a sparkle at the location.
+			position.Play(Sound.Environment.Fizz, 10, 1); // Play a sound effect for the spell!
 
 			for (RunsafePlayer victim : position.getPlayersInRange(1))
 				if (!victim.getName().equals(player.getName()))

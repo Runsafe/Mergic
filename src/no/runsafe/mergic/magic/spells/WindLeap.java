@@ -1,6 +1,8 @@
 package no.runsafe.mergic.magic.spells;
 
 
+import no.runsafe.framework.minecraft.RunsafeLocation;
+import no.runsafe.framework.minecraft.Sound;
 import no.runsafe.framework.minecraft.player.RunsafePlayer;
 import no.runsafe.mergic.magic.MagicSchool;
 import no.runsafe.mergic.magic.Spell;
@@ -44,13 +46,18 @@ public class WindLeap implements Spell
 	public void onCast(final RunsafePlayer player)
 	{
 		// Throw the player in the air to begin.
-		player.setVelocity(player.getLocation().getDirection().add(new Vector(0, 2, 0)));
+		RunsafeLocation loc = player.getLocation();
+		player.setVelocity(loc.getDirection().add(new Vector(0, 2, 0)));
+		loc.Play(Sound.Creature.Golem.Death, 10, -1);
+
 
 		// Throw the player forward two seconds later.
 		SpellHandler.scheduler.startSyncTask(new Runnable() {
 			@Override
 			public void run() {
-				player.setVelocity(player.getLocation().getDirection().multiply(3));
+				RunsafeLocation playerLoc = player.getLocation();
+				player.setVelocity(playerLoc.getDirection().multiply(3));
+				playerLoc.Play(Sound.Player.Breath, 10, -1);
 			}
 		}, 1);
 	}

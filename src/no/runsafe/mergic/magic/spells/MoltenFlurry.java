@@ -1,6 +1,7 @@
 package no.runsafe.mergic.magic.spells;
 
 import no.runsafe.framework.minecraft.RunsafeLocation;
+import no.runsafe.framework.minecraft.Sound;
 import no.runsafe.framework.minecraft.entity.ProjectileEntity;
 import no.runsafe.framework.minecraft.entity.RunsafeEntity;
 import no.runsafe.framework.minecraft.player.RunsafePlayer;
@@ -73,6 +74,7 @@ public class MoltenFlurry implements Spell
 		{
 			RunsafeEntity entity = player.Launch(ProjectileEntity.SmallFireball);
 			entity.teleport(location);
+			location.Play(Sound.Creature.Ghast.Fireball, 10, 1);
 			entity.setVelocity(this.fireVectors[current]);
 			current++;
 		}

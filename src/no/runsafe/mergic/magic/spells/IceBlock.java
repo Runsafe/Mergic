@@ -2,6 +2,7 @@ package no.runsafe.mergic.magic.spells;
 
 import no.runsafe.framework.minecraft.Item;
 import no.runsafe.framework.minecraft.RunsafeLocation;
+import no.runsafe.framework.minecraft.Sound;
 import no.runsafe.framework.minecraft.block.RunsafeBlock;
 import no.runsafe.framework.minecraft.player.RunsafePlayer;
 import no.runsafe.mergic.magic.MagicSchool;
@@ -67,11 +68,13 @@ public class IceBlock implements Spell
 	private void spawnIceBlock(RunsafeLocation location)
 	{
 		this.setFormation(location, Item.Unavailable.Air, Item.BuildingBlock.Ice);
+		location.Play(Sound.Environment.Swim, 10, -1); // Ice form sound? Kind of.
 	}
 
 	private void despawnIceBlock(RunsafeLocation location)
 	{
 		this.setFormation(location, Item.BuildingBlock.Ice, Item.Unavailable.Air);
+		location.Play(Sound.Environment.Glass, 10, -1); // Play ice breaking sound.
 	}
 
 	private void setFormation(RunsafeLocation location, Item previous, Item next)

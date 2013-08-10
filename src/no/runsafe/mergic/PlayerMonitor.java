@@ -77,6 +77,7 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 			player.setHealth(20D); // Heal the player to full.
 			player.setFireTicks(0); // Stop the fire from burning if they are.
 			player.setFoodLevel(20); // Fill the hunger bar back to full.
+			EquipmentManager.repairBoots(player); // Repair the players boots.
 
 			// If we can confirm they were killed, tell them who by, otherwise default message.
 			RunsafePlayer killer = this.killManager.getKiller(player);

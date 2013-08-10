@@ -28,4 +28,9 @@ public class EquipmentManager
 
 		player.getInventory().setBoots(boots); // Put the boots on the player.
 	}
+
+	public static void repairBoots(RunsafePlayer player)
+	{
+		player.getInventory().getBoots().setDurability((short) 65);
+	}
 }

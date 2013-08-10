@@ -65,11 +65,16 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 			player.setFoodLevel(20); // Fill the hunger bar back to full.
 
 			// If we can confirm they were killed, tell them who by, otherwise default message.
-			String killer = this.killManager.getKiller(player);
+			RunsafePlayer killer = this.killManager.getKiller(player);
 			if (killer == null)
+			{
 				player.sendColouredMessage("&cYou have died! You will respawn shortly.");
+			}
 			else
-				player.sendColouredMessage("&cYou were killed by %s! You will respawn shortly.", killer);
+			{
+				player.sendColouredMessage("&cYou were killed by %s! You will respawn shortly.", killer.getName());
+				killer.sendColouredMessage("&aYou killed killed %s, +1 point.", player.getName());
+			}
 
 			this.killManager.OnPlayerKilled(player); // Trigger event in kill manager to tally score.
 		}

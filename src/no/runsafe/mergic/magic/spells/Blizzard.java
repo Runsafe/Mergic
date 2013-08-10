@@ -2,7 +2,6 @@ package no.runsafe.mergic.magic.spells;
 
 import no.runsafe.framework.api.event.entity.IEntityChangeBlockEvent;
 import no.runsafe.framework.minecraft.*;
-import no.runsafe.framework.minecraft.block.RunsafeBlock;
 import no.runsafe.framework.minecraft.entity.RunsafeEntity;
 import no.runsafe.framework.minecraft.entity.RunsafeFallingBlock;
 import no.runsafe.framework.minecraft.event.entity.RunsafeEntityChangeBlockEvent;
@@ -13,7 +12,6 @@ import no.runsafe.mergic.magic.Spell;
 import no.runsafe.mergic.magic.SpellHandler;
 import no.runsafe.mergic.magic.SpellType;
 
-import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Blizzard implements Spell, IEntityChangeBlockEvent

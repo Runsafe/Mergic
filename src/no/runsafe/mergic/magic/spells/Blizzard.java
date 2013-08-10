@@ -86,7 +86,7 @@ public class Blizzard implements Spell, IEntityChangeBlockEvent
 				player.sendColouredMessage("Tick!");
 				player.sendColouredMessage(new RunsafeLocation(world, x, high, z).toString());
 			}
-		}, 10L, 10L);
+		}, 5L, 5L);
 
 		player.sendColouredMessage("Repeating ticker registered: " + ticker);
 
@@ -117,7 +117,7 @@ public class Blizzard implements Spell, IEntityChangeBlockEvent
 				location.playEffect(WorldEffect.SPLASH, 1, 20, 50); // Play a splash.
 				for (RunsafePlayer victim : location.getPlayersInRange(2))
 				{
-					Buff.Utility.Movement.DecreaseSpeed.duration(5).applyTo(victim); // Slow the player.
+					Buff.Utility.Movement.DecreaseSpeed.duration(10).applyTo(victim); // Slow the player.
 					victim.damage(6D); // Three hearts of damage.
 
 					if (player != null)

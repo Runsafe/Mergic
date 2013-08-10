@@ -51,10 +51,7 @@ public class KillManager implements IEntityDamageByEntityEvent
 	public void registerAttack(RunsafePlayer victim, RunsafePlayer attacker)
 	{
 		if (!attacker.isVanished() && !victim.isVanished())
-		{
 			this.lastDamage.put(victim.getName(),  attacker.getName());
-			attacker.sendColouredMessage("Registered hit on " + victim.getName());
-		}
 	}
 
 	public void OnPlayerKilled(RunsafePlayer player)

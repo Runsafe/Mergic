@@ -71,11 +71,10 @@ public class ArcaneWave implements Spell
 
 			position.offset(0.5D, 0, 0.5D); // Offset to centre of the block.
 			position.playEffect(WorldEffect.CRIT, 1, 30, 50); // Play a sparkle at the location.
-			player.sendColouredMessage(position.toString());
 		}
 	}
 
 	private int[][] offsets = {
-			{1, 0}, {0, 1}, {0, 1}
+			{1, 0}, {0, 1}, {0, -1}, {-1, 0}
 	};
 }

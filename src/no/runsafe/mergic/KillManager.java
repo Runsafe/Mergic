@@ -74,6 +74,12 @@ public class KillManager implements IEntityDamageByEntityEvent
 		}
 	}
 
+	public String getKiller(RunsafePlayer player)
+	{
+		String playerName = player.getName();
+		return this.lastDamage.containsKey(playerName) ? this.lastDamage.get(playerName) : null;
+	}
+
 	public int getPlayerKills(RunsafePlayer player)
 	{
 		String playerName = player.getName();

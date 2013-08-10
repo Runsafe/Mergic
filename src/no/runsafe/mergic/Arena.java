@@ -117,8 +117,12 @@ public class Arena implements IConfigurationChanged
 		// Note: If a player is in the graveyard, they will also be in the arena as
 		// the graveyard should be a sub-region of the arena if set-up right.
 
+		RunsafeWorld world = player.getWorld();
+		if (world == null)
+			return false;
+
 		// Check if the player is in the correct world, if not we can be sure they are not in the arena.
-		if (!player.getWorld().getName().equals(this.world.getName()))
+		if (!world.getName().equals(this.world.getName()))
 			return false;
 
 		// Grab a list of the regions the player is currently in.

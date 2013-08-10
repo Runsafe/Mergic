@@ -6,6 +6,7 @@ import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
 import no.runsafe.framework.minecraft.player.RunsafePlayer;
 import no.runsafe.mergic.magic.CooldownManager;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Game implements IConfigurationChanged
@@ -103,19 +104,24 @@ public class Game implements IConfigurationChanged
 			// Generate the score list.
 			Map<String, Integer> scores = this.killManager.getScoreList();
 
+			Map<String, Integer> top = new HashMap<String, Integer>();
+			int current = 1;
+			for (Map.Entry<String, Integer> node : scores.entrySet())
+			{
+				if (current == 6)
+					break;
+
+				top.put(node.getKey(), node.getValue());
+				current++;
+			}
+
 			// Loop every player now in the lobby and give them their score and the top 5.
 			for (RunsafePlayer player : this.lobby.getPlayersInLobby())
 			{
 				player.sendColouredMessage("&cThe match has ended!");
-				int current = 1;
-				for (Map.Entry<String, Integer> node : scores.entrySet())
-				{
+				for (Map.Entry<String, Integer> node : top.entrySet())
 					player.sendColouredMessage("%d. &b%s &f- &a%d&f kills.", current, node.getKey(), node.getValue());
-					current++;
 
-					if (current == 5) // We only want to show five players.
-						break;
-				}
 				player.sendColouredMessage("You are currently at &a%d&f kills.", this.killManager.getPlayerKills(player));
 			}
 		}

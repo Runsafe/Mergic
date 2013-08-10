@@ -21,6 +21,7 @@ public class EquipmentManager
 		);
 
 		RunsafeMeta boots = Item.Combat.Boots.Leather.getItem(); // Create some boots.
+		boots.setDisplayName("Wizard Boots"); // Rename the booties!
 		Enchant.FallProtection.power(Enchant.FallProtection.getMaxLevel()).applyTo(boots); // Enchant the boots.
 		RunsafeLeatherArmor armour = (RunsafeLeatherArmor) boots;
 		armour.setColor(Integer.valueOf(randomColour, 16)); // Colour the boots!

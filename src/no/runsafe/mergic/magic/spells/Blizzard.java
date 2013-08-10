@@ -107,7 +107,7 @@ public class Blizzard implements Spell, IEntityChangeBlockEvent
 				RunsafePlayer player = RunsafeServer.Instance.getPlayerExact(blocks.get(entityID));
 
 				location.playEffect(WorldEffect.SPLASH, 1, 20, 50); // Play a splash.
-				for (RunsafePlayer victim : location.getPlayersInRange(2))
+				for (RunsafePlayer victim : location.getPlayersInRange(4))
 				{
 					if (player != null)
 					{

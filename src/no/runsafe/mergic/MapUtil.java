@@ -21,20 +21,4 @@ public class MapUtil
 
 		return result;
 	}
-
-	public static <K, V>Map<K, V> limitMap(Map<K, V> map, int amount)
-	{
-		HashMap<K, V> newMap = new HashMap<K, V>();
-		int curr = 0;
-
-		for (Map.Entry<K, V> node : map.entrySet())
-		{
-			if (curr == amount)
-				return newMap;
-
-			newMap.put(node.getKey(), node.getValue());
-			curr++;
-		}
-		return newMap;
-	}
 }

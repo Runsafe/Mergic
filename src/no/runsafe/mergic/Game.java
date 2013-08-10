@@ -100,18 +100,21 @@ public class Game implements IConfigurationChanged
 
 			// Everything reset, let's give the players now in the lobby a list of what just went down.
 
-			// Generate the top 5 score list.
-			Map<String, Integer> top = this.killManager.getTopWinners(5);
+			// Generate the score list.
+			Map<String, Integer> scores = this.killManager.getScoreList();
 
 			// Loop every player now in the lobby and give them their score and the top 5.
 			for (RunsafePlayer player : this.lobby.getPlayersInLobby())
 			{
 				player.sendColouredMessage("&cThe match has ended!");
 				int current = 1;
-				for (Map.Entry<String, Integer> node : top.entrySet())
+				for (Map.Entry<String, Integer> node : scores.entrySet())
 				{
 					player.sendColouredMessage("%d. &b%s &f- &a%d&f kills.", current, node.getKey(), node.getValue());
 					current++;
+
+					if (current == 5) // We only want to show five players.
+						break;
 				}
 				player.sendColouredMessage("You are currently at &a%d&f kills.", this.killManager.getPlayerKills(player));
 			}

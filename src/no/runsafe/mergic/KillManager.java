@@ -86,9 +86,9 @@ public class KillManager implements IEntityDamageByEntityEvent
 		return this.killCount.containsKey(playerName) ? this.killCount.get(playerName) : 0;
 	}
 
-	public Map<String, Integer> getTopWinners(int amount)
+	public Map<String, Integer> getScoreList()
 	{
-		return MapUtil.limitMap(MapUtil.sortByValue(this.killCount), amount);
+		return MapUtil.sortByValue(this.killCount);
 	}
 
 	private HashMap<String, String> lastDamage = new HashMap<String, String>();

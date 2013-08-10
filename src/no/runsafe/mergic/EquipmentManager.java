@@ -31,6 +31,6 @@ public class EquipmentManager
 
 	public static void repairBoots(RunsafePlayer player)
 	{
-		player.getInventory().getBoots().setDurability((short) 65);
+		player.getInventory().getBoots().setDurability((short) 0);
 	}
 }

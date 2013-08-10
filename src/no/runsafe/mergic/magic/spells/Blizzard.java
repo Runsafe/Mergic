@@ -12,6 +12,7 @@ import no.runsafe.mergic.magic.Spell;
 import no.runsafe.mergic.magic.SpellHandler;
 import no.runsafe.mergic.magic.SpellType;
 
+import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Blizzard implements Spell, IEntityChangeBlockEvent
@@ -69,8 +70,8 @@ public class Blizzard implements Spell, IEntityChangeBlockEvent
 		final int ticker = SpellHandler.scheduler.startSyncRepeatingTask(new Runnable() {
 			@Override
 			public void run() {
-				int x = lowX + (int)(Math.random() * ((highX - lowX) + 1));
-				int z = lowZ + (int)(Math.random() * ((highZ - lowZ) + 1));
+				int x = random.nextInt(lowX - highX + 1) + lowX;
+				int z = random.nextInt(lowZ - highZ + 1) + lowZ;
 
 				// Spawn a falling ice block randomly within the radius.
 				RunsafeFallingBlock block = world.spawnFallingBlock(
@@ -130,4 +131,5 @@ public class Blizzard implements Spell, IEntityChangeBlockEvent
 	}
 
 	private static ConcurrentHashMap<Integer, String> blocks = new ConcurrentHashMap<Integer, String>();
+	final private Random random = new Random();
 }

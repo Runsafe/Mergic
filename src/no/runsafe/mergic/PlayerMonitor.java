@@ -53,6 +53,7 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 				player.getInventory().clear(); // Clear the players inventory.
 				this.spellHandler.givePlayerAllSpells(player); // Give the player all spells.
 				EquipmentManager.givePlayerWizardBoots(player); // Give the player some magic boots!
+				player.setLevel(this.killManager.getPlayerKills(player)); // Update the players level.
 			}
 		}
 	}

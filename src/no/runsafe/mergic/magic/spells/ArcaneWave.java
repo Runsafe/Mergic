@@ -60,7 +60,7 @@ public class ArcaneWave implements Spell
 	private void createSpellLine(RunsafePlayer player, RunsafeLocation location, int step)
 	{
 		Vector vector = location.getDirection();
-		player.sendColouredMessage("%d, %d, %d", vector.getX(), vector.getY(), vector.getZ());
+		player.sendColouredMessage("%f, %f, %f", vector.getX(), vector.getY(), vector.getZ());
 	}
 
 	private int[][] offsets = {

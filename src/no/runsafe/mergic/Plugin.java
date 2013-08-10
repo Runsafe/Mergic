@@ -58,19 +58,5 @@ public class Plugin extends RunsafeConfigurablePlugin
 		mergic.addSubCommand(getInstance(StopGameCommand.class));
 		mergic.addSubCommand(getInstance(CreateSpellBook.class));
 		this.addComponent(mergic);
-
-
-		HashMap<String, Integer> test = new HashMap<String, Integer>();
-		test.put("Kruithne", 55);
-		test.put("cybersplice", 2);
-		test.put("Solonari", 532);
-		test.put("kiiaz", 56);
-		test.put("JettKuso", 20);
-		test.put("Naxanria", 42);
-
-		Map<String, Integer> testSort = MapUtil.limitMap(MapUtil.sortByValue(test), 5);
-
-		for (Map.Entry<String, Integer> node : testSort.entrySet())
-			this.getComponent(IOutput.class).fine("%s - %d", node.getKey(), node.getValue());
 	}
 }

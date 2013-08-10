@@ -53,7 +53,7 @@ public class ArrowBarrage implements Spell
 				@Override
 				public void run() {
 					player.Launch(ProjectileEntity.Arrow);
-					player.getLocation().Play(Sound.Creature.Enderman.Teleport, 10, 2); // Pew pew
+					player.getLocation().Play(Sound.Creature.Enderman.Teleport, 2, 2); // Pew pew
 				}
 			}, time);
 			current++;

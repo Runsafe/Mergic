@@ -45,7 +45,7 @@ public class ShadowStrike implements Spell
 	{
 		player.Fire(ProjectileEntity.WitherSkull);
 		RunsafeLocation loc = player.getLocation();
-		loc.Play(Sound.Creature.Wither.Hurt, 10, 2);
-		loc.Play(Sound.Creature.Wither.Shoot, 10, -1);
+		loc.Play(Sound.Creature.Wither.Hurt, 2, 2);
+		loc.Play(Sound.Creature.Wither.Shoot, 2, -1);
 	}
 }

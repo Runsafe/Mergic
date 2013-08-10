@@ -48,7 +48,7 @@ public class WindLeap implements Spell
 		// Throw the player in the air to begin.
 		RunsafeLocation loc = player.getLocation();
 		player.setVelocity(loc.getDirection().add(new Vector(0, 2, 0)));
-		loc.Play(Sound.Creature.Golem.Death, 10, -1);
+		loc.Play(Sound.Creature.Golem.Death, 2, -1);
 
 
 		// Throw the player forward two seconds later.
@@ -57,7 +57,7 @@ public class WindLeap implements Spell
 			public void run() {
 				RunsafeLocation playerLoc = player.getLocation();
 				player.setVelocity(playerLoc.getDirection().multiply(3));
-				playerLoc.Play(Sound.Player.Breath, 10, -1);
+				playerLoc.Play(Sound.Player.Breath, 2, -1);
 			}
 		}, 1);
 	}

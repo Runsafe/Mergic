@@ -44,6 +44,6 @@ public class WindJump implements Spell
 	{
 		RunsafeLocation playerLoc = player.getLocation();
 		player.setVelocity(playerLoc.getDirection().multiply(3));
-		playerLoc.Play(Sound.Player.Breath, 10, -1);
+		playerLoc.Play(Sound.Player.Breath, 2, -1);
 	}
 }

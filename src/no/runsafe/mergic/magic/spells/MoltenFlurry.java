@@ -74,7 +74,7 @@ public class MoltenFlurry implements Spell
 		{
 			RunsafeEntity entity = player.Launch(ProjectileEntity.SmallFireball);
 			entity.teleport(location);
-			location.Play(Sound.Creature.Ghast.Fireball, 10, 1);
+			location.Play(Sound.Creature.Ghast.Fireball, 2, 1);
 			entity.setVelocity(this.fireVectors[current]);
 			current++;
 		}

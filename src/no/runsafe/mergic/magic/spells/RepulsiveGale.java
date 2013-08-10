@@ -48,7 +48,8 @@ public class RepulsiveGale implements Spell
 		for (RunsafePlayer victim : playerLocation.getPlayersInRange(20))
 		{
 			// This is a test, it will act in opposite to what we want, but testing!
-			victim.throwFromPoint(playerLocation);
+			if (!victim.getName().equals(player.getName()))
+				victim.throwFromPoint(playerLocation);
 		}
 	}
 }

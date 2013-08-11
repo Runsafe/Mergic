@@ -115,7 +115,7 @@ public class Blizzard implements Spell, IEntityChangeBlockEvent
 						continue;
 
 					Buff.Utility.Movement.DecreaseSpeed.duration(10).applyTo(victim); // Slow the player.
-					victim.damage(6D, player); // Three hearts of damage.
+					victim.damage(3D, player); // Three hearts of damage.
 				}
 			}
 

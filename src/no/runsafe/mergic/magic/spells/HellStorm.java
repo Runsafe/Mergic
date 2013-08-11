@@ -115,7 +115,7 @@ public class HellStorm implements Spell, IEntityChangeBlockEvent
 						continue;
 
 					victim.setFireTicks(5 * 20); // Set the player on fire for 5 seconds
-					victim.damage(6D, player); // Three hearts of damage.
+					victim.damage(3D, player); // Three hearts of damage.
 				}
 			}
 

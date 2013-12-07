@@ -98,11 +98,9 @@ public class Arena implements IConfigurationChanged
 
 	private RunsafeLocation getSafeSpot(RunsafeLocation location)
 	{
-		int blockID = location.getBlock().getTypeId(); // The ID of the block.
-		while (blockID != 0) // Loop until we find air.
+		while (!location.getBlock().isAir()) // Loop until we find air.
 		{
 			location.incrementY(1); // Increment the Y co-ordinate.
-			blockID = location.getBlock().getTypeId(); // Reset the blockID to the block we're at now.
 		}
 		return location;
 	}
@@ -156,7 +154,7 @@ public class Arena implements IConfigurationChanged
 
 	private int getRandomBetween(int low, int high)
 	{
-		return low + (int)(Math.random() * ((high - low) + 1));
+		return low + (int) (Math.random() * ((high - low) + 1));
 	}
 
 	public boolean isAvailable()

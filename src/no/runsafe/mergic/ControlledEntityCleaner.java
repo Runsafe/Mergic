@@ -1,9 +1,9 @@
 package no.runsafe.mergic;
 
+import no.runsafe.framework.api.IWorld;
+import no.runsafe.framework.api.entity.IEntity;
 import no.runsafe.framework.api.event.plugin.IPluginDisabled;
 import no.runsafe.framework.minecraft.RunsafeServer;
-import no.runsafe.framework.minecraft.RunsafeWorld;
-import no.runsafe.framework.minecraft.entity.RunsafeEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,12 +17,12 @@ public class ControlledEntityCleaner implements IPluginDisabled
 	{
 		for (Map.Entry<String, List<Integer>> node : entities.entrySet())
 		{
-			RunsafeWorld world = RunsafeServer.Instance.getWorld(node.getKey());
+			IWorld world = RunsafeServer.Instance.getWorld(node.getKey());
 			if (world != null)
 			{
 				for (Integer entityID : node.getValue())
 				{
-					RunsafeEntity entity = world.getEntityById(entityID);
+					IEntity entity = world.getEntityById(entityID);
 					if (entity != null)
 						entity.remove(); // Remove entity from the world.
 				}
@@ -30,9 +30,9 @@ public class ControlledEntityCleaner implements IPluginDisabled
 		}
 	}
 
-	public static void registerEntity(RunsafeEntity entity)
+	public static void registerEntity(IEntity entity)
 	{
-		RunsafeWorld world = entity.getWorld();
+		IWorld world = entity.getWorld();
 		if (world != null)
 		{
 			String worldName = world.getName();
@@ -43,9 +43,9 @@ public class ControlledEntityCleaner implements IPluginDisabled
 		}
 	}
 
-	public static void unregisterEntity(RunsafeEntity entity)
+	public static void unregisterEntity(IEntity entity)
 	{
-		RunsafeWorld world = entity.getWorld();
+		IWorld world = entity.getWorld();
 		if (world != null)
 		{
 			String worldName = world.getName();

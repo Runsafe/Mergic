@@ -1,5 +1,6 @@
 package no.runsafe.mergic.magic.spells;
 
+import no.runsafe.framework.api.IWorld;
 import no.runsafe.framework.api.event.entity.IEntityChangeBlockEvent;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.*;
@@ -51,7 +52,7 @@ public class Blizzard implements Spell, IEntityChangeBlockEvent
 	{
 		int radius = 5; // Will be doubled in a square radius.
 		RunsafeLocation location = player.getLocation();
-		final RunsafeWorld world = player.getWorld();
+		final IWorld world = player.getWorld();
 
 		if (location == null || world == null)
 			return; // If we've got an invalid location, cancel.
@@ -73,7 +74,7 @@ public class Blizzard implements Spell, IEntityChangeBlockEvent
 				int z = lowZ + (int) (Math.random() * ((highZ - lowZ) + 1));
 
 				// Spawn a falling ice block randomly within the radius.
-				RunsafeFallingBlock block = world.spawnFallingBlock(
+				RunsafeFallingBlock block = ((RunsafeWorld) world).spawnFallingBlock(
 					new RunsafeLocation(world, x, high, z),
 					Item.BuildingBlock.Ice.getType(),
 					(byte) 0

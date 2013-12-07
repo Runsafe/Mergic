@@ -3,10 +3,10 @@ package no.runsafe.mergic;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import no.runsafe.framework.api.IConfiguration;
 import no.runsafe.framework.api.IOutput;
+import no.runsafe.framework.api.IWorld;
 import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.RunsafeLocation;
-import no.runsafe.framework.minecraft.RunsafeWorld;
 import no.runsafe.worldguardbridge.WorldGuardInterface;
 
 import java.util.ArrayList;
@@ -163,7 +163,7 @@ public class Arena implements IConfigurationChanged
 	}
 
 	private boolean isSetup;
-	private RunsafeWorld world;
+	private IWorld world;
 	private int teleportY;
 	private IOutput output;
 	private WorldGuardInterface worldGuard;

@@ -3,7 +3,7 @@ package no.runsafe.mergic;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.Enchant;
 import no.runsafe.framework.minecraft.Item;
-import no.runsafe.framework.minecraft.inventory.RunsafePlayerInventory;
+import no.runsafe.framework.minecraft.inventory.RunsafeInventory;
 import no.runsafe.framework.minecraft.item.meta.RunsafeLeatherArmor;
 import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
 
@@ -29,17 +29,21 @@ public class EquipmentManager
 		RunsafeLeatherArmor armour = (RunsafeLeatherArmor) boots;
 		armour.setColor(Integer.valueOf(randomColour, 16)); // Colour the boots!
 
-		player.getInventory().setBoots(boots); // Put the boots on the player.
+		player.setBoots(boots); // Put the boots on the player.
 	}
 
 	public static void repairBoots(IPlayer player)
 	{
-		player.getInventory().getBoots().setDurability((short) 0);
+		RunsafeMeta boots = player.getBoots();
+		if (boots != null)
+			boots.setDurability((short) 0);
 	}
 
 	private static int getArmourColour(IPlayer player)
 	{
-		RunsafeMeta boots = player.getInventory().getBoots();
+		RunsafeMeta boots = player.getBoots();
+		if(boots == null)
+			return 0;
 		RunsafeLeatherArmor armour = (RunsafeLeatherArmor) boots;
 
 		return armour.getColor();
@@ -47,7 +51,7 @@ public class EquipmentManager
 
 	public static void applyFullProtection(IPlayer player)
 	{
-		RunsafePlayerInventory inventory = player.getInventory();
+		RunsafeInventory inventory = player.getInventory();
 		if (inventory == null)
 			return;
 
@@ -73,22 +77,18 @@ public class EquipmentManager
 		Enchant.Durability.applyTo(leatherHelmet).applyTo(leatherChest).applyTo(leatherLeggings);
 		Enchant.ProjectileProtection.applyTo(leatherHelmet).applyTo(leatherChest).applyTo(leatherLeggings);
 
-		inventory.setHelmet(leatherHelmet);
-		inventory.setChestplate(leatherChest);
-		inventory.setLeggings(leatherLeggings);
+		player.setHelmet(leatherHelmet);
+		player.setChestplate(leatherChest);
+		player.setLeggings(leatherLeggings);
 
 		player.updateInventory();
 	}
 
 	public static void removeFullProtection(IPlayer player)
 	{
-		RunsafePlayerInventory inventory = player.getInventory();
-		if (inventory == null)
-			return;
-
 		RunsafeMeta air = Item.Unavailable.Air.getItem();
-		inventory.setChestplate(air);
-		inventory.setLeggings(air);
-		inventory.setHelmet(air);
+		player.setChestplate(air);
+		player.setLeggings(air);
+		player.setHelmet(air);
 	}
 }

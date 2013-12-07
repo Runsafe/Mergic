@@ -1,6 +1,7 @@
 package no.runsafe.mergic;
 
 import no.runsafe.framework.api.event.entity.IEntityDamageByEntityEvent;
+import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.RunsafeServer;
 import no.runsafe.framework.minecraft.entity.RunsafeEntity;
 import no.runsafe.framework.minecraft.entity.RunsafeProjectile;
@@ -30,7 +31,7 @@ public class KillManager implements IEntityDamageByEntityEvent
 			else if (attackingEntity instanceof RunsafeProjectile)
 			{
 				RunsafeProjectile projectile = (RunsafeProjectile) attackingEntity;
-				RunsafePlayer shooterPlayer = projectile.getShooterPlayer();
+				IPlayer shooterPlayer = projectile.getShooterPlayer();
 
 				if (shooterPlayer != null)
 					this.registerAttack(victim, shooterPlayer);
@@ -48,19 +49,19 @@ public class KillManager implements IEntityDamageByEntityEvent
 		this.lastDamage.remove(player.getName());
 	}
 
-	public void registerAttack(RunsafePlayer victim, RunsafePlayer attacker)
+	public void registerAttack(IPlayer victim, IPlayer attacker)
 	{
 		if (!attacker.isVanished() && !victim.isVanished())
-			this.lastDamage.put(victim.getName(),  attacker.getName());
+			this.lastDamage.put(victim.getName(), attacker.getName());
 	}
 
-	public void OnPlayerKilled(RunsafePlayer player)
+	public void OnPlayerKilled(IPlayer player)
 	{
 		String playerName = player.getName();
 		if (this.lastDamage.containsKey(playerName))
 		{
 			String killerName = this.lastDamage.get(playerName);
-			RunsafePlayer killer = RunsafeServer.Instance.getPlayerExact(killerName);
+			IPlayer killer = RunsafeServer.Instance.getPlayerExact(killerName);
 
 			if (killer != null)
 			{
@@ -71,7 +72,7 @@ public class KillManager implements IEntityDamageByEntityEvent
 		}
 	}
 
-	public RunsafePlayer getKiller(RunsafePlayer player)
+	public IPlayer getKiller(IPlayer player)
 	{
 		String playerName = player.getName();
 		if (this.lastDamage.containsKey(playerName))
@@ -80,7 +81,7 @@ public class KillManager implements IEntityDamageByEntityEvent
 		return null;
 	}
 
-	public int getPlayerKills(RunsafePlayer player)
+	public int getPlayerKills(IPlayer player)
 	{
 		String playerName = player.getName();
 		return this.killCount.containsKey(playerName) ? this.killCount.get(playerName) : 0;

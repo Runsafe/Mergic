@@ -1,7 +1,7 @@
 package no.runsafe.mergic.magic.spells;
 
+import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.WorldEffect;
-import no.runsafe.framework.minecraft.player.RunsafePlayer;
 import no.runsafe.mergic.magic.MagicSchool;
 import no.runsafe.mergic.magic.Spell;
 import no.runsafe.mergic.magic.SpellHandler;
@@ -40,14 +40,16 @@ public class Heal implements Spell
 	}
 
 	@Override
-	public void onCast(final RunsafePlayer player)
+	public void onCast(final IPlayer player)
 	{
 		int current = 0;
 		while (current < 7)
 		{
-			SpellHandler.scheduler.startSyncTask(new Runnable() {
+			SpellHandler.scheduler.startSyncTask(new Runnable()
+			{
 				@Override
-				public void run() {
+				public void run()
+				{
 					player.heal(2); // Heal one heart of damage
 					player.getEyeLocation().playEffect(WorldEffect.HEART, 1, 2, 50); // Play heart effect.
 				}

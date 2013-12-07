@@ -4,9 +4,9 @@ import no.runsafe.framework.api.IConfiguration;
 import no.runsafe.framework.api.IOutput;
 import no.runsafe.framework.api.IScheduler;
 import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
+import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.RunsafeLocation;
 import no.runsafe.framework.minecraft.RunsafeWorld;
-import no.runsafe.framework.minecraft.player.RunsafePlayer;
 import no.runsafe.worldguardbridge.WorldGuardInterface;
 
 import java.util.List;
@@ -72,12 +72,12 @@ public class Graveyard implements IConfigurationChanged
 		this.isSetup = true;
 	}
 
-	public boolean playerIsInGraveyard(RunsafePlayer player)
+	public boolean playerIsInGraveyard(IPlayer player)
 	{
 		return this.deadTimers.containsKey(player.getName());
 	}
 
-	public void removePlayer(RunsafePlayer player)
+	public void removePlayer(IPlayer player)
 	{
 		String playerName = player.getName();
 
@@ -90,7 +90,7 @@ public class Graveyard implements IConfigurationChanged
 		}
 	}
 
-	public List<RunsafePlayer> getPlayers()
+	public List<IPlayer> getPlayers()
 	{
 		return this.worldGuard.getPlayersInRegion(this.world, this.region);
 	}
@@ -105,15 +105,17 @@ public class Graveyard implements IConfigurationChanged
 		}
 	}
 
-	public void teleportPlayerToGraveyard(final RunsafePlayer player)
+	public void teleportPlayerToGraveyard(final IPlayer player)
 	{
 		// Teleport the player to the location stored in this instance.
 		player.teleport(this.location);
 
 		// Store a new timer for the player to respawn them.
-		this.deadTimers.put(player.getName(), this.scheduler.startSyncTask(new Runnable() {
+		this.deadTimers.put(player.getName(), this.scheduler.startSyncTask(new Runnable()
+		{
 			@Override
-			public void run() {
+			public void run()
+			{
 				removePlayer(player);
 			}
 		}, this.deadTime));

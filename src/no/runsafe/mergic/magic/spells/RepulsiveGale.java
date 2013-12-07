@@ -1,9 +1,9 @@
 package no.runsafe.mergic.magic.spells;
 
+import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.RunsafeLocation;
 import no.runsafe.framework.minecraft.Sound;
 import no.runsafe.framework.minecraft.WorldEffect;
-import no.runsafe.framework.minecraft.player.RunsafePlayer;
 import no.runsafe.mergic.magic.MagicSchool;
 import no.runsafe.mergic.magic.Spell;
 import no.runsafe.mergic.magic.SpellHandler;
@@ -42,13 +42,13 @@ public class RepulsiveGale implements Spell
 	}
 
 	@Override
-	public void onCast(RunsafePlayer player)
+	public void onCast(IPlayer player)
 	{
 		RunsafeLocation playerLocation = player.getLocation();
 		if (playerLocation == null)
 			return; // Drop here if we have a problem with the players location;
 
-		for (RunsafePlayer victim : playerLocation.getPlayersInRange(15))
+		for (IPlayer victim : playerLocation.getPlayersInRange(15))
 		{
 			// This is a test, it will act in opposite to what we want, but testing!
 			if (!victim.getName().equals(player.getName()))

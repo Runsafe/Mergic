@@ -1,12 +1,11 @@
 package no.runsafe.mergic.magic;
 
 import no.runsafe.framework.api.IScheduler;
+import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
-import no.runsafe.framework.minecraft.player.RunsafePlayer;
 import no.runsafe.mergic.KillManager;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -23,7 +22,7 @@ public class SpellHandler
 		SpellHandler.killManager = killManager;
 	}
 
-	public void givePlayerSpellBook(RunsafePlayer player, Spell spell)
+	public void givePlayerSpellBook(IPlayer player, Spell spell)
 	{
 		SpellType spellType = spell.getType();
 		RunsafeMeta item = spellType.getCastItem().getItem(); // Create whatever item we cast with.
@@ -53,7 +52,7 @@ public class SpellHandler
 		return null;
 	}
 
-	public void givePlayerAllSpells(RunsafePlayer player)
+	public void givePlayerAllSpells(IPlayer player)
 	{
 		// Loop every spell in the handler and give it to the player.
 		for (Spell spell : this.spellList.values())

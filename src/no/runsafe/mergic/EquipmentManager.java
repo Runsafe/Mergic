@@ -1,24 +1,26 @@
 package no.runsafe.mergic;
 
+import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.Enchant;
 import no.runsafe.framework.minecraft.Item;
 import no.runsafe.framework.minecraft.inventory.RunsafePlayerInventory;
 import no.runsafe.framework.minecraft.item.meta.RunsafeLeatherArmor;
 import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
-import no.runsafe.framework.minecraft.player.RunsafePlayer;
 
 public class EquipmentManager
 {
-	private EquipmentManager() {}
+	private EquipmentManager()
+	{
+	}
 
-	public static void givePlayerWizardBoots(RunsafePlayer player)
+	public static void givePlayerWizardBoots(IPlayer player)
 	{
 		// Get a random colour, how exciting.
 		String randomColour = String.format(
-				"%02x%02x%02x",
-				(int)(Math.random() * 255),
-				(int)(Math.random() * 255),
-				(int)(Math.random() * 255)
+			"%02x%02x%02x",
+			(int) (Math.random() * 255),
+			(int) (Math.random() * 255),
+			(int) (Math.random() * 255)
 		);
 
 		RunsafeMeta boots = Item.Combat.Boots.Leather.getItem(); // Create some boots.
@@ -30,12 +32,12 @@ public class EquipmentManager
 		player.getInventory().setBoots(boots); // Put the boots on the player.
 	}
 
-	public static void repairBoots(RunsafePlayer player)
+	public static void repairBoots(IPlayer player)
 	{
 		player.getInventory().getBoots().setDurability((short) 0);
 	}
 
-	private static int getArmourColour(RunsafePlayer player)
+	private static int getArmourColour(IPlayer player)
 	{
 		RunsafeMeta boots = player.getInventory().getBoots();
 		RunsafeLeatherArmor armour = (RunsafeLeatherArmor) boots;
@@ -43,7 +45,7 @@ public class EquipmentManager
 		return armour.getColor();
 	}
 
-	public static void applyFullProtection(RunsafePlayer player)
+	public static void applyFullProtection(IPlayer player)
 	{
 		RunsafePlayerInventory inventory = player.getInventory();
 		if (inventory == null)
@@ -78,7 +80,7 @@ public class EquipmentManager
 		player.updateInventory();
 	}
 
-	public static void removeFullProtection(RunsafePlayer player)
+	public static void removeFullProtection(IPlayer player)
 	{
 		RunsafePlayerInventory inventory = player.getInventory();
 		if (inventory == null)

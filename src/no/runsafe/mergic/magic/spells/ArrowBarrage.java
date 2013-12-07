@@ -1,5 +1,6 @@
 package no.runsafe.mergic.magic.spells;
 
+import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.Sound;
 import no.runsafe.framework.minecraft.entity.ProjectileEntity;
 import no.runsafe.framework.minecraft.player.RunsafePlayer;
@@ -41,7 +42,7 @@ public class ArrowBarrage implements Spell
 	}
 
 	@Override
-	public void onCast(final RunsafePlayer player)
+	public void onCast(final IPlayer player)
 	{
 		int current = 1;
 

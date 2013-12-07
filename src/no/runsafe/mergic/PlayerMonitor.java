@@ -1,10 +1,15 @@
 package no.runsafe.mergic;
 
-import no.runsafe.framework.api.event.player.*;
+import no.runsafe.framework.api.event.player.IPlayerCustomEvent;
+import no.runsafe.framework.api.event.player.IPlayerDamageEvent;
+import no.runsafe.framework.api.event.player.IPlayerInteractEvent;
+import no.runsafe.framework.api.event.player.IPlayerJoinEvent;
 import no.runsafe.framework.api.event.plugin.IPluginDisabled;
+import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.event.entity.RunsafeEntityDamageEvent;
-import no.runsafe.framework.minecraft.event.player.*;
-import no.runsafe.framework.minecraft.inventory.RunsafePlayerInventory;
+import no.runsafe.framework.minecraft.event.player.RunsafeCustomEvent;
+import no.runsafe.framework.minecraft.event.player.RunsafePlayerInteractEvent;
+import no.runsafe.framework.minecraft.event.player.RunsafePlayerJoinEvent;
 import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
 import no.runsafe.framework.minecraft.player.RunsafePlayer;
 import no.runsafe.mergic.magic.*;
@@ -35,7 +40,7 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 			Map<String, String> data = (Map<String, String>) event.getData();
 			if (arena.getArenaRegionString().equals(String.format("%s-%s", data.get("world"), data.get("region"))))
 			{
-				RunsafePlayer player = event.getPlayer();
+				IPlayer player = event.getPlayer();
 
 				// Check if the player is actually in the game.
 				if (arena.playerIsInGame(player))
@@ -48,7 +53,7 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 			Map<String, String> data = (Map<String, String>) event.getData();
 			if (lobby.getLobbyRegionString().equals(String.format("%s-%s", data.get("world"), data.get("region"))))
 			{
-				RunsafePlayer player = event.getPlayer();
+				IPlayer player = event.getPlayer();
 
 				player.getInventory().clear(); // Clear the players inventory.
 				this.spellHandler.givePlayerAllSpells(player); // Give the player all spells.
@@ -61,7 +66,7 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 	@Override
 	public void OnPlayerJoinEvent(RunsafePlayerJoinEvent event)
 	{
-		RunsafePlayer player = event.getPlayer();
+		IPlayer player = event.getPlayer();
 
 		// Check if the player is inside the arena when they shouldn't be.
 		if (!this.arena.playerIsInGame(player) && this.arena.playerIsInPhysicalArena(player))
@@ -69,7 +74,7 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 	}
 
 	@Override
-	public void OnPlayerDamage(RunsafePlayer player, RunsafeEntityDamageEvent event)
+	public void OnPlayerDamage(IPlayer player, RunsafeEntityDamageEvent event)
 	{
 		if (this.arena.playerIsInGame(player) && player.getHealth() - event.getDamage() <= 0D)
 		{
@@ -81,7 +86,7 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 			EquipmentManager.repairBoots(player); // Repair the players boots.
 
 			// If we can confirm they were killed, tell them who by, otherwise default message.
-			RunsafePlayer killer = this.killManager.getKiller(player);
+			IPlayer killer = this.killManager.getKiller(player);
 			if (killer == null)
 			{
 				player.sendColouredMessage("&cYou have died! You will respawn shortly.");
@@ -99,7 +104,7 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 	@Override
 	public void OnPlayerInteractEvent(RunsafePlayerInteractEvent event)
 	{
-		RunsafePlayer player = event.getPlayer();
+		IPlayer player = event.getPlayer();
 
 		// Check the player is registered as playing the game.
 		if (this.arena.playerIsInGame(player) && !this.graveyard.playerIsInGraveyard(player))

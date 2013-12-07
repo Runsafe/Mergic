@@ -1,10 +1,10 @@
 package no.runsafe.mergic.magic.spells;
 
+import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.RunsafeLocation;
 import no.runsafe.framework.minecraft.Sound;
 import no.runsafe.framework.minecraft.entity.ProjectileEntity;
 import no.runsafe.framework.minecraft.entity.RunsafeEntity;
-import no.runsafe.framework.minecraft.player.RunsafePlayer;
 import no.runsafe.mergic.magic.MagicSchool;
 import no.runsafe.mergic.magic.Spell;
 import no.runsafe.mergic.magic.SpellHandler;
@@ -44,7 +44,7 @@ public class MoltenFlurry implements Spell
 	}
 
 	@Override
-	public void onCast(final RunsafePlayer player)
+	public void onCast(final IPlayer player)
 	{
 		RunsafeLocation location = player.getLocation();
 		if (location == null)
@@ -57,9 +57,11 @@ public class MoltenFlurry implements Spell
 		int current = 0;
 		while (current < 4)
 		{
-			SpellHandler.scheduler.startSyncTask(new Runnable() {
+			SpellHandler.scheduler.startSyncTask(new Runnable()
+			{
 				@Override
-				public void run() {
+				public void run()
+				{
 					fireBalls(player, loc);
 				}
 			}, current + 1);
@@ -67,7 +69,7 @@ public class MoltenFlurry implements Spell
 		}
 	}
 
-	private void fireBalls(RunsafePlayer player, RunsafeLocation location)
+	private void fireBalls(IPlayer player, RunsafeLocation location)
 	{
 		int current = 0;
 		while (current < 4)
@@ -81,9 +83,9 @@ public class MoltenFlurry implements Spell
 	}
 
 	private Vector[] fireVectors = {
-			new Vector(0.2, 0, 0),
-			new Vector(0, 0, 0.2),
-			new Vector(-0.2, 0, 0),
-			new Vector(0, 0, -0.2)
+		new Vector(0.2, 0, 0),
+		new Vector(0, 0, 0.2),
+		new Vector(-0.2, 0, 0),
+		new Vector(0, 0, -0.2)
 	};
 }

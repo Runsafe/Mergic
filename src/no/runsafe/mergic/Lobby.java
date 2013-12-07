@@ -3,6 +3,7 @@ package no.runsafe.mergic;
 import no.runsafe.framework.api.IConfiguration;
 import no.runsafe.framework.api.IOutput;
 import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
+import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.RunsafeLocation;
 import no.runsafe.framework.minecraft.RunsafeWorld;
 import no.runsafe.framework.minecraft.Sound;
@@ -10,6 +11,7 @@ import no.runsafe.framework.minecraft.player.RunsafePlayer;
 import no.runsafe.worldguardbridge.WorldGuardInterface;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Lobby implements IConfigurationChanged
@@ -66,31 +68,31 @@ public class Lobby implements IConfigurationChanged
 		return this.lobbySetup;
 	}
 
-	public List<RunsafePlayer> getPlayersInLobby()
+	public List<IPlayer> getPlayersInLobby()
 	{
 		// Check if the lobby is set-up, if so return a list of players inside the region.
 		if (this.isAvailable())
 			return this.worldGuard.getPlayersInRegion(this.lobbyWorld, this.lobbyRegion);
 
 		// We are not set-up correctly, throw an empty list to prevent errors.
-		return new ArrayList<RunsafePlayer>();
+		return Collections.emptyList();
 	}
 
 	public void broadcastToLobby(String message)
 	{
 		// Loop every player in the lobby and send them the message.
-		for (RunsafePlayer player : this.getPlayersInLobby())
+		for (IPlayer player : this.getPlayersInLobby())
 			player.sendColouredMessage(message);
 	}
 
-	public void teleportPlayersToLobby(List<RunsafePlayer> playerList)
+	public void teleportPlayersToLobby(List<IPlayer> playerList)
 	{
 		// Loop every player in the list given and teleport them into the lobby.
-		for (RunsafePlayer player : playerList)
+		for (IPlayer player : playerList)
 			this.teleportPlayerToLobby(player);
 	}
 
-	public void teleportPlayerToLobby(RunsafePlayer player)
+	public void teleportPlayerToLobby(IPlayer player)
 	{
 		// Teleport the player into the lobby, simple!
 		player.teleport(this.location);
@@ -99,7 +101,7 @@ public class Lobby implements IConfigurationChanged
 	public void teleportLobbyPlayers(RunsafeLocation location)
 	{
 		// Loop every player in the lobby and teleport them to the given location.
-		for (RunsafePlayer player : this.getPlayersInLobby())
+		for (IPlayer player : this.getPlayersInLobby())
 			player.teleport(location);
 	}
 

@@ -1,11 +1,11 @@
 package no.runsafe.mergic.magic.spells;
 
 import no.runsafe.framework.api.event.entity.IEntityChangeBlockEvent;
+import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.*;
 import no.runsafe.framework.minecraft.entity.RunsafeEntity;
 import no.runsafe.framework.minecraft.entity.RunsafeFallingBlock;
 import no.runsafe.framework.minecraft.event.entity.RunsafeEntityChangeBlockEvent;
-import no.runsafe.framework.minecraft.player.RunsafePlayer;
 import no.runsafe.mergic.ControlledEntityCleaner;
 import no.runsafe.mergic.magic.MagicSchool;
 import no.runsafe.mergic.magic.Spell;
@@ -47,7 +47,7 @@ public class Blizzard implements Spell, IEntityChangeBlockEvent
 	}
 
 	@Override
-	public void onCast(RunsafePlayer player)
+	public void onCast(IPlayer player)
 	{
 		int radius = 5; // Will be doubled in a square radius.
 		RunsafeLocation location = player.getLocation();
@@ -64,17 +64,19 @@ public class Blizzard implements Spell, IEntityChangeBlockEvent
 		final int lowZ = location.getBlockZ() - radius;
 		final int high = location.getBlockY() + 20;
 
-		final int ticker = SpellHandler.scheduler.startSyncRepeatingTask(new Runnable() {
+		final int ticker = SpellHandler.scheduler.startSyncRepeatingTask(new Runnable()
+		{
 			@Override
-			public void run() {
-				int x = lowX + (int)(Math.random() * ((highX - lowX) + 1));
-				int z = lowZ + (int)(Math.random() * ((highZ - lowZ) + 1));
+			public void run()
+			{
+				int x = lowX + (int) (Math.random() * ((highX - lowX) + 1));
+				int z = lowZ + (int) (Math.random() * ((highZ - lowZ) + 1));
 
 				// Spawn a falling ice block randomly within the radius.
 				RunsafeFallingBlock block = world.spawnFallingBlock(
-						new RunsafeLocation(world, x, high, z),
-						Item.BuildingBlock.Ice.getType(),
-						(byte) 0
+					new RunsafeLocation(world, x, high, z),
+					Item.BuildingBlock.Ice.getType(),
+					(byte) 0
 				);
 				block.setDropItem(false);
 
@@ -83,9 +85,11 @@ public class Blizzard implements Spell, IEntityChangeBlockEvent
 			}
 		}, 5L, 5L);
 
-		SpellHandler.scheduler.startSyncTask(new Runnable() {
+		SpellHandler.scheduler.startSyncTask(new Runnable()
+		{
 			@Override
-			public void run() {
+			public void run()
+			{
 				SpellHandler.scheduler.cancelTask(ticker); // Cancel the blizzard.
 			}
 		}, 10);
@@ -104,12 +108,12 @@ public class Blizzard implements Spell, IEntityChangeBlockEvent
 
 			if (location != null)
 			{
-				RunsafePlayer player = RunsafeServer.Instance.getPlayerExact(blocks.get(entityID));
+				IPlayer player = RunsafeServer.Instance.getPlayerExact(blocks.get(entityID));
 
 				location.playEffect(WorldEffect.SPLASH, 1, 20, 50); // Play a splash.
 				location.Play(Sound.Environment.Glass, 2, -1); // Play ice breaking sound.
 
-				for (RunsafePlayer victim : location.getPlayersInRange(4))
+				for (IPlayer victim : location.getPlayersInRange(4))
 				{
 					if (player != null && player.getName().equals(victim.getName()))
 						continue;

@@ -1,9 +1,9 @@
 package no.runsafe.mergic.magic.spells;
 
+import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.RunsafeLocation;
 import no.runsafe.framework.minecraft.Sound;
 import no.runsafe.framework.minecraft.WorldEffect;
-import no.runsafe.framework.minecraft.player.RunsafePlayer;
 import no.runsafe.mergic.magic.MagicSchool;
 import no.runsafe.mergic.magic.Spell;
 import no.runsafe.mergic.magic.SpellHandler;
@@ -36,7 +36,7 @@ public class ArcaneWave implements Spell
 	}
 
 	@Override
-	public void onCast(final RunsafePlayer player)
+	public void onCast(final IPlayer player)
 	{
 		final RunsafeLocation location = player.getLocation();
 		if (location == null)
@@ -46,9 +46,11 @@ public class ArcaneWave implements Spell
 		while (current < 22)
 		{
 			final int number = current;
-			SpellHandler.scheduler.startSyncTask(new Runnable() {
+			SpellHandler.scheduler.startSyncTask(new Runnable()
+			{
 				@Override
-				public void run() {
+				public void run()
+				{
 					createSpellLine(player, location, number);
 				}
 			}, (long) (2 * current));
@@ -62,28 +64,28 @@ public class ArcaneWave implements Spell
 		return "Shoots arcane magic in all directions.";
 	}
 
-	private void createSpellLine(RunsafePlayer player, RunsafeLocation location, int step)
+	private void createSpellLine(IPlayer player, RunsafeLocation location, int step)
 	{
 		for (int[] node : this.offsets)
 		{
 			RunsafeLocation position = new RunsafeLocation(
-					location.getWorld(),
-					location.getX() + (step * node[0]),
-					location.getY(),
-					location.getZ()+ (step * node[1])
+				location.getWorld(),
+				location.getX() + (step * node[0]),
+				location.getY(),
+				location.getZ() + (step * node[1])
 			); // Get the relative position, hopefully.
 
 			position.offset(0.5D, 0, 0.5D); // Offset to centre of the block.
 			position.playEffect(WorldEffect.CRIT, 1, 30, 50); // Play a sparkle at the location.
 			position.Play(Sound.Environment.Fizz, 2, 1); // Play a sound effect for the spell!
 
-			for (RunsafePlayer victim : position.getPlayersInRange(3))
+			for (IPlayer victim : position.getPlayersInRange(3))
 				if (!victim.getName().equals(player.getName()))
 					victim.damage(6D, player); // Damage the player for 3 hearts.
 		}
 	}
 
 	private int[][] offsets = {
-			{1, 0}, {0, 1}, {0, -1}, {-1, 0}
+		{1, 0}, {0, 1}, {0, -1}, {-1, 0}
 	};
 }

@@ -3,6 +3,7 @@ package no.runsafe.mergic;
 import no.runsafe.framework.api.IConfiguration;
 import no.runsafe.framework.api.IScheduler;
 import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
+import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.player.RunsafePlayer;
 import no.runsafe.mergic.magic.CooldownManager;
 
@@ -77,7 +78,7 @@ public class Game implements IConfigurationChanged
 		this.currentPreMatchStep = this.currentPreMatchStep - this.preMatchDelay;
 	}
 
-	public void removePlayerFromGame(RunsafePlayer player)
+	public void removePlayerFromGame(IPlayer player)
 	{
 		this.lobby.teleportPlayerToLobby(player); // Teleport them to the lobby.
 		this.arena.removePlayer(player); // Remove them from the arena list.
@@ -116,7 +117,7 @@ public class Game implements IConfigurationChanged
 			}
 
 			// Loop every player now in the lobby and give them their score and the top 5.
-			for (RunsafePlayer player : this.lobby.getPlayersInLobby())
+			for (IPlayer player : this.lobby.getPlayersInLobby())
 			{
 				player.sendColouredMessage("&cThe match has ended!");
 				for (Map.Entry<String, Integer> node : top.entrySet())

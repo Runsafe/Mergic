@@ -1,6 +1,6 @@
 package no.runsafe.mergic.magic;
 
-import no.runsafe.framework.minecraft.player.RunsafePlayer;
+import no.runsafe.framework.api.player.IPlayer;
 
 public interface Spell
 {
@@ -9,5 +9,5 @@ public interface Spell
 	public MagicSchool getSchool();
 	public SpellType getType();
 	public String getDescription();
-	public void onCast(RunsafePlayer player);
+	public void onCast(IPlayer player);
 }

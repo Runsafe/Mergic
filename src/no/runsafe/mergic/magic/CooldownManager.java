@@ -1,7 +1,7 @@
 package no.runsafe.mergic.magic;
 
 import no.runsafe.framework.api.IScheduler;
-import no.runsafe.framework.minecraft.player.RunsafePlayer;
+import no.runsafe.framework.api.player.IPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,13 +14,13 @@ public class CooldownManager
 		this.scheduler = scheduler;
 	}
 
-	public boolean canCastSpell(RunsafePlayer player, Spell spell)
+	public boolean canCastSpell(IPlayer player, Spell spell)
 	{
 		String playerName = player.getName();
 		return !cooldowns.containsKey(playerName) || !this.cooldowns.get(playerName).contains(spell.getSchool());
 	}
 
-	public void applySchoolCooldown(RunsafePlayer player, Spell spell)
+	public void applySchoolCooldown(IPlayer player, Spell spell)
 	{
 		final String playerName = player.getName();
 		final MagicSchool school = spell.getSchool();
@@ -30,9 +30,11 @@ public class CooldownManager
 			this.cooldowns.put(playerName, new ArrayList<MagicSchool>());
 
 		this.cooldowns.get(playerName).add(school); // Add the school to the cooldown list.
-		this.scheduler.startAsyncTask(new Runnable() {
+		this.scheduler.startAsyncTask(new Runnable()
+		{
 			@Override
-			public void run() {
+			public void run()
+			{
 				removeSchoolCooldown(playerName, school);
 			}
 		}, spell.getCooldown()); // Create a cooldown timer.

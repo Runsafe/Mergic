@@ -1,7 +1,7 @@
 package no.runsafe.mergic.magic.spells;
 
+import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.WorldEffect;
-import no.runsafe.framework.minecraft.player.RunsafePlayer;
 import no.runsafe.mergic.magic.MagicSchool;
 import no.runsafe.mergic.magic.Spell;
 import no.runsafe.mergic.magic.SpellType;
@@ -39,7 +39,7 @@ public class BasicHeal implements Spell
 	}
 
 	@Override
-	public void onCast(RunsafePlayer player)
+	public void onCast(IPlayer player)
 	{
 		player.heal(6); // Heal the player for 3 hearts.
 		player.getEyeLocation().playEffect(WorldEffect.HEART, 1, 4, 50); // Play a heart effect for healing!

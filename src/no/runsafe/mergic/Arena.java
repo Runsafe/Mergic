@@ -4,9 +4,9 @@ import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import no.runsafe.framework.api.IConfiguration;
 import no.runsafe.framework.api.IOutput;
 import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
+import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.RunsafeLocation;
 import no.runsafe.framework.minecraft.RunsafeWorld;
-import no.runsafe.framework.minecraft.player.RunsafePlayer;
 import no.runsafe.worldguardbridge.WorldGuardInterface;
 
 import java.util.ArrayList;
@@ -69,13 +69,13 @@ public class Arena implements IConfigurationChanged
 		this.isSetup = true;
 	}
 
-	public void teleportPlayersIntoArena(List<RunsafePlayer> playerList)
+	public void teleportPlayersIntoArena(List<IPlayer> playerList)
 	{
-		for (RunsafePlayer player : playerList)
+		for (IPlayer player : playerList)
 			this.teleportPlayerIntoArena(player);
 	}
 
-	public void teleportPlayerIntoArena(RunsafePlayer player)
+	public void teleportPlayerIntoArena(IPlayer player)
 	{
 		// Register the player as in-game in the arena instance.
 		this.players.add(player.getName());
@@ -105,12 +105,12 @@ public class Arena implements IConfigurationChanged
 		return location;
 	}
 
-	public List<RunsafePlayer> getPlayers()
+	public List<IPlayer> getPlayers()
 	{
 		return this.worldGuard.getPlayersInRegion(this.world, this.region);
 	}
 
-	public boolean playerIsInPhysicalArena(RunsafePlayer player)
+	public boolean playerIsInPhysicalArena(IPlayer player)
 	{
 		if (!this.isAvailable())
 			return false;
@@ -132,12 +132,12 @@ public class Arena implements IConfigurationChanged
 		return playerRegions.contains(this.region);
 	}
 
-	public boolean playerIsInGame(RunsafePlayer player)
+	public boolean playerIsInGame(IPlayer player)
 	{
 		return this.players.contains(player.getName());
 	}
 
-	public void removePlayer(RunsafePlayer player)
+	public void removePlayer(IPlayer player)
 	{
 		this.players.remove(player.getName());
 	}

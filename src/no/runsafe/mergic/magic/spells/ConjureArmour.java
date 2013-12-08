@@ -1,7 +1,6 @@
 package no.runsafe.mergic.magic.spells;
 
 import no.runsafe.framework.api.player.IPlayer;
-import no.runsafe.framework.minecraft.player.RunsafePlayer;
 import no.runsafe.mergic.EquipmentManager;
 import no.runsafe.mergic.magic.MagicSchool;
 import no.runsafe.mergic.magic.Spell;
@@ -44,9 +43,11 @@ public class ConjureArmour implements Spell
 	public void onCast(final IPlayer player)
 	{
 		EquipmentManager.applyFullProtection(player);
-		SpellHandler.scheduler.startSyncTask(new Runnable() {
+		SpellHandler.scheduler.startSyncTask(new Runnable()
+		{
 			@Override
-			public void run() {
+			public void run()
+			{
 				EquipmentManager.removeFullProtection(player);
 			}
 		}, 5);

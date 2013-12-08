@@ -3,7 +3,6 @@ package no.runsafe.mergic.magic.spells;
 import no.runsafe.framework.api.ILocation;
 import no.runsafe.framework.api.entity.IEntity;
 import no.runsafe.framework.api.player.IPlayer;
-import no.runsafe.framework.minecraft.player.RunsafePlayer;
 import no.runsafe.mergic.magic.MagicSchool;
 import no.runsafe.mergic.magic.Spell;
 import no.runsafe.mergic.magic.SpellHandler;
@@ -53,7 +52,7 @@ public class SkyStrikes implements Spell
 				if (entity.getLocation().distance(strikeSpot) <= 2)
 				{
 					entity.strikeWithLightning(false); // Strike the player with lightning.
-					SpellHandler.killManager.registerAttack((RunsafePlayer) entity, player); // Register the attack.
+					SpellHandler.killManager.registerAttack((IPlayer) entity, player); // Register the attack.
 				}
 				else
 				{

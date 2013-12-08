@@ -6,7 +6,6 @@ import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.entity.RunsafeEntity;
 import no.runsafe.framework.minecraft.entity.RunsafeProjectile;
 import no.runsafe.framework.minecraft.event.entity.RunsafeEntityDamageByEntityEvent;
-import no.runsafe.framework.minecraft.player.RunsafePlayer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,14 +22,14 @@ public class KillManager implements IEntityDamageByEntityEvent
 	{
 		RunsafeEntity entity = event.getEntity();
 
-		if (entity instanceof RunsafePlayer)
+		if (entity instanceof IPlayer)
 		{
-			RunsafePlayer victim = (RunsafePlayer) entity;
+			IPlayer victim = (IPlayer) entity;
 			RunsafeEntity attackingEntity = event.getDamageActor();
 
-			if (attackingEntity instanceof RunsafePlayer)
+			if (attackingEntity instanceof IPlayer)
 			{
-				RunsafePlayer attacker = (RunsafePlayer) attackingEntity;
+				IPlayer attacker = (IPlayer) attackingEntity;
 				this.registerAttack(victim, attacker);
 			}
 			else if (attackingEntity instanceof RunsafeProjectile)
@@ -49,7 +48,7 @@ public class KillManager implements IEntityDamageByEntityEvent
 		this.lastDamage.clear();
 	}
 
-	public void wipePlayerData(RunsafePlayer player)
+	public void wipePlayerData(IPlayer player)
 	{
 		this.lastDamage.remove(player.getName());
 	}

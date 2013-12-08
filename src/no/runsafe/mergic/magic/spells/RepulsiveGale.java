@@ -1,7 +1,7 @@
 package no.runsafe.mergic.magic.spells;
 
+import no.runsafe.framework.api.ILocation;
 import no.runsafe.framework.api.player.IPlayer;
-import no.runsafe.framework.minecraft.RunsafeLocation;
 import no.runsafe.framework.minecraft.Sound;
 import no.runsafe.framework.minecraft.WorldEffect;
 import no.runsafe.mergic.magic.MagicSchool;
@@ -44,7 +44,7 @@ public class RepulsiveGale implements Spell
 	@Override
 	public void onCast(IPlayer player)
 	{
-		RunsafeLocation playerLocation = player.getLocation();
+		ILocation playerLocation = player.getLocation();
 		if (playerLocation == null)
 			return; // Drop here if we have a problem with the players location;
 
@@ -56,12 +56,12 @@ public class RepulsiveGale implements Spell
 				SpellHandler.killManager.registerAttack(victim, player); // Register a hit.
 				victim.throwFromPoint(playerLocation); // Throw the player.
 
-				RunsafeLocation victimLocation = victim.getLocation();
+				ILocation victimLocation = victim.getLocation();
 
 				if (victimLocation != null)
 				{
 					victimLocation.playEffect(WorldEffect.ENCHANTMENT_TABLE, 1, 10, 50); // Shiny effect!
-					victimLocation.Play(Sound.Player.Breath, 2, -1);
+					victimLocation.playSound(Sound.Player.Breath, 2, -1);
 				}
 			}
 		}

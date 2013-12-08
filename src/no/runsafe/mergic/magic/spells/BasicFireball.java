@@ -43,6 +43,6 @@ public class BasicFireball implements Spell
 	public void onCast(IPlayer player)
 	{
 		player.Fire(ProjectileEntity.SmallFireball);
-		player.getLocation().Play(Sound.Creature.Ghast.Fireball, 2, 1); // Play a fireball sound.
+		player.getLocation().playSound(Sound.Creature.Ghast.Fireball, 2, 1); // Play a fireball sound.
 	}
 }

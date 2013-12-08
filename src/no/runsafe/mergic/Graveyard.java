@@ -1,12 +1,8 @@
 package no.runsafe.mergic;
 
-import no.runsafe.framework.api.IConfiguration;
-import no.runsafe.framework.api.IOutput;
-import no.runsafe.framework.api.IScheduler;
-import no.runsafe.framework.api.IWorld;
+import no.runsafe.framework.api.*;
 import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
 import no.runsafe.framework.api.player.IPlayer;
-import no.runsafe.framework.minecraft.RunsafeLocation;
 import no.runsafe.worldguardbridge.WorldGuardInterface;
 
 import java.util.List;
@@ -132,7 +128,7 @@ public class Graveyard implements IConfigurationChanged
 	private int deadTime = -1;
 	private IWorld world;
 	private String region;
-	private RunsafeLocation location;
+	private ILocation location;
 	private boolean isSetup;
 	private IOutput output;
 	private WorldGuardInterface worldGuard;

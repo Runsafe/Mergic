@@ -1,5 +1,6 @@
 package no.runsafe.mergic.magic.spells;
 
+import no.runsafe.framework.api.ILocation;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.RunsafeLocation;
 import no.runsafe.framework.minecraft.Sound;
@@ -38,7 +39,7 @@ public class ArcaneWave implements Spell
 	@Override
 	public void onCast(final IPlayer player)
 	{
-		final RunsafeLocation location = player.getLocation();
+		final ILocation location = player.getLocation();
 		if (location == null)
 			return;
 
@@ -64,11 +65,11 @@ public class ArcaneWave implements Spell
 		return "Shoots arcane magic in all directions.";
 	}
 
-	private void createSpellLine(IPlayer player, RunsafeLocation location, int step)
+	private void createSpellLine(IPlayer player, ILocation location, int step)
 	{
 		for (int[] node : this.offsets)
 		{
-			RunsafeLocation position = new RunsafeLocation(
+			ILocation position = new RunsafeLocation(
 				location.getWorld(),
 				location.getX() + (step * node[0]),
 				location.getY(),
@@ -77,7 +78,7 @@ public class ArcaneWave implements Spell
 
 			position.offset(0.5D, 0, 0.5D); // Offset to centre of the block.
 			position.playEffect(WorldEffect.CRIT, 1, 30, 50); // Play a sparkle at the location.
-			position.Play(Sound.Environment.Fizz, 2, 1); // Play a sound effect for the spell!
+			position.playSound(Sound.Environment.Fizz, 2, 1); // Play a sound effect for the spell!
 
 			for (IPlayer victim : position.getPlayersInRange(3))
 				if (!victim.getName().equals(player.getName()))

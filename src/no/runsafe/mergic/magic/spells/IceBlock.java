@@ -1,5 +1,6 @@
 package no.runsafe.mergic.magic.spells;
 
+import no.runsafe.framework.api.ILocation;
 import no.runsafe.framework.api.block.IBlock;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.Item;
@@ -45,7 +46,7 @@ public class IceBlock implements Spell
 	@Override
 	public void onCast(IPlayer player)
 	{
-		final RunsafeLocation playerLocation = player.getLocation();
+		final ILocation playerLocation = player.getLocation();
 		this.spawnIceBlock(playerLocation); // Spawn the ice block around the player;
 
 		// Create a timer to despawn the ice block after five seconds.
@@ -67,19 +68,19 @@ public class IceBlock implements Spell
 		));
 	}
 
-	private void spawnIceBlock(RunsafeLocation location)
+	private void spawnIceBlock(ILocation location)
 	{
 		this.setFormation(location, Item.Unavailable.Air, Item.BuildingBlock.Ice);
-		location.Play(Sound.Environment.Swim, 2, -1); // Ice form sound? Kind of.
+		location.playSound(Sound.Environment.Swim, 2, -1); // Ice form sound? Kind of.
 	}
 
-	private void despawnIceBlock(RunsafeLocation location)
+	private void despawnIceBlock(ILocation location)
 	{
 		this.setFormation(location, Item.BuildingBlock.Ice, Item.Unavailable.Air);
-		location.Play(Sound.Environment.Glass, 2, -1); // Play ice breaking sound.
+		location.playSound(Sound.Environment.Glass, 2, -1); // Play ice breaking sound.
 	}
 
-	private void setFormation(RunsafeLocation location, Item previous, Item next)
+	private void setFormation(ILocation location, Item previous, Item next)
 	{
 		// Loop each relative position of the formation and set it to the item given.
 		for (int[] position : this.formation)

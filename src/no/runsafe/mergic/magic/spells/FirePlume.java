@@ -1,5 +1,6 @@
 package no.runsafe.mergic.magic.spells;
 
+import no.runsafe.framework.api.ILocation;
 import no.runsafe.framework.api.block.IBlock;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.Item;
@@ -44,7 +45,7 @@ public class FirePlume implements Spell
 	@Override
 	public void onCast(IPlayer player)
 	{
-		final RunsafeLocation location = player.getLocation();
+		final ILocation location = player.getLocation();
 		int currentStep = 1;
 
 		// Loop three times, each time spawning a timer to construct the next plume stage in 1 second intervals.
@@ -71,7 +72,7 @@ public class FirePlume implements Spell
 		));
 	}
 
-	private void createPlume(RunsafeLocation loc, int stage)
+	private void createPlume(ILocation loc, int stage)
 	{
 		// Grab the current plume stage.
 		int[][] plumeStages = this.plume[stage];

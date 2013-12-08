@@ -1,11 +1,11 @@
 package no.runsafe.mergic;
 
 import no.runsafe.framework.api.IConfiguration;
+import no.runsafe.framework.api.ILocation;
 import no.runsafe.framework.api.IOutput;
 import no.runsafe.framework.api.IWorld;
 import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
 import no.runsafe.framework.api.player.IPlayer;
-import no.runsafe.framework.minecraft.RunsafeLocation;
 import no.runsafe.framework.minecraft.Sound;
 import no.runsafe.worldguardbridge.WorldGuardInterface;
 
@@ -96,7 +96,7 @@ public class Lobby implements IConfigurationChanged
 		player.teleport(this.location);
 	}
 
-	public void teleportLobbyPlayers(RunsafeLocation location)
+	public void teleportLobbyPlayers(ILocation location)
 	{
 		// Loop every player in the lobby and teleport them to the given location.
 		for (IPlayer player : this.getPlayersInLobby())
@@ -110,7 +110,7 @@ public class Lobby implements IConfigurationChanged
 
 	public void playStartSound()
 	{
-		this.location.Play(Sound.Creature.Wither.Spawn, 1000, 0); // Play a gong like sound when the match starts.
+		this.location.playSound(Sound.Creature.Wither.Spawn, 1000, 0); // Play a gong like sound when the match starts.
 	}
 
 	private boolean lobbySetup;
@@ -118,5 +118,5 @@ public class Lobby implements IConfigurationChanged
 	private String lobbyRegion;
 	private WorldGuardInterface worldGuard;
 	private IOutput output;
-	private RunsafeLocation location;
+	private ILocation location;
 }

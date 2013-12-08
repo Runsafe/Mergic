@@ -1,5 +1,6 @@
 package no.runsafe.mergic.magic.spells;
 
+import no.runsafe.framework.api.ILocation;
 import no.runsafe.framework.api.IWorld;
 import no.runsafe.framework.api.event.entity.IEntityChangeBlockEvent;
 import no.runsafe.framework.api.player.IPlayer;
@@ -51,7 +52,7 @@ public class HellStorm implements Spell, IEntityChangeBlockEvent
 	public void onCast(IPlayer player)
 	{
 		int radius = 5; // Will be doubled in a square radius.
-		RunsafeLocation location = player.getLocation();
+		ILocation location = player.getLocation();
 		final IWorld world = player.getWorld();
 
 		if (location == null || world == null)
@@ -106,14 +107,14 @@ public class HellStorm implements Spell, IEntityChangeBlockEvent
 		// Are we tracking this entity?
 		if (blocks.containsKey(entityID))
 		{
-			RunsafeLocation location = entity.getLocation();
+			ILocation location = entity.getLocation();
 
 			if (location != null)
 			{
 				IPlayer player = RunsafeServer.Instance.getPlayerExact(blocks.get(entityID));
 
 				location.playEffect(WorldEffect.LAVA, 1, 20, 50); // Play a splash.
-				location.Play(Sound.Environment.Explode, 2, 1);
+				location.playSound(Sound.Environment.Explode, 2, 1);
 				for (IPlayer victim : location.getPlayersInRange(4))
 				{
 					if (player != null && player.getName().equals(victim.getName()))

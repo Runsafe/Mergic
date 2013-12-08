@@ -2,6 +2,7 @@ package no.runsafe.mergic;
 
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import no.runsafe.framework.api.IConfiguration;
+import no.runsafe.framework.api.ILocation;
 import no.runsafe.framework.api.IOutput;
 import no.runsafe.framework.api.IWorld;
 import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
@@ -86,7 +87,7 @@ public class Arena implements IConfigurationChanged
 
 
 		// Get a safe spot at the co-ordinates we generated.
-		RunsafeLocation loc = getSafeSpot(new RunsafeLocation(this.world, randomX, this.teleportY, randomZ));
+		ILocation loc = getSafeSpot(new RunsafeLocation(this.world, randomX, this.teleportY, randomZ));
 
 		// Adjust the location to be at the centre of the block.
 		loc.incrementX(0.5D);
@@ -96,7 +97,7 @@ public class Arena implements IConfigurationChanged
 		player.teleport(loc);
 	}
 
-	private RunsafeLocation getSafeSpot(RunsafeLocation location)
+	private ILocation getSafeSpot(ILocation location)
 	{
 		while (!location.getBlock().isAir()) // Loop until we find air.
 		{

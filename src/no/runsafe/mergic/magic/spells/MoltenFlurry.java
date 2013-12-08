@@ -1,7 +1,7 @@
 package no.runsafe.mergic.magic.spells;
 
+import no.runsafe.framework.api.ILocation;
 import no.runsafe.framework.api.player.IPlayer;
-import no.runsafe.framework.minecraft.RunsafeLocation;
 import no.runsafe.framework.minecraft.Sound;
 import no.runsafe.framework.minecraft.entity.ProjectileEntity;
 import no.runsafe.framework.minecraft.entity.RunsafeEntity;
@@ -46,12 +46,12 @@ public class MoltenFlurry implements Spell
 	@Override
 	public void onCast(final IPlayer player)
 	{
-		RunsafeLocation location = player.getLocation();
+		ILocation location = player.getLocation();
 		if (location == null)
 			return; // We don't want to continue if our location is borked.
 
 		location.incrementY(2); // Go up one blocks from the players head.
-		final RunsafeLocation loc = location; // Make a final version for the timers.
+		final ILocation loc = location; // Make a final version for the timers.
 
 		// Loop four times, triggering fireBalls() once per second.
 		int current = 0;
@@ -69,14 +69,14 @@ public class MoltenFlurry implements Spell
 		}
 	}
 
-	private void fireBalls(IPlayer player, RunsafeLocation location)
+	private void fireBalls(IPlayer player, ILocation location)
 	{
 		int current = 0;
 		while (current < 4)
 		{
 			RunsafeEntity entity = player.Launch(ProjectileEntity.SmallFireball);
 			entity.teleport(location);
-			location.Play(Sound.Creature.Ghast.Fireball, 2, 1);
+			location.playSound(Sound.Creature.Ghast.Fireball, 2, 1);
 			entity.setVelocity(this.fireVectors[current]);
 			current++;
 		}

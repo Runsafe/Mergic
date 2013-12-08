@@ -1,8 +1,8 @@
 package no.runsafe.mergic.magic.spells;
 
+import no.runsafe.framework.api.ILocation;
 import no.runsafe.framework.api.entity.IEntity;
 import no.runsafe.framework.api.player.IPlayer;
-import no.runsafe.framework.minecraft.RunsafeLocation;
 import no.runsafe.framework.minecraft.player.RunsafePlayer;
 import no.runsafe.mergic.magic.MagicSchool;
 import no.runsafe.mergic.magic.Spell;
@@ -48,7 +48,7 @@ public class SkyStrikes implements Spell
 		{
 			if (entity instanceof IPlayer)
 			{
-				RunsafeLocation strikeSpot = entity.getLocation().top(); // Get the strike location.
+				ILocation strikeSpot = entity.getLocation().findTop(); // Get the strike location.
 
 				if (entity.getLocation().distance(strikeSpot) <= 2)
 				{

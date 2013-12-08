@@ -1,7 +1,7 @@
 package no.runsafe.mergic.magic.spells;
 
+import no.runsafe.framework.api.ILocation;
 import no.runsafe.framework.api.player.IPlayer;
-import no.runsafe.framework.minecraft.RunsafeLocation;
 import no.runsafe.framework.minecraft.Sound;
 import no.runsafe.framework.minecraft.entity.ProjectileEntity;
 import no.runsafe.mergic.magic.MagicSchool;
@@ -44,8 +44,8 @@ public class ShadowStrike implements Spell
 	public void onCast(IPlayer player)
 	{
 		player.Fire(ProjectileEntity.WitherSkull);
-		RunsafeLocation loc = player.getLocation();
-		loc.Play(Sound.Creature.Wither.Hurt, 2, 2);
-		loc.Play(Sound.Creature.Wither.Shoot, 2, -1);
+		ILocation loc = player.getLocation();
+		loc.playSound(Sound.Creature.Wither.Hurt, 2, 2);
+		loc.playSound(Sound.Creature.Wither.Shoot, 2, -1);
 	}
 }

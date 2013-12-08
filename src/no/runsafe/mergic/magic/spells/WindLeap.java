@@ -1,8 +1,9 @@
 package no.runsafe.mergic.magic.spells;
 
 
+import no.runsafe.framework.api.ILocation;
 import no.runsafe.framework.api.player.IPlayer;
-import no.runsafe.framework.minecraft.RunsafeLocation;
+import no.runsafe.framework.internal.wrapper.BukkitLocation;
 import no.runsafe.framework.minecraft.Sound;
 import no.runsafe.mergic.magic.MagicSchool;
 import no.runsafe.mergic.magic.Spell;
@@ -46,9 +47,9 @@ public class WindLeap implements Spell
 	public void onCast(final IPlayer player)
 	{
 		// Throw the player in the air to begin.
-		RunsafeLocation loc = player.getLocation();
-		player.setVelocity(loc.getDirection().add(new Vector(0, 2, 0)));
-		loc.Play(Sound.Creature.Golem.Death, 2, -1);
+		ILocation loc = player.getLocation();
+		player.setVelocity(((BukkitLocation) loc).getDirection().add(new Vector(0, 2, 0)));
+		loc.playSound(Sound.Creature.Golem.Death, 2, -1);
 
 		// Throw the player forward two seconds later.
 		SpellHandler.scheduler.startSyncTask(new Runnable()
@@ -56,9 +57,9 @@ public class WindLeap implements Spell
 			@Override
 			public void run()
 			{
-				RunsafeLocation playerLoc = player.getLocation();
-				player.setVelocity(playerLoc.getDirection().multiply(3));
-				playerLoc.Play(Sound.Player.Breath, 2, -1);
+				ILocation playerLoc = player.getLocation();
+				player.setVelocity(((BukkitLocation) playerLoc).getDirection().multiply(3));
+				playerLoc.playSound(Sound.Player.Breath, 2, -1);
 			}
 		}, 1);
 	}

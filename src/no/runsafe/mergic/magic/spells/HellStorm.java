@@ -1,6 +1,7 @@
 package no.runsafe.mergic.magic.spells;
 
 import no.runsafe.framework.api.ILocation;
+import no.runsafe.framework.api.IServer;
 import no.runsafe.framework.api.IWorld;
 import no.runsafe.framework.api.event.entity.IEntityChangeBlockEvent;
 import no.runsafe.framework.api.player.IPlayer;
@@ -18,6 +19,11 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class HellStorm implements Spell, IEntityChangeBlockEvent
 {
+	public HellStorm(IServer server)
+	{
+		this.server = server;
+	}
+
 	@Override
 	public int getCooldown()
 	{
@@ -111,7 +117,7 @@ public class HellStorm implements Spell, IEntityChangeBlockEvent
 
 			if (location != null)
 			{
-				IPlayer player = RunsafeServer.Instance.getPlayerExact(blocks.get(entityID));
+				IPlayer player = server.getPlayerExact(blocks.get(entityID));
 
 				location.playEffect(WorldEffect.LAVA, 1, 20, 50); // Play a splash.
 				location.playSound(Sound.Environment.Explode, 2, 1);
@@ -137,6 +143,8 @@ public class HellStorm implements Spell, IEntityChangeBlockEvent
 			}
 		}
 	}
+
+	private final IServer server;
 
 	private static ConcurrentHashMap<Integer, String> blocks = new ConcurrentHashMap<Integer, String>();
 }

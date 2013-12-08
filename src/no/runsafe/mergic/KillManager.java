@@ -1,8 +1,8 @@
 package no.runsafe.mergic;
 
+import no.runsafe.framework.api.IServer;
 import no.runsafe.framework.api.event.entity.IEntityDamageByEntityEvent;
 import no.runsafe.framework.api.player.IPlayer;
-import no.runsafe.framework.minecraft.RunsafeServer;
 import no.runsafe.framework.minecraft.entity.RunsafeEntity;
 import no.runsafe.framework.minecraft.entity.RunsafeProjectile;
 import no.runsafe.framework.minecraft.event.entity.RunsafeEntityDamageByEntityEvent;
@@ -13,6 +13,11 @@ import java.util.Map;
 
 public class KillManager implements IEntityDamageByEntityEvent
 {
+	public KillManager(IServer server)
+	{
+		this.server = server;
+	}
+
 	@Override
 	public void OnEntityDamageByEntity(RunsafeEntityDamageByEntityEvent event)
 	{
@@ -61,7 +66,7 @@ public class KillManager implements IEntityDamageByEntityEvent
 		if (this.lastDamage.containsKey(playerName))
 		{
 			String killerName = this.lastDamage.get(playerName);
-			IPlayer killer = RunsafeServer.Instance.getPlayerExact(killerName);
+			IPlayer killer = server.getPlayerExact(killerName);
 
 			if (killer != null)
 			{
@@ -76,7 +81,7 @@ public class KillManager implements IEntityDamageByEntityEvent
 	{
 		String playerName = player.getName();
 		if (this.lastDamage.containsKey(playerName))
-			return RunsafeServer.Instance.getPlayerExact(this.lastDamage.get(playerName));
+			return server.getPlayerExact(this.lastDamage.get(playerName));
 
 		return null;
 	}
@@ -92,6 +97,7 @@ public class KillManager implements IEntityDamageByEntityEvent
 		return MapUtil.sortByValue(this.killCount);
 	}
 
+	private final IServer server;
 	private HashMap<String, String> lastDamage = new HashMap<String, String>();
 	private HashMap<String, Integer> killCount = new HashMap<String, Integer>();
 }

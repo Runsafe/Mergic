@@ -3,9 +3,9 @@ package no.runsafe.mergic;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import no.runsafe.framework.api.IConfiguration;
 import no.runsafe.framework.api.ILocation;
-import no.runsafe.framework.api.IOutput;
 import no.runsafe.framework.api.IWorld;
 import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
+import no.runsafe.framework.api.log.IConsole;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.RunsafeLocation;
 import no.runsafe.worldguardbridge.WorldGuardInterface;
@@ -15,9 +15,9 @@ import java.util.List;
 
 public class Arena implements IConfigurationChanged
 {
-	public Arena(IOutput output, WorldGuardInterface worldGuard)
+	public Arena(IConsole output, WorldGuardInterface worldGuard)
 	{
-		this.output = output;
+		this.console = output;
 		this.worldGuard = worldGuard;
 	}
 
@@ -31,7 +31,7 @@ public class Arena implements IConfigurationChanged
 		this.world = configuration.getConfigValueAsWorld("arena.world");
 		if (this.world == null)
 		{
-			this.output.logError("Arena world missing or invalid in configuration.");
+			this.console.logError("Arena world missing or invalid in configuration.");
 			return;
 		}
 
@@ -39,7 +39,7 @@ public class Arena implements IConfigurationChanged
 		this.region = configuration.getConfigValueAsString("arena.region");
 		if (this.region == null)
 		{
-			this.output.logError("Arena region missing from configuration.");
+			this.console.logError("Arena region missing from configuration.");
 			return;
 		}
 
@@ -47,14 +47,14 @@ public class Arena implements IConfigurationChanged
 		String teleportRegion = configuration.getConfigValueAsString("arena.teleportRegion");
 		if (teleportRegion == null)
 		{
-			this.output.logError("Arena teleport region missing from configuration.");
+			this.console.logError("Arena teleport region missing from configuration.");
 			return;
 		}
 
 		this.teleportY = configuration.getConfigValueAsInt("arena.teleportY");
 		if (this.teleportY == -1)
 		{
-			this.output.logError("Arena teleportY missing from configuration.");
+			this.console.logError("Arena teleportY missing from configuration.");
 			return;
 		}
 
@@ -62,7 +62,7 @@ public class Arena implements IConfigurationChanged
 		this.teleportRegion = this.worldGuard.getRegion(world, teleportRegion);
 		if (this.teleportRegion == null)
 		{
-			this.output.logError("Arena teleport region from configuration does not exist.");
+			this.console.logError("Arena teleport region from configuration does not exist.");
 			return;
 		}
 
@@ -166,7 +166,7 @@ public class Arena implements IConfigurationChanged
 	private boolean isSetup;
 	private IWorld world;
 	private int teleportY;
-	private IOutput output;
+	private IConsole console;
 	private WorldGuardInterface worldGuard;
 	private ProtectedRegion teleportRegion;
 	private String region;

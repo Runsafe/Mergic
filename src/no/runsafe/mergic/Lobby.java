@@ -2,9 +2,9 @@ package no.runsafe.mergic;
 
 import no.runsafe.framework.api.IConfiguration;
 import no.runsafe.framework.api.ILocation;
-import no.runsafe.framework.api.IOutput;
 import no.runsafe.framework.api.IWorld;
 import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
+import no.runsafe.framework.api.log.IConsole;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.Sound;
 import no.runsafe.worldguardbridge.WorldGuardInterface;
@@ -14,7 +14,7 @@ import java.util.List;
 
 public class Lobby implements IConfigurationChanged
 {
-	public Lobby(WorldGuardInterface worldGuard, IOutput output)
+	public Lobby(WorldGuardInterface worldGuard, IConsole output)
 	{
 		this.worldGuard = worldGuard;
 		this.output = output;
@@ -117,6 +117,6 @@ public class Lobby implements IConfigurationChanged
 	private IWorld lobbyWorld;
 	private String lobbyRegion;
 	private WorldGuardInterface worldGuard;
-	private IOutput output;
+	private IConsole output;
 	private ILocation location;
 }

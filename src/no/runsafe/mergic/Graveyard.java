@@ -2,6 +2,7 @@ package no.runsafe.mergic;
 
 import no.runsafe.framework.api.*;
 import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
+import no.runsafe.framework.api.log.IConsole;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.worldguardbridge.WorldGuardInterface;
 
@@ -11,11 +12,11 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class Graveyard implements IConfigurationChanged
 {
-	public Graveyard(Arena arena, IScheduler scheduler, IOutput output, WorldGuardInterface worldGuard)
+	public Graveyard(Arena arena, IScheduler scheduler, IConsole output, WorldGuardInterface worldGuard)
 	{
 		this.arena = arena;
 		this.scheduler = scheduler;
-		this.output = output;
+		this.console = output;
 		this.worldGuard = worldGuard;
 	}
 
@@ -29,7 +30,7 @@ public class Graveyard implements IConfigurationChanged
 		this.deadTime = configuration.getConfigValueAsInt("graveyard.deadTime");
 		if (this.deadTime < 0)
 		{
-			this.output.logError("Graveyard deadTime invalid or missing in configuration.");
+			this.console.logError("Graveyard deadTime invalid or missing in configuration.");
 			return;
 		}
 
@@ -37,7 +38,7 @@ public class Graveyard implements IConfigurationChanged
 		this.world = configuration.getConfigValueAsWorld("graveyard.world");
 		if (this.world == null)
 		{
-			this.output.logError("Graveyard world invalid or missing in configuration.");
+			this.console.logError("Graveyard world invalid or missing in configuration.");
 			return;
 		}
 
@@ -45,14 +46,14 @@ public class Graveyard implements IConfigurationChanged
 		this.region = configuration.getConfigValueAsString("graveyard.region");
 		if (this.region == null)
 		{
-			this.output.logError("Graveyard region missing in configuration.");
+			this.console.logError("Graveyard region missing in configuration.");
 			return;
 		}
 
 		// Check the region exists, if not throw an error and return.
 		if (this.worldGuard.getRegion(this.world, this.region) == null)
 		{
-			this.output.logError("Graveyard region invalid in configuration.");
+			this.console.logError("Graveyard region invalid in configuration.");
 			return;
 		}
 
@@ -60,7 +61,7 @@ public class Graveyard implements IConfigurationChanged
 		this.location = configuration.getConfigValueAsLocation("graveyard.location");
 		if (this.location == null)
 		{
-			this.output.logError("Graveyard location missing or invalid in configuration.");
+			this.console.logError("Graveyard location missing or invalid in configuration.");
 			return;
 		}
 
@@ -130,6 +131,6 @@ public class Graveyard implements IConfigurationChanged
 	private String region;
 	private ILocation location;
 	private boolean isSetup;
-	private IOutput output;
+	private IConsole console;
 	private WorldGuardInterface worldGuard;
 }

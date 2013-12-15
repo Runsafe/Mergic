@@ -8,14 +8,14 @@ import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
 import no.runsafe.framework.api.log.IConsole;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.RunsafeLocation;
-import no.runsafe.worldguardbridge.WorldGuardInterface;
+import no.runsafe.worldguardbridge.IRegionControl;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Arena implements IConfigurationChanged
 {
-	public Arena(IConsole output, WorldGuardInterface worldGuard)
+	public Arena(IConsole output, IRegionControl worldGuard)
 	{
 		this.console = output;
 		this.worldGuard = worldGuard;
@@ -167,7 +167,7 @@ public class Arena implements IConfigurationChanged
 	private IWorld world;
 	private int teleportY;
 	private IConsole console;
-	private WorldGuardInterface worldGuard;
+	private IRegionControl worldGuard;
 	private ProtectedRegion teleportRegion;
 	private String region;
 	private List<String> players = new ArrayList<String>();

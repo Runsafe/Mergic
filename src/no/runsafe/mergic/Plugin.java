@@ -2,20 +2,22 @@ package no.runsafe.mergic;
 
 import no.runsafe.framework.RunsafeConfigurablePlugin;
 import no.runsafe.framework.api.command.Command;
+import no.runsafe.framework.features.Commands;
+import no.runsafe.framework.features.Events;
 import no.runsafe.mergic.commands.CreateSpellBook;
 import no.runsafe.mergic.commands.StartGameCommand;
 import no.runsafe.mergic.commands.StopGameCommand;
-import no.runsafe.mergic.magic.spells.*;
 import no.runsafe.mergic.magic.CooldownManager;
 import no.runsafe.mergic.magic.SpellHandler;
-import no.runsafe.worldguardbridge.WorldGuardInterface;
+import no.runsafe.mergic.magic.spells.*;
 
 public class Plugin extends RunsafeConfigurablePlugin
 {
 	@Override
 	protected void PluginSetup()
 	{
-		addComponent(getFirstPluginAPI(WorldGuardInterface.class));
+		addComponent(Events.class);
+		addComponent(Commands.class);
 
 		// Arena related things.
 		this.addComponent(KillManager.class);

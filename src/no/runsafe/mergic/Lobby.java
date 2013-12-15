@@ -7,14 +7,14 @@ import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
 import no.runsafe.framework.api.log.IConsole;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.Sound;
-import no.runsafe.worldguardbridge.WorldGuardInterface;
+import no.runsafe.worldguardbridge.IRegionControl;
 
 import java.util.Collections;
 import java.util.List;
 
 public class Lobby implements IConfigurationChanged
 {
-	public Lobby(WorldGuardInterface worldGuard, IConsole output)
+	public Lobby(IRegionControl worldGuard, IConsole output)
 	{
 		this.worldGuard = worldGuard;
 		this.output = output;
@@ -116,7 +116,7 @@ public class Lobby implements IConfigurationChanged
 	private boolean lobbySetup;
 	private IWorld lobbyWorld;
 	private String lobbyRegion;
-	private WorldGuardInterface worldGuard;
+	private IRegionControl worldGuard;
 	private IConsole output;
 	private ILocation location;
 }

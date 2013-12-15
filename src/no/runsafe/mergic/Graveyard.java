@@ -1,10 +1,13 @@
 package no.runsafe.mergic;
 
-import no.runsafe.framework.api.*;
+import no.runsafe.framework.api.IConfiguration;
+import no.runsafe.framework.api.ILocation;
+import no.runsafe.framework.api.IScheduler;
+import no.runsafe.framework.api.IWorld;
 import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
 import no.runsafe.framework.api.log.IConsole;
 import no.runsafe.framework.api.player.IPlayer;
-import no.runsafe.worldguardbridge.WorldGuardInterface;
+import no.runsafe.worldguardbridge.IRegionControl;
 
 import java.util.List;
 import java.util.Map;
@@ -12,7 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class Graveyard implements IConfigurationChanged
 {
-	public Graveyard(Arena arena, IScheduler scheduler, IConsole output, WorldGuardInterface worldGuard)
+	public Graveyard(Arena arena, IScheduler scheduler, IConsole output, IRegionControl worldGuard)
 	{
 		this.arena = arena;
 		this.scheduler = scheduler;
@@ -132,5 +135,5 @@ public class Graveyard implements IConfigurationChanged
 	private ILocation location;
 	private boolean isSetup;
 	private IConsole console;
-	private WorldGuardInterface worldGuard;
+	private IRegionControl worldGuard;
 }

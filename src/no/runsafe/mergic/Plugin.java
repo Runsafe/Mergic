@@ -14,7 +14,7 @@ import no.runsafe.mergic.magic.spells.*;
 public class Plugin extends RunsafeConfigurablePlugin
 {
 	@Override
-	protected void PluginSetup()
+	protected void pluginSetup()
 	{
 		addComponent(Events.class);
 		addComponent(Commands.class);

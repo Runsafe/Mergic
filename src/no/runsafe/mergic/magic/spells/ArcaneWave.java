@@ -77,7 +77,7 @@ public class ArcaneWave implements Spell
 			); // Get the relative position, hopefully.
 
 			position.offset(0.5D, 0, 0.5D); // Offset to centre of the block.
-			position.playEffect(WorldEffect.CRIT, 1, 30, 50); // Play a sparkle at the location.
+			//position.playEffect(WorldEffect.CRIT, 1, 30, 50); // Play a sparkle at the location.
 			position.playSound(Sound.Environment.Fizz, 2, 1); // Play a sound effect for the spell!
 
 			for (IPlayer victim : position.getPlayersInRange(3))

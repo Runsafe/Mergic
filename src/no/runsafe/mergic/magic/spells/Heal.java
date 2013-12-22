@@ -51,7 +51,7 @@ public class Heal implements Spell
 				public void run()
 				{
 					player.heal(2); // Heal one heart of damage
-					player.getEyeLocation().playEffect(WorldEffect.HEART, 1, 2, 50); // Play heart effect.
+					//player.getEyeLocation().playEffect(WorldEffect.HEART, 1, 2, 50); // Play heart effect.
 				}
 			}, current);
 			current++;

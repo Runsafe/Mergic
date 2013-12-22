@@ -119,7 +119,7 @@ public class HellStorm implements Spell, IEntityChangeBlockEvent
 			{
 				IPlayer player = server.getPlayerExact(blocks.get(entityID));
 
-				location.playEffect(WorldEffect.LAVA, 1, 20, 50); // Play a splash.
+				//location.playEffect(WorldEffect.LAVA, 1, 20, 50); // Play a splash.
 				location.playSound(Sound.Environment.Explode, 2, 1);
 				for (IPlayer victim : location.getPlayersInRange(4))
 				{

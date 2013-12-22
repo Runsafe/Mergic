@@ -60,8 +60,8 @@ public class RepulsiveGale implements Spell
 
 				if (victimLocation != null)
 				{
-					victimLocation.playEffect(WorldEffect.ENCHANTMENT_TABLE, 1, 10, 50); // Shiny effect!
-					victimLocation.playSound(Sound.Player.Breath, 2, -1);
+					//victimLocation.playEffect(WorldEffect.ENCHANTMENT_TABLE, 1, 10, 50); // Shiny effect!
+					//victimLocation.playSound(Sound.Player.Breath, 2, -1);
 				}
 			}
 		}

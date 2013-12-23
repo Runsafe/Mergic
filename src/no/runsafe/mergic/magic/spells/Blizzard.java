@@ -66,23 +66,23 @@ public class Blizzard implements Spell, IEntityChangeBlockEvent
 
 		final String playerName = player.getName();
 
-		final int highX = location.getBlockX() + radius;
-		final int highZ = location.getBlockZ() + radius;
-		final int lowX = location.getBlockX() - radius;
-		final int lowZ = location.getBlockZ() - radius;
-		final int high = location.getBlockY() + 20;
+		final double highX = location.getBlockX() + radius;
+		final double highZ = location.getBlockZ() + radius;
+		final double lowX = location.getBlockX() - radius;
+		final double lowZ = location.getBlockZ() - radius;
+		final double high = location.getBlockY() + 20;
 
 		final int ticker = SpellHandler.scheduler.startSyncRepeatingTask(new Runnable()
 		{
 			@Override
 			public void run()
 			{
-				int x = lowX + (int) (Math.random() * ((highX - lowX) + 1));
-				int z = lowZ + (int) (Math.random() * ((highZ - lowZ) + 1));
+				double x = lowX + (int) (Math.random() * ((highX - lowX) + 1));
+				double z = lowZ + (int) (Math.random() * ((highZ - lowZ) + 1));
 
 				// Spawn a falling ice block randomly within the radius.
 				RunsafeFallingBlock block = ((RunsafeWorld) world).spawnFallingBlock(
-					new RunsafeLocation(world, x, high, z),
+					world.getLocation(x, high, z),
 					Item.BuildingBlock.Ice.getType(),
 					(byte) 0
 				);
@@ -118,7 +118,7 @@ public class Blizzard implements Spell, IEntityChangeBlockEvent
 			{
 				IPlayer player = server.getPlayerExact(blocks.get(entityID));
 
-				location.playEffect(WorldEffect.SPLASH, 1, 20, 50); // Play a splash.
+//				location.playEffect(WorldEffect.SPLASH, 1, 20, 50); // Play a splash.
 				location.playSound(Sound.Environment.Glass, 2, -1); // Play ice breaking sound.
 
 				for (IPlayer victim : location.getPlayersInRange(4))

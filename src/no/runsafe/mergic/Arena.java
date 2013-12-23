@@ -82,12 +82,12 @@ public class Arena implements IConfigurationChanged
 		this.players.add(player.getName());
 
 		// Create random X and Z co-ordinates within the region.
-		int randomX = getRandomBetween(teleportRegion.getMinimumPoint().getBlockX(), teleportRegion.getMaximumPoint().getBlockX());
-		int randomZ = getRandomBetween(teleportRegion.getMinimumPoint().getBlockZ(), teleportRegion.getMaximumPoint().getBlockZ());
+		double randomX = getRandomBetween(teleportRegion.getMinimumPoint().getBlockX(), teleportRegion.getMaximumPoint().getBlockX());
+		double randomZ = getRandomBetween(teleportRegion.getMinimumPoint().getBlockZ(), teleportRegion.getMaximumPoint().getBlockZ());
 
 
 		// Get a safe spot at the co-ordinates we generated.
-		ILocation loc = getSafeSpot(new RunsafeLocation(this.world, randomX, this.teleportY, randomZ));
+		ILocation loc = getSafeSpot(this.world.getLocation(randomX, this.teleportY, randomZ));
 
 		// Adjust the location to be at the centre of the block.
 		loc.incrementX(0.5D);
@@ -165,7 +165,7 @@ public class Arena implements IConfigurationChanged
 
 	private boolean isSetup;
 	private IWorld world;
-	private int teleportY;
+	private double teleportY;
 	private IConsole console;
 	private IRegionControl worldGuard;
 	private ProtectedRegion teleportRegion;

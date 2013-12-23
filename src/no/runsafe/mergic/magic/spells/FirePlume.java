@@ -4,7 +4,6 @@ import no.runsafe.framework.api.ILocation;
 import no.runsafe.framework.api.block.IBlock;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.Item;
-import no.runsafe.framework.minecraft.RunsafeLocation;
 import no.runsafe.mergic.magic.MagicSchool;
 import no.runsafe.mergic.magic.Spell;
 import no.runsafe.mergic.magic.SpellHandler;
@@ -64,8 +63,7 @@ public class FirePlume implements Spell
 		}
 
 		// Teleport the player to the middle of the block they are stood on to prevent them catching fire.
-		player.teleport(new RunsafeLocation(
-			location.getWorld(),
+		player.teleport(location.getWorld().getLocation(
 			location.getBlockX() + 0.5D,
 			location.getY(),
 			location.getBlockZ() + 0.5D
@@ -80,12 +78,7 @@ public class FirePlume implements Spell
 		for (int[] plumeStage : plumeStages)
 		{
 			// Work out a relative location for this plume stage.
-			IBlock block = new RunsafeLocation(
-				loc.getWorld(),
-				loc.getX() + plumeStage[0],
-				loc.getY(),
-				loc.getZ() + plumeStage[1]
-			).getBlock();
+			IBlock block = loc.add(plumeStage[0], 0.0D, plumeStage[1]).getBlock();
 
 			// Check if the block is air.
 			if (block.is(Item.Unavailable.Air))

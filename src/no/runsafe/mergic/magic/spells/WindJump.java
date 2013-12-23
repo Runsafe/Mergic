@@ -45,6 +45,6 @@ public class WindJump implements Spell
 	{
 		ILocation playerLoc = player.getLocation();
 		player.setVelocity(((BukkitLocation) playerLoc).getDirection().multiply(3));
-		playerLoc.playSound(Sound.Player.Breath, 2, -1);
+//		playerLoc.playSound(Sound.Player.Breath, 2, -1);
 	}
 }

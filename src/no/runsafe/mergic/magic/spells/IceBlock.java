@@ -4,7 +4,6 @@ import no.runsafe.framework.api.ILocation;
 import no.runsafe.framework.api.block.IBlock;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.Item;
-import no.runsafe.framework.minecraft.RunsafeLocation;
 import no.runsafe.framework.minecraft.Sound;
 import no.runsafe.mergic.magic.MagicSchool;
 import no.runsafe.mergic.magic.Spell;
@@ -60,8 +59,7 @@ public class IceBlock implements Spell
 		}, 5);
 
 		// Centre the player on the block they are stood on to prevent getting clipped into the ice.
-		player.teleport(new RunsafeLocation(
-			playerLocation.getWorld(),
+		player.teleport(playerLocation.getWorld().getLocation(
 			playerLocation.getBlockX() + 0.5D,
 			playerLocation.getY(),
 			playerLocation.getBlockZ() + 0.5D
@@ -85,12 +83,7 @@ public class IceBlock implements Spell
 		// Loop each relative position of the formation and set it to the item given.
 		for (int[] position : this.formation)
 		{
-			IBlock block = new RunsafeLocation(
-				location.getWorld(),
-				location.getBlockX() + position[0],
-				location.getBlockY() + position[1],
-				location.getBlockZ() + position[2]
-			).getBlock();
+			IBlock block = location.add(position[0], position[1], position[2]).getBlock();
 
 			// Check if we have the desired previous block, if so, update it to the new one.
 			if (block.is(previous))

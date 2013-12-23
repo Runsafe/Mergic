@@ -67,11 +67,8 @@ public class ArcaneWave implements Spell
 	{
 		for (int[] node : this.offsets)
 		{
-			ILocation position = location.getWorld().getLocation(
-				location.getX() + (step * node[0]),
-				location.getY(),
-				location.getZ() + (step * node[1])
-			); // Get the relative position, hopefully.
+			// Get the relative position, hopefully.
+			ILocation position = location.add(step * node[0], 0.0, step * node[1]);
 
 			position.offset(0.5D, 0, 0.5D); // Offset to centre of the block.
 			//position.playEffect(WorldEffect.CRIT, 1, 30, 50); // Play a sparkle at the location.

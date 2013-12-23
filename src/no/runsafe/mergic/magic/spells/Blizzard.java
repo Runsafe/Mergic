@@ -118,7 +118,7 @@ public class Blizzard implements Spell, IEntityChangeBlockEvent
 			{
 				IPlayer player = server.getPlayerExact(blocks.get(entityID));
 
-//				location.playEffect(WorldEffect.SPLASH, 1, 20, 50); // Play a splash.
+				//location.playEffect(WorldEffect.SPLASH, 1, 20, 50); // Play a splash.
 				location.playSound(Sound.Environment.Glass, 2, -1); // Play ice breaking sound.
 
 				for (IPlayer victim : location.getPlayersInRange(4))

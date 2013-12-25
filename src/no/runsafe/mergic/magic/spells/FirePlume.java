@@ -1,5 +1,6 @@
 package no.runsafe.mergic.magic.spells;
 
+import no.runsafe.framework.api.ILocalizer;
 import no.runsafe.framework.api.ILocation;
 import no.runsafe.framework.api.block.IBlock;
 import no.runsafe.framework.api.player.IPlayer;
@@ -78,7 +79,9 @@ public class FirePlume implements Spell
 		for (int[] plumeStage : plumeStages)
 		{
 			// Work out a relative location for this plume stage.
-			IBlock block = loc.add(plumeStage[0], 0.0D, plumeStage[1]).getBlock();
+			ILocation point = loc.clone();
+			point.offset(plumeStage[0], 0.0D, plumeStage[1]);
+			IBlock block = point.getBlock();
 
 			// Check if the block is air.
 			if (block.is(Item.Unavailable.Air))

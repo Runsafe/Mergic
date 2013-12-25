@@ -83,7 +83,9 @@ public class IceBlock implements Spell
 		// Loop each relative position of the formation and set it to the item given.
 		for (int[] position : this.formation)
 		{
-			IBlock block = location.add(position[0], position[1], position[2]).getBlock();
+			ILocation point = location.clone();
+			point.offset(position[0], position[1], position[2]);
+			IBlock block = point.getBlock();
 
 			// Check if we have the desired previous block, if so, update it to the new one.
 			if (block.is(previous))

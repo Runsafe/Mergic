@@ -5,7 +5,5 @@ public enum MagicSchool
 	FIRE,
 	FROST,
 	SHADOW,
-	NATURE,
-	WIND,
-	ARCANE
+	NATURE
 }

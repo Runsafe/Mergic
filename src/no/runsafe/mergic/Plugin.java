@@ -20,33 +20,33 @@ public class Plugin extends RunsafeConfigurablePlugin
 		addComponent(Commands.class);
 
 		// Arena related things.
-		this.addComponent(KillManager.class);
+		addComponent(KillManager.class);
 
-		this.addComponent(Arena.class);
-		this.addComponent(Lobby.class);
-		this.addComponent(Graveyard.class);
-		this.addComponent(Game.class);
+		addComponent(Arena.class);
+		addComponent(Lobby.class);
+		addComponent(Graveyard.class);
+		addComponent(Game.class);
 
-		this.addComponent(CooldownManager.class);
-		this.addComponent(PlayerMonitor.class);
+		addComponent(CooldownManager.class);
+		addComponent(PlayerMonitor.class);
 
 		// Spell related things.
-		this.addComponent(SpellHandler.class);
+		addComponent(SpellHandler.class);
 
 		// Spell list
-		//this.addComponent(IceBlock.class);
-		//this.addComponent(BasicHeal.class);
-		//this.addComponent(Heal.class);
-		//this.addComponent(ConjureArmour.class);
+		//addComponent(IceBlock.class);
+		//addComponent(BasicHeal.class);
+		//addComponent(Heal.class);
+		//addComponent(ConjureArmour.class);
 
 		// Util
-		this.addComponent(ControlledEntityCleaner.class);
+		addComponent(ControlledEntityCleaner.class);
 
 		// Commands
 		Command mergic = new Command("mergic", "A collection of commands to control Wizard PvP", null);
 		mergic.addSubCommand(getInstance(StartGameCommand.class));
 		mergic.addSubCommand(getInstance(StopGameCommand.class));
 		mergic.addSubCommand(getInstance(CreateSpellBook.class));
-		this.addComponent(mergic);
+		addComponent(mergic);
 	}
 }

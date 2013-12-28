@@ -86,9 +86,10 @@ public class EquipmentManager
 
 	public static void removeFullProtection(IPlayer player)
 	{
-		RunsafeMeta air = Item.Unavailable.Air.getItem();
-		player.setChestplate(air);
-		player.setLeggings(air);
-		player.setHelmet(air);
+		player.setChestplate(AIR);
+		player.setLeggings(AIR);
+		player.setHelmet(AIR);
 	}
+
+	private static final RunsafeMeta AIR = Item.Unavailable.Air.getItem();
 }

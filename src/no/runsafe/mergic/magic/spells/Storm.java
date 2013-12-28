@@ -45,7 +45,7 @@ public abstract class Storm implements Spell, IEntityChangeBlockEvent
 	@Override
 	public void onCast(IPlayer player)
 	{
-		int radius = 5; // Will be doubled in a square radius.
+		int radius = 10; // Will be doubled in a square radius.
 		ILocation location = player.getLocation();
 		final IWorld world = player.getWorld();
 

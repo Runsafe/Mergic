@@ -34,20 +34,9 @@ public class Plugin extends RunsafeConfigurablePlugin
 		this.addComponent(SpellHandler.class);
 
 		// Spell list
-		this.addComponent(BasicFireball.class);
-		this.addComponent(Fireball.class);
-		this.addComponent(ShadowStrike.class);
-		this.addComponent(ArrowBarrage.class);
-		this.addComponent(WindJump.class);
-		this.addComponent(WindLeap.class);
-		this.addComponent(FirePlume.class);
 		this.addComponent(IceBlock.class);
-		this.addComponent(SkyStrikes.class);
-		this.addComponent(MoltenFlurry.class);
-		this.addComponent(ArcaneWave.class);
 		this.addComponent(BasicHeal.class);
 		this.addComponent(Heal.class);
-		this.addComponent(RepulsiveGale.class);
 		this.addComponent(Blizzard.class);
 		this.addComponent(HellStorm.class);
 		this.addComponent(ConjureArmour.class);

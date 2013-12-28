@@ -42,6 +42,6 @@ public class BasicHeal implements Spell
 	public void onCast(IPlayer player)
 	{
 		player.heal(6); // Heal the player for 3 hearts.
-		//player.getEyeLocation().playEffect(WorldEffect.HEART, 1, 4, 50); // Play a heart effect for healing!
+		player.getEyeLocation().playEffect(WorldEffect.HEART, 1, 4, 50); // Play a heart effect for healing!
 	}
 }

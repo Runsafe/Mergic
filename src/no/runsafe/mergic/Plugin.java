@@ -34,10 +34,8 @@ public class Plugin extends RunsafeConfigurablePlugin
 		addComponent(SpellHandler.class);
 
 		// Spell list
-		//addComponent(IceBlock.class);
-		//addComponent(BasicHeal.class);
-		//addComponent(Heal.class);
-		//addComponent(ConjureArmour.class);
+		addComponent(FireStorm.class);
+		addComponent(IceStorm.class);
 
 		// Util
 		addComponent(ControlledEntityCleaner.class);

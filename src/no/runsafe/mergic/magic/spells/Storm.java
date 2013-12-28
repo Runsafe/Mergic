@@ -19,9 +19,10 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class Storm implements Spell, IEntityChangeBlockEvent
 {
-	public Storm(IServer server)
+	public Storm(IServer server, Item blockType)
 	{
 		this.server = server;
+		this.blockType = blockType;
 	}
 
 	@Override
@@ -71,7 +72,7 @@ public abstract class Storm implements Spell, IEntityChangeBlockEvent
 				// Spawn a falling ice block randomly within the radius.
 				RunsafeFallingBlock block = ((RunsafeWorld) world).spawnFallingBlock(
 					world.getLocation(x, high, z),
-					Item.BuildingBlock.Ice.getType(),
+					blockType.getType(),
 					(byte) 0
 				);
 				block.setDropItem(false);
@@ -131,6 +132,7 @@ public abstract class Storm implements Spell, IEntityChangeBlockEvent
 		}
 	}
 
+	private final Item blockType;
 	private final IServer server;
 	private static ConcurrentHashMap<Integer, String> blocks = new ConcurrentHashMap<Integer, String>();
 }

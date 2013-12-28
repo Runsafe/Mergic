@@ -114,7 +114,6 @@ public abstract class Storm implements Spell, IEntityChangeBlockEvent
 					if (player != null && player.getName().equals(victim.getName()))
 						continue;
 
-					Buff.Utility.Movement.DecreaseSpeed.duration(10).applyTo(victim); // Slow the player.
 					victim.damage(3D, player); // Three hearts of damage.
 				}
 			}
@@ -133,6 +132,5 @@ public abstract class Storm implements Spell, IEntityChangeBlockEvent
 	}
 
 	private final IServer server;
-
 	private static ConcurrentHashMap<Integer, String> blocks = new ConcurrentHashMap<Integer, String>();
 }

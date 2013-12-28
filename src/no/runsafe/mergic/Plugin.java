@@ -37,7 +37,6 @@ public class Plugin extends RunsafeConfigurablePlugin
 		//this.addComponent(IceBlock.class);
 		//this.addComponent(BasicHeal.class);
 		//this.addComponent(Heal.class);
-		//this.addComponent(Storm.class);
 		//this.addComponent(ConjureArmour.class);
 
 		// Util

@@ -17,9 +17,9 @@ import no.runsafe.mergic.magic.SpellType;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-public class Blizzard implements Spell, IEntityChangeBlockEvent
+public abstract class Storm implements Spell, IEntityChangeBlockEvent
 {
-	public Blizzard(IServer server)
+	public Storm(IServer server)
 	{
 		this.server = server;
 	}
@@ -27,31 +27,19 @@ public class Blizzard implements Spell, IEntityChangeBlockEvent
 	@Override
 	public int getCooldown()
 	{
-		return 10;
-	}
-
-	@Override
-	public String getName()
-	{
-		return "Blizzard";
-	}
-
-	@Override
-	public MagicSchool getSchool()
-	{
-		return MagicSchool.FROST;
+		return 20;
 	}
 
 	@Override
 	public SpellType getType()
 	{
-		return SpellType.GENERIC;
+		return SpellType.STORM;
 	}
 
 	@Override
 	public String getDescription()
 	{
-		return "Conjures up a blizzard. Chilly!";
+		return "Conjure a " + getSchool().name().toLowerCase() + " storm which will rain down on the area.";
 	}
 
 	@Override
@@ -88,7 +76,7 @@ public class Blizzard implements Spell, IEntityChangeBlockEvent
 				);
 				block.setDropItem(false);
 
-				Blizzard.blocks.put(block.getEntityId(), playerName); // Track the block.
+				Storm.blocks.put(block.getEntityId(), playerName); // Track the block.
 				ControlledEntityCleaner.registerEntity(block); // Register for clean-up.
 			}
 		}, 5L, 5L);

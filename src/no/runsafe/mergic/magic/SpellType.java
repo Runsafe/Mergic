@@ -4,7 +4,7 @@ import no.runsafe.framework.minecraft.Item;
 
 public enum SpellType
 {
-	AOE("Right click to summon this area-of-effect ability.", Item.Special.Crafted.EnchantedBook, InteractType.RIGHT_CLICK),
+	STORM("Right click to conjure a storm.", Item.Special.Crafted.EnchantedBook, InteractType.RIGHT_CLICK),
 	PROJECTILE("Left click to attack with this wand.", Item.Materials.Stick, InteractType.LEFT_CLICK),
 	GENERIC("Right click to activate this spell.", Item.Special.Crafted.EnchantedBook, InteractType.RIGHT_CLICK),
 	WARD("Right click to activate this protection/ward.", Item.Special.Crafted.EnchantedBook, InteractType.RIGHT_CLICK),

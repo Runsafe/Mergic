@@ -12,7 +12,7 @@ import no.runsafe.mergic.magic.CooldownManager;
 import no.runsafe.mergic.magic.SpellHandler;
 import no.runsafe.mergic.magic.spells.*;
 
-public class Plugin extends RunsafeConfigurablePlugin
+public class Mergic extends RunsafeConfigurablePlugin
 {
 	@Override
 	protected void pluginSetup()

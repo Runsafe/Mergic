@@ -1,5 +1,5 @@
 name: Mergic
-main: no.runsafe.mergic.Plugin
+main: no.runsafe.mergic.Mergic
 version: 1.0.@BUILD@
 author: Kruithne
 depend: [RunsafeWorldGuardBridge]

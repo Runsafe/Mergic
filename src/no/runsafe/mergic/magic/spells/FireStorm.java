@@ -8,7 +8,7 @@ public class FireStorm extends Storm
 {
 	public FireStorm(IServer server)
 	{
-		super(server, Item.Unavailable.Fire);
+		super(server, Item.Unavailable.StationaryLava);
 	}
 
 	@Override

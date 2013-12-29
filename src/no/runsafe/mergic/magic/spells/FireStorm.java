@@ -8,7 +8,7 @@ public class FireStorm extends Storm
 {
 	public FireStorm(IServer server)
 	{
-		super(server, Item.BuildingBlock.CoalBlock);
+		super(server, Item.BuildingBlock.Sponge);
 	}
 
 	@Override

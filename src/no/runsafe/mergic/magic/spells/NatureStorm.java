@@ -8,7 +8,7 @@ public class NatureStorm extends Storm
 {
 	public NatureStorm(IServer server)
 	{
-		super(server, Item.Decoration.Vine);
+		super(server, Item.BuildingBlock.Wood.Oak);
 	}
 
 	@Override

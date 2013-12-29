@@ -6,7 +6,6 @@ import no.runsafe.mergic.magic.MagicSchool;
 
 public class FireStorm extends Storm
 {
-
 	public FireStorm(IServer server)
 	{
 		super(server, Item.BuildingBlock.CoalBlock);

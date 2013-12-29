@@ -3,6 +3,7 @@ package no.runsafe.mergic.magic.spells;
 import no.runsafe.framework.api.ILocation;
 import no.runsafe.framework.api.IServer;
 import no.runsafe.framework.api.IWorld;
+import no.runsafe.framework.api.IWorldEffect;
 import no.runsafe.framework.api.event.entity.IEntityChangeBlockEvent;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.*;
@@ -23,6 +24,7 @@ public abstract class Storm implements Spell, IEntityChangeBlockEvent
 	{
 		this.server = server;
 		this.blockType = blockType;
+		this.effect = new WorldBlockEffect(WorldBlockEffectType.BLOCK_DUST, blockType);
 	}
 
 	@Override
@@ -71,9 +73,9 @@ public abstract class Storm implements Spell, IEntityChangeBlockEvent
 
 				// Spawn a falling ice block randomly within the radius.
 				RunsafeFallingBlock block = ((RunsafeWorld) world).spawnFallingBlock(
-					world.getLocation(x, high, z),
-					blockType.getType(),
-					(byte) 0
+						world.getLocation(x, high, z),
+						blockType.getType(),
+						(byte) 0
 				);
 				block.setDropItem(false);
 
@@ -107,7 +109,7 @@ public abstract class Storm implements Spell, IEntityChangeBlockEvent
 			{
 				IPlayer player = server.getPlayerExact(blocks.get(entityID));
 
-				location.playEffect(WorldEffect.SPLASH, 1, 20, 50); // Play a splash.
+				location.playEffect(effect, 20, 50);
 				location.playSound(Sound.Environment.Glass, 2, -1); // Play ice breaking sound.
 
 				for (IPlayer victim : location.getPlayersInRange(4))
@@ -133,6 +135,7 @@ public abstract class Storm implements Spell, IEntityChangeBlockEvent
 	}
 
 	private final Item blockType;
+	private final IWorldEffect effect;
 	private final IServer server;
 	private static ConcurrentHashMap<Integer, String> blocks = new ConcurrentHashMap<Integer, String>();
 }

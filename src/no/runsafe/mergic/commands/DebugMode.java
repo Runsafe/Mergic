@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class DebugMode extends PlayerCommand
 {
-	protected DebugMode(PlayerMonitor playerMonitor)
+	public DebugMode(PlayerMonitor playerMonitor)
 	{
 		super("debug", "Toggle debug mode.", "runsafe.mergic.debug");
 		this.playerMonitor = playerMonitor;

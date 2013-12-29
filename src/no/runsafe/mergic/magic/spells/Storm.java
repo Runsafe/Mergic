@@ -79,7 +79,7 @@ public abstract class Storm implements Spell, IEntityChangeBlockEvent
 				);
 				block.setDropItem(false);
 
-				Storm.blocks.put(block.getEntityId(), playerName); // Track the block.
+				blocks.put(block.getEntityId(), playerName); // Track the block.
 				ControlledEntityCleaner.registerEntity(block); // Register for clean-up.
 			}
 		}, 5L, 5L);
@@ -137,5 +137,5 @@ public abstract class Storm implements Spell, IEntityChangeBlockEvent
 	private final Item blockType;
 	private final IWorldEffect effect;
 	private final IServer server;
-	private static ConcurrentHashMap<Integer, String> blocks = new ConcurrentHashMap<Integer, String>();
+	private final ConcurrentHashMap<Integer, String> blocks = new ConcurrentHashMap<Integer, String>();
 }

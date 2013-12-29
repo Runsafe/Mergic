@@ -38,6 +38,7 @@ public class Mergic extends RunsafeConfigurablePlugin
 		addComponent(FireStorm.class);
 		addComponent(IceStorm.class);
 		addComponent(NatureStorm.class);
+		addComponent(ShadowStorm.class);
 
 		// Util
 		addComponent(ControlledEntityCleaner.class);

@@ -5,6 +5,7 @@ import no.runsafe.framework.api.command.Command;
 import no.runsafe.framework.features.Commands;
 import no.runsafe.framework.features.Events;
 import no.runsafe.mergic.commands.CreateSpellBook;
+import no.runsafe.mergic.commands.DebugMode;
 import no.runsafe.mergic.commands.StartGameCommand;
 import no.runsafe.mergic.commands.StopGameCommand;
 import no.runsafe.mergic.magic.CooldownManager;
@@ -45,6 +46,7 @@ public class Plugin extends RunsafeConfigurablePlugin
 		mergic.addSubCommand(getInstance(StartGameCommand.class));
 		mergic.addSubCommand(getInstance(StopGameCommand.class));
 		mergic.addSubCommand(getInstance(CreateSpellBook.class));
+		mergic.addSubCommand(getInstance(DebugMode.class));
 		addComponent(mergic);
 	}
 }

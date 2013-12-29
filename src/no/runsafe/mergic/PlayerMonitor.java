@@ -13,6 +13,8 @@ import no.runsafe.framework.minecraft.event.player.RunsafePlayerJoinEvent;
 import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
 import no.runsafe.mergic.magic.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPlayerInteractEvent, IPluginDisabled, IPlayerDamageEvent
@@ -142,6 +144,24 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 		this.game.cancelGame();
 	}
 
+	public boolean isDebugging(IPlayer player)
+	{
+		return debuggers.contains(player.getName());
+	}
+
+	public boolean toggleDebugging(IPlayer player)
+	{
+		boolean isDebugging = isDebugging(player);
+		String playerName = player.getName();
+
+		if (isDebugging)
+			debuggers.remove(playerName);
+		else
+			debuggers.add(playerName);
+
+		return !isDebugging;
+	}
+
 	private Graveyard graveyard;
 	private Arena arena;
 	private Game game;
@@ -149,4 +169,5 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 	private SpellHandler spellHandler;
 	private CooldownManager cooldownManager;
 	private KillManager killManager;
+	private final List<String> debuggers = new ArrayList<String>();
 }

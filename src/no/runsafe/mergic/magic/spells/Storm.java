@@ -47,7 +47,7 @@ public abstract class Storm implements Spell, IEntityChangeBlockEvent
 	@Override
 	public void onCast(IPlayer player)
 	{
-		int radius = 10; // Will be doubled in a square radius.
+		int radius = 6; // Will be doubled in a square radius.
 		ILocation location = player.getLocation();
 		final IWorld world = player.getWorld();
 
@@ -81,7 +81,7 @@ public abstract class Storm implements Spell, IEntityChangeBlockEvent
 				blocks.put(block.getEntityId(), playerName); // Track the block.
 				ControlledEntityCleaner.registerEntity(block); // Register for clean-up.
 			}
-		}, 5L, 5L);
+		}, 3L, 3L);
 
 		SpellHandler.scheduler.startSyncTask(new Runnable()
 		{

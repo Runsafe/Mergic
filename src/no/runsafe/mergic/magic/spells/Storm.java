@@ -118,6 +118,7 @@ public abstract class Storm implements Spell, IEntityChangeBlockEvent
 
 					victim.damage(3D, player); // Three hearts of damage.
 				}
+				blocks.remove(entityID); // Remove the entity ID from our tracker.
 			}
 
 			ControlledEntityCleaner.unregisterEntity(entity); // Remove entity from cleaner

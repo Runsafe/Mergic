@@ -11,7 +11,6 @@ import no.runsafe.framework.minecraft.entity.RunsafeEntity;
 import no.runsafe.framework.minecraft.entity.RunsafeFallingBlock;
 import no.runsafe.framework.minecraft.event.entity.RunsafeEntityChangeBlockEvent;
 import no.runsafe.mergic.ControlledEntityCleaner;
-import no.runsafe.mergic.magic.MagicSchool;
 import no.runsafe.mergic.magic.Spell;
 import no.runsafe.mergic.magic.SpellHandler;
 import no.runsafe.mergic.magic.SpellType;

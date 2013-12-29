@@ -74,7 +74,7 @@ public abstract class Storm implements Spell, IEntityChangeBlockEvent
 				RunsafeFallingBlock block = ((RunsafeWorld) world).spawnFallingBlock(
 						world.getLocation(x, high, z),
 						blockType.getType(),
-						(byte) 0
+						blockType.getData()
 				);
 				block.setDropItem(false);
 

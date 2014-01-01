@@ -4,6 +4,7 @@ import no.runsafe.framework.api.ILocation;
 import no.runsafe.framework.api.IServer;
 import no.runsafe.framework.api.IWorld;
 import no.runsafe.framework.api.IWorldEffect;
+import no.runsafe.framework.api.entity.IEntity;
 import no.runsafe.framework.api.event.entity.IEntityChangeBlockEvent;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.*;
@@ -71,12 +72,8 @@ public abstract class Storm implements Spell, IEntityChangeBlockEvent
 				double z = lowZ + (int) (Math.random() * ((highZ - lowZ) + 1));
 
 				// Spawn a falling ice block randomly within the radius.
-				RunsafeFallingBlock block = ((RunsafeWorld) world).spawnFallingBlock(
-						world.getLocation(x, high, z),
-						blockType.getType(),
-						blockType.getData()
-				);
-				block.setDropItem(false);
+				IEntity block = world.spawnFallingBlock(world.getLocation(x, high, z), blockType);
+				((RunsafeFallingBlock)block).setDropItem(false);
 
 				blocks.put(block.getEntityId(), playerName); // Track the block.
 				ControlledEntityCleaner.registerEntity(block); // Register for clean-up.

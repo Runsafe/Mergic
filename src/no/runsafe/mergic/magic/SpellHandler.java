@@ -4,6 +4,7 @@ import no.runsafe.framework.api.IScheduler;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
 import no.runsafe.mergic.KillManager;
+import no.runsafe.mergic.MagicClassHandler;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,7 +12,7 @@ import java.util.List;
 
 public class SpellHandler
 {
-	public SpellHandler(Spell[] spells, IScheduler scheduler, KillManager killManager)
+	public SpellHandler(Spell[] spells, IScheduler scheduler, KillManager killManager, MagicClassHandler classHandler)
 	{
 		// Populate the spell handler with every spell the plug-in has injected.
 		for (Spell spell : spells)
@@ -20,6 +21,8 @@ public class SpellHandler
 		// Provide a static scheduler for the spells and static kill manager for kill counting.
 		SpellHandler.scheduler = scheduler;
 		SpellHandler.killManager = killManager;
+
+		this.classHandler = classHandler; // Class handler used for players.
 	}
 
 	public void givePlayerSpellBook(IPlayer player, Spell spell)
@@ -54,12 +57,16 @@ public class SpellHandler
 
 	public void givePlayerAllSpells(IPlayer player)
 	{
+		MagicSchool playerSchool = classHandler.getPlayerSchool(player); // The magic school the player is using.
+
 		// Loop every spell in the handler and give it to the player.
-		for (Spell spell : this.spellList.values())
-			this.givePlayerSpellBook(player, spell);
+		for (Spell spell : spellList.values())
+			if (spell.getSchool() == playerSchool)
+				givePlayerSpellBook(player, spell);
 	}
 
 	private HashMap<String, Spell> spellList = new HashMap<String, Spell>();
 	public static IScheduler scheduler;
 	public static KillManager killManager;
+	private MagicClassHandler classHandler;
 }

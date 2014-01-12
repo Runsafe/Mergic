@@ -33,6 +33,7 @@ public class Mergic extends RunsafeConfigurablePlugin
 
 		// Spell related things.
 		addComponent(SpellHandler.class);
+		addComponent(MagicClassHandler.class);
 
 		// Spell list
 		addComponent(FireStorm.class);

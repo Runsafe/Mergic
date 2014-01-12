@@ -30,7 +30,7 @@ public class KillManager implements IEntityDamageByEntityEvent
 			if (attackingEntity instanceof IPlayer)
 			{
 				IPlayer attacker = (IPlayer) attackingEntity;
-				this.registerAttack(victim, attacker);
+				registerAttack(victim, attacker);
 			}
 			else if (attackingEntity instanceof RunsafeProjectile)
 			{
@@ -38,39 +38,39 @@ public class KillManager implements IEntityDamageByEntityEvent
 				IPlayer shooterPlayer = projectile.getShooterPlayer();
 
 				if (shooterPlayer != null)
-					this.registerAttack(victim, shooterPlayer);
+					registerAttack(victim, shooterPlayer);
 			}
 		}
 	}
 
 	public void wipeAllData()
 	{
-		this.lastDamage.clear();
+		lastDamage.clear();
 	}
 
 	public void wipePlayerData(IPlayer player)
 	{
-		this.lastDamage.remove(player.getName());
+		lastDamage.remove(player.getName());
 	}
 
 	public void registerAttack(IPlayer victim, IPlayer attacker)
 	{
 		if (!attacker.isVanished() && !victim.isVanished())
-			this.lastDamage.put(victim.getName(), attacker.getName());
+			lastDamage.put(victim.getName(), attacker.getName());
 	}
 
 	public void OnPlayerKilled(IPlayer player)
 	{
 		String playerName = player.getName();
-		if (this.lastDamage.containsKey(playerName))
+		if (lastDamage.containsKey(playerName))
 		{
-			String killerName = this.lastDamage.get(playerName);
+			String killerName = lastDamage.get(playerName);
 			IPlayer killer = server.getPlayerExact(killerName);
 
 			if (killer != null)
 			{
-				int newKills = this.getPlayerKills(killer) + 1;
-				this.killCount.put(killerName, newKills);
+				int newKills = getPlayerKills(killer) + 1;
+				killCount.put(killerName, newKills);
 				killer.setLevel(newKills);
 			}
 		}
@@ -79,8 +79,8 @@ public class KillManager implements IEntityDamageByEntityEvent
 	public IPlayer getKiller(IPlayer player)
 	{
 		String playerName = player.getName();
-		if (this.lastDamage.containsKey(playerName))
-			return server.getPlayerExact(this.lastDamage.get(playerName));
+		if (lastDamage.containsKey(playerName))
+			return server.getPlayerExact(lastDamage.get(playerName));
 
 		return null;
 	}
@@ -88,12 +88,12 @@ public class KillManager implements IEntityDamageByEntityEvent
 	public int getPlayerKills(IPlayer player)
 	{
 		String playerName = player.getName();
-		return this.killCount.containsKey(playerName) ? this.killCount.get(playerName) : 0;
+		return killCount.containsKey(playerName) ? killCount.get(playerName) : 0;
 	}
 
 	public Map<String, Integer> getScoreList()
 	{
-		return MapUtil.sortByValue(this.killCount);
+		return MapUtil.sortByValue(killCount);
 	}
 
 	private final IServer server;

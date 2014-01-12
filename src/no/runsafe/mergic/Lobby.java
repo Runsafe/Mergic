@@ -24,53 +24,53 @@ public class Lobby implements IConfigurationChanged
 	public void OnConfigurationChanged(IConfiguration configuration)
 	{
 		// Flag the lobby as not set-up to begin with.
-		this.lobbySetup = false;
+		lobbySetup = false;
 
 		// Grab the location from configuration, throw an error if we can't.
-		this.location = configuration.getConfigValueAsLocation("lobby.location");
-		if (this.location == null)
+		location = configuration.getConfigValueAsLocation("lobby.location");
+		if (location == null)
 		{
-			this.output.logError("Lobby location missing or invalid in configuration.");
+			output.logError("Lobby location missing or invalid in configuration.");
 			return;
 		}
 
 		// Grab the world from configuration, throw an error if we can't.
-		this.lobbyWorld = configuration.getConfigValueAsWorld("lobby.world");
-		if (this.lobbyWorld == null)
+		lobbyWorld = configuration.getConfigValueAsWorld("lobby.world");
+		if (lobbyWorld == null)
 		{
-			this.output.logError("Lobby world missing or invalid in configuration.");
+			output.logError("Lobby world missing or invalid in configuration.");
 			return;
 		}
 
 		// Grab the region from configuration, throw an error if we can't.
-		this.lobbyRegion = configuration.getConfigValueAsString("lobby.region");
-		if (this.lobbyRegion == null)
+		lobbyRegion = configuration.getConfigValueAsString("lobby.region");
+		if (lobbyRegion == null)
 		{
-			this.output.logError("Lobby region missing in configuration.");
+			output.logError("Lobby region missing in configuration.");
 			return;
 		}
 
 		// Check that the region exists, if not, throw an error.
-		if (this.worldGuard.getRegion(this.lobbyWorld, this.lobbyRegion) == null)
+		if (worldGuard.getRegion(lobbyWorld, lobbyRegion) == null)
 		{
-			this.output.logError("Lobby region invalid in configuration.");
+			output.logError("Lobby region invalid in configuration.");
 			return;
 		}
 
 		// Everything went fine, flag the lobby as set-up correctly.
-		this.lobbySetup = true;
+		lobbySetup = true;
 	}
 
 	public boolean isAvailable()
 	{
-		return this.lobbySetup;
+		return lobbySetup;
 	}
 
 	public List<IPlayer> getPlayersInLobby()
 	{
 		// Check if the lobby is set-up, if so return a list of players inside the region.
-		if (this.isAvailable())
-			return this.worldGuard.getPlayersInRegion(this.lobbyWorld, this.lobbyRegion);
+		if (isAvailable())
+			return worldGuard.getPlayersInRegion(lobbyWorld, lobbyRegion);
 
 		// We are not set-up correctly, throw an empty list to prevent errors.
 		return Collections.emptyList();
@@ -79,7 +79,7 @@ public class Lobby implements IConfigurationChanged
 	public void broadcastToLobby(String message)
 	{
 		// Loop every player in the lobby and send them the message.
-		for (IPlayer player : this.getPlayersInLobby())
+		for (IPlayer player : getPlayersInLobby())
 			player.sendColouredMessage(message);
 	}
 
@@ -87,30 +87,30 @@ public class Lobby implements IConfigurationChanged
 	{
 		// Loop every player in the list given and teleport them into the lobby.
 		for (IPlayer player : playerList)
-			this.teleportPlayerToLobby(player);
+			teleportPlayerToLobby(player);
 	}
 
 	public void teleportPlayerToLobby(IPlayer player)
 	{
 		// Teleport the player into the lobby, simple!
-		player.teleport(this.location);
+		player.teleport(location);
 	}
 
 	public void teleportLobbyPlayers(ILocation location)
 	{
 		// Loop every player in the lobby and teleport them to the given location.
-		for (IPlayer player : this.getPlayersInLobby())
+		for (IPlayer player : getPlayersInLobby())
 			player.teleport(location);
 	}
 
 	public String getLobbyRegionString()
 	{
-		return String.format("%s-%s", this.lobbyWorld.getName(), this.lobbyRegion);
+		return String.format("%s-%s", lobbyWorld.getName(), lobbyRegion);
 	}
 
 	public void playStartSound()
 	{
-		this.location.playSound(Sound.Creature.Wither.Spawn, 1000, 0); // Play a gong like sound when the match starts.
+		location.playSound(Sound.Creature.Wither.Spawn, 1000, 0); // Play a gong like sound when the match starts.
 	}
 
 	private boolean lobbySetup;

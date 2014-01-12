@@ -16,7 +16,7 @@ public class SpellHandler
 	{
 		// Populate the spell handler with every spell the plug-in has injected.
 		for (Spell spell : spells)
-			this.spellList.put(spell.getName().toLowerCase(), spell);
+			spellList.put(spell.getName().toLowerCase(), spell);
 
 		// Provide a static scheduler for the spells and static kill manager for kill counting.
 		SpellHandler.scheduler = scheduler;
@@ -49,8 +49,8 @@ public class SpellHandler
 		spellName = spellName.toLowerCase(); // Convert provided name to lower-case.
 
 		// Check if we have a spell with the requested name.
-		if (this.spellList.containsKey(spellName))
-			return this.spellList.get(spellName);
+		if (spellList.containsKey(spellName))
+			return spellList.get(spellName);
 
 		return null;
 	}

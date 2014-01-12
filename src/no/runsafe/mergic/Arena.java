@@ -24,21 +24,21 @@ public class Arena implements IConfigurationChanged
 	public void OnConfigurationChanged(IConfiguration configuration)
 	{
 		// Flag the arena as not set-up, as a fall-back.
-		this.isSetup = false;
+		isSetup = false;
 
 		// Grab the world from configuration, throw an error and return if we fail.
-		this.world = configuration.getConfigValueAsWorld("arena.world");
-		if (this.world == null)
+		world = configuration.getConfigValueAsWorld("arena.world");
+		if (world == null)
 		{
-			this.console.logError("Arena world missing or invalid in configuration.");
+			console.logError("Arena world missing or invalid in configuration.");
 			return;
 		}
 
 		// Grab the arena region from configuration, throw an error and return if we fail.
-		this.region = configuration.getConfigValueAsString("arena.region");
-		if (this.region == null)
+		region = configuration.getConfigValueAsString("arena.region");
+		if (region == null)
 		{
-			this.console.logError("Arena region missing from configuration.");
+			console.logError("Arena region missing from configuration.");
 			return;
 		}
 
@@ -46,19 +46,19 @@ public class Arena implements IConfigurationChanged
 		String teleportRegion = configuration.getConfigValueAsString("arena.teleportRegion");
 		if (teleportRegion == null)
 		{
-			this.console.logError("Arena teleport region missing from configuration.");
+			console.logError("Arena teleport region missing from configuration.");
 			return;
 		}
 
-		this.teleportY = configuration.getConfigValueAsInt("arena.teleportY");
-		if (this.teleportY == -1)
+		teleportY = configuration.getConfigValueAsInt("arena.teleportY");
+		if (teleportY == -1)
 		{
-			this.console.logError("Arena teleportY missing from configuration.");
+			console.logError("Arena teleportY missing from configuration.");
 			return;
 		}
 
 		// Grab the teleport region, throw an error and return if we fail like idiots.
-		this.teleportRegion = this.worldGuard.getRegion(world, teleportRegion);
+		this.teleportRegion = worldGuard.getRegion(world, teleportRegion);
 		if (this.teleportRegion == null)
 		{
 			this.console.logError("Arena teleport region from configuration does not exist.");
@@ -66,19 +66,19 @@ public class Arena implements IConfigurationChanged
 		}
 
 		// Flag the arena as set-up, woo!
-		this.isSetup = true;
+		isSetup = true;
 	}
 
 	public void teleportPlayersIntoArena(List<IPlayer> playerList)
 	{
 		for (IPlayer player : playerList)
-			this.teleportPlayerIntoArena(player);
+			teleportPlayerIntoArena(player);
 	}
 
 	public void teleportPlayerIntoArena(IPlayer player)
 	{
 		// Register the player as in-game in the arena instance.
-		this.players.add(player.getName());
+		players.add(player.getName());
 
 		// Create random X and Z co-ordinates within the region.
 		double randomX = getRandomBetween(teleportRegion.getMinimumPoint().getBlockX(), teleportRegion.getMaximumPoint().getBlockX());
@@ -86,7 +86,7 @@ public class Arena implements IConfigurationChanged
 
 
 		// Get a safe spot at the co-ordinates we generated.
-		ILocation loc = getSafeSpot(this.world.getLocation(randomX, this.teleportY, randomZ));
+		ILocation loc = getSafeSpot(world.getLocation(randomX, teleportY, randomZ));
 
 		// Adjust the location to be at the centre of the block.
 		loc.incrementX(0.5D);
@@ -107,49 +107,49 @@ public class Arena implements IConfigurationChanged
 
 	public List<IPlayer> getPlayers()
 	{
-		return this.worldGuard.getPlayersInRegion(this.world, this.region);
+		return worldGuard.getPlayersInRegion(world, region);
 	}
 
 	public boolean playerIsInPhysicalArena(IPlayer player)
 	{
-		if (!this.isAvailable())
+		if (!isAvailable())
 			return false;
 
 		// Note: If a player is in the graveyard, they will also be in the arena as
 		// the graveyard should be a sub-region of the arena if set-up right.
 		// Check if the player is in the correct world, if not we can be sure they are not in the arena.
-		if (!player.getWorld().getName().equals(this.world.getName()))
+		if (!player.getWorld().getName().equals(world.getName()))
 			return false;
 
 		// Grab a list of the regions the player is currently in.
-		List<String> playerRegions = this.worldGuard.getApplicableRegions(player);
+		List<String> playerRegions = worldGuard.getApplicableRegions(player);
 
 		// If the list is null, there are no regions, so it's false!
 		if (playerRegions == null)
 			return false;
 
 		// Return if we have the player in the correct region.
-		return playerRegions.contains(this.region);
+		return playerRegions.contains(region);
 	}
 
 	public boolean playerIsInGame(IPlayer player)
 	{
-		return this.players.contains(player.getName());
+		return players.contains(player.getName());
 	}
 
 	public void removePlayer(IPlayer player)
 	{
-		this.players.remove(player.getName());
+		players.remove(player.getName());
 	}
 
 	public void removeAllPlayers()
 	{
-		this.players.clear();
+		players.clear();
 	}
 
 	public String getArenaRegionString()
 	{
-		return String.format("%s-%s", this.world.getName(), this.region);
+		return String.format("%s-%s", world.getName(), region);
 	}
 
 	private int getRandomBetween(int low, int high)
@@ -159,7 +159,7 @@ public class Arena implements IConfigurationChanged
 
 	public boolean isAvailable()
 	{
-		return this.isSetup;
+		return isSetup;
 	}
 
 	private boolean isSetup;

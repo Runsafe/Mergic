@@ -19,13 +19,13 @@ public class StartGameCommand extends ExecutableCommand
 	public String OnExecute(ICommandExecutor executor, Map<String, String> parameters)
 	{
 		// Check if the game is running, if it is, throw an error back.
-		if (this.game.gameInProgress())
+		if (game.gameInProgress())
 			return "&cThe game is already in progress.";
 
 		// Attempt to launch the game.
 		try
 		{
-			this.game.launchGame();
+			game.launchGame();
 			return "&2The game has been launched.";
 		}
 		catch (GameException exception)

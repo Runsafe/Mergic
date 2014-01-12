@@ -19,11 +19,11 @@ public class CreateSpellBook extends PlayerCommand
 	@Override
 	public String OnExecute(IPlayer executor, Map<String, String> parameters)
 	{
-		Spell spell = this.spellHandler.getSpellByName(parameters.get("spell"));
+		Spell spell = spellHandler.getSpellByName(parameters.get("spell"));
 		if (spell == null)
 			return "&cUnable to find spell with that name.";
 
-		this.spellHandler.givePlayerSpellBook(executor, spell);
+		spellHandler.givePlayerSpellBook(executor, spell);
 		return "&2Created spell-book: " + spell.getName();
 	}
 

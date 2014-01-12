@@ -45,7 +45,7 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 
 				// Check if the player is actually in the game.
 				if (arena.playerIsInGame(player))
-					this.game.removePlayerFromGame(player); // Throw them from the game.
+					game.removePlayerFromGame(player); // Throw them from the game.
 			}
 		}
 		else if (event.getEvent().equals("region.enter")) // Or maybe an enter?
@@ -57,9 +57,9 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 				IPlayer player = event.getPlayer();
 
 				player.getInventory().clear(); // Clear the players inventory.
-				this.spellHandler.givePlayerAllSpells(player); // Give the player all spells.
+				spellHandler.givePlayerAllSpells(player); // Give the player all spells.
 				EquipmentManager.givePlayerWizardBoots(player); // Give the player some magic boots!
-				player.setLevel(this.killManager.getPlayerKills(player)); // Update the players level.
+				player.setLevel(killManager.getPlayerKills(player)); // Update the players level.
 			}
 		}
 	}
@@ -70,24 +70,24 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 		IPlayer player = event.getPlayer();
 
 		// Check if the player is inside the arena when they shouldn't be.
-		if (!this.arena.playerIsInGame(player) && this.arena.playerIsInPhysicalArena(player))
-			this.lobby.teleportPlayerToLobby(player); // Teleport them to the lobby!
+		if (!arena.playerIsInGame(player) && arena.playerIsInPhysicalArena(player))
+			lobby.teleportPlayerToLobby(player); // Teleport them to the lobby!
 	}
 
 	@Override
 	public void OnPlayerDamage(IPlayer player, RunsafeEntityDamageEvent event)
 	{
-		if (this.arena.playerIsInGame(player) && player.getHealth() - event.getDamage() <= 0D)
+		if (arena.playerIsInGame(player) && player.getHealth() - event.getDamage() <= 0D)
 		{
 			event.setDamage(0); // Cancel the incoming damage.
-			this.graveyard.teleportPlayerToGraveyard(player); // Teleport player to graveyard.
+			graveyard.teleportPlayerToGraveyard(player); // Teleport player to graveyard.
 			player.setHealth(20D); // Heal the player to full.
 			player.setFireTicks(0); // Stop the fire from burning if they are.
 			player.setFoodLevel(20); // Fill the hunger bar back to full.
 			EquipmentManager.repairBoots(player); // Repair the players boots.
 
 			// If we can confirm they were killed, tell them who by, otherwise default message.
-			IPlayer killer = this.killManager.getKiller(player);
+			IPlayer killer = killManager.getKiller(player);
 			if (killer == null)
 			{
 				player.sendColouredMessage("&cYou have died! You will respawn shortly.");
@@ -98,7 +98,7 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 				killer.sendColouredMessage("&aYou killed killed %s, +1 point.", player.getName());
 			}
 
-			this.killManager.OnPlayerKilled(player); // Trigger event in kill manager to tally score.
+			killManager.OnPlayerKilled(player); // Trigger event in kill manager to tally score.
 		}
 	}
 
@@ -108,13 +108,13 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 		IPlayer player = event.getPlayer();
 
 		// Check the player is registered as playing the game.
-		if (isDebugging(player) || (this.arena.playerIsInGame(player) && !this.graveyard.playerIsInGraveyard(player)))
+		if (isDebugging(player) || (arena.playerIsInGame(player) && !graveyard.playerIsInGraveyard(player)))
 		{
 			RunsafeMeta item = event.getItemStack();
 			if (item == null)
 				return;
 
-			Spell spell = this.spellHandler.getSpellByName(item.getDisplayName()); // Grab the spell.
+			Spell spell = spellHandler.getSpellByName(item.getDisplayName()); // Grab the spell.
 			if (spell != null)
 			{
 				SpellType type = spell.getType(); // Get the spell type.
@@ -128,10 +128,10 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 					return;
 
 				// Check if we have the right item and are not on cooldown for that school.
-				if (item.is(type.getCastItem()) && this.cooldownManager.canCastSpell(player, spell))
+				if (item.is(type.getCastItem()) && cooldownManager.canCastSpell(player, spell))
 				{
 					spell.onCast(player); // Make the player cast the spell.
-					this.cooldownManager.applySchoolCooldown(player, spell); // Apply school cooldown.
+					cooldownManager.applySchoolCooldown(player, spell); // Apply school cooldown.
 				}
 			}
 		}
@@ -141,7 +141,7 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 	public void OnPluginDisabled()
 	{
 		// If the server shuts down, we should cancel the game just to make sure.
-		this.game.cancelGame();
+		game.cancelGame();
 	}
 
 	public boolean isDebugging(IPlayer player)

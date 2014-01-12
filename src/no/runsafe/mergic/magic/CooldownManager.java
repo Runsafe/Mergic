@@ -17,7 +17,7 @@ public class CooldownManager
 	public boolean canCastSpell(IPlayer player, Spell spell)
 	{
 		String playerName = player.getName();
-		return !cooldowns.containsKey(playerName) || !this.cooldowns.get(playerName).contains(spell.getSchool());
+		return !cooldowns.containsKey(playerName) || !cooldowns.get(playerName).contains(spell.getSchool());
 	}
 
 	public void applySchoolCooldown(IPlayer player, Spell spell)
@@ -26,11 +26,11 @@ public class CooldownManager
 		final MagicSchool school = spell.getSchool();
 
 		// If we lack a key for the player, create one.
-		if (!this.cooldowns.containsKey(playerName))
-			this.cooldowns.put(playerName, new ArrayList<MagicSchool>());
+		if (!cooldowns.containsKey(playerName))
+			cooldowns.put(playerName, new ArrayList<MagicSchool>());
 
-		this.cooldowns.get(playerName).add(school); // Add the school to the cooldown list.
-		this.scheduler.startAsyncTask(new Runnable()
+		cooldowns.get(playerName).add(school); // Add the school to the cooldown list.
+		scheduler.startAsyncTask(new Runnable()
 		{
 			@Override
 			public void run()
@@ -43,13 +43,13 @@ public class CooldownManager
 	public void removeSchoolCooldown(String playerName, MagicSchool school)
 	{
 		// Remove the school from the players cooldown list if it exists.
-		if (this.cooldowns.containsKey(playerName))
-			this.cooldowns.get(playerName).remove(school);
+		if (cooldowns.containsKey(playerName))
+			cooldowns.get(playerName).remove(school);
 	}
 
 	public void resetCooldowns()
 	{
-		this.cooldowns.clear(); // Remove all cooldowns.
+		cooldowns.clear(); // Remove all cooldowns.
 	}
 
 	private ConcurrentHashMap<String, List<MagicSchool>> cooldowns = new ConcurrentHashMap<String, List<MagicSchool>>();

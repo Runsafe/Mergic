@@ -9,11 +9,12 @@ import java.util.Map;
 
 public class GameMonitor implements IConfigurationChanged
 {
-	public GameMonitor(IScheduler scheduler, Game game, Lobby lobby, KillManager killManager, IConsole console)
+	public GameMonitor(IScheduler scheduler, Game game, Lobby lobby, Arena arena, KillManager killManager, IConsole console)
 	{
 		this.scheduler = scheduler;
 		this.game = game;
 		this.lobby = lobby;
+		this.arena = arena;
 		this.killManager = killManager;
 		this.console = console;
 
@@ -53,6 +54,12 @@ public class GameMonitor implements IConfigurationChanged
 		}
 		else
 		{
+			if (arena.getPlayers().size() < 2)
+			{
+				cancelGame(); // Stop the game!
+				return;
+			}
+
 			for (Map.Entry<String, Integer> score : killManager.getScoreList().entrySet())
 				if (score.getValue() >= winScore)
 					cancelGame(); // Stop the game!
@@ -75,6 +82,7 @@ public class GameMonitor implements IConfigurationChanged
 	private final IScheduler scheduler;
 	private final Game game;
 	private final Lobby lobby;
+	private final Arena arena;
 	private final KillManager killManager;
 	private final IConsole console;
 	private int endTimer;

@@ -113,6 +113,11 @@ public class Lobby implements IConfigurationChanged
 		location.playSound(Sound.Creature.Wither.Spawn, 1000, 0); // Play a gong like sound when the match starts.
 	}
 
+	public void playEndSound()
+	{
+		location.playSound(Sound.Player.LevelUp, 1000, 0); // Play a ding when the match ends.
+	}
+
 	private boolean lobbySetup;
 	private IWorld lobbyWorld;
 	private String lobbyRegion;

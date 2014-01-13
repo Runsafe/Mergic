@@ -95,6 +95,7 @@ public class Game implements IConfigurationChanged
 			lobby.teleportPlayersToLobby(arena.getPlayers()); // Move players from arena to lobby.
 			graveyard.removeAllTimers(); // Cancel any outstanding graveyard timers.
 			cooldownManager.resetCooldowns(); // Reset all cooldowns.
+			lobby.playEndSound(); // Play the end-of-game sound.
 
 			// Everything reset, let's give the players now in the lobby a list of what just went down.
 

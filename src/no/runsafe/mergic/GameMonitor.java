@@ -48,7 +48,11 @@ public class GameMonitor implements IConfigurationChanged
 				}
 				catch (GameException exception)
 				{
-					console.logException(exception); // Log the exception to the console.
+					if (!hasThrown)
+					{
+						console.logException(exception); // Log the exception to the console.
+						hasThrown = true;
+					}
 				}
 			}
 		}
@@ -77,6 +81,7 @@ public class GameMonitor implements IConfigurationChanged
 	{
 		winScore = configuration.getConfigValueAsInt("winScore");
 		matchLength = configuration.getConfigValueAsInt("matchLength");
+		hasThrown = false;
 	}
 
 	private final IScheduler scheduler;
@@ -85,6 +90,7 @@ public class GameMonitor implements IConfigurationChanged
 	private final Arena arena;
 	private final KillManager killManager;
 	private final IConsole console;
+	private boolean hasThrown = false;
 	private int endTimer;
 	private int winScore;
 	private int matchLength;

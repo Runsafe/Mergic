@@ -106,7 +106,6 @@ public abstract class Storm implements Spell, IEntityChangeBlockEvent
 				IPlayer player = server.getPlayerExact(blocks.get(entityID));
 
 				location.playEffect(effect, 0.3F, 100, 50); // Create a dust effect using the storm block.
-				//location.playSound(Sound.Environment.Glass, 2, -1); // Play ice breaking sound.
 
 				for (IPlayer victim : location.getPlayersInRange(4))
 				{

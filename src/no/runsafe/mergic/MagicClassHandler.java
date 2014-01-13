@@ -3,16 +3,14 @@ package no.runsafe.mergic;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.mergic.magic.MagicSchool;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class MagicClassHandler
 {
 	public MagicClassHandler()
 	{
-		availableSchools = Arrays.asList(MagicSchool.values());
+		availableSchools = new ArrayList<MagicSchool>();
+		availableSchools.addAll(Arrays.asList(MagicSchool.values()));
 		availableSchools.remove(MagicSchool.GENERIC);
 	}
 

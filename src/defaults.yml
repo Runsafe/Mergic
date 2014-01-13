@@ -14,3 +14,4 @@ graveyard:
   region: graveyard
   deadTime: 20
 winScore: 5
+matchLength: 1

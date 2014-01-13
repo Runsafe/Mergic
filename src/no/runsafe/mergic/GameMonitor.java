@@ -36,6 +36,14 @@ public class GameMonitor implements IConfigurationChanged
 				try
 				{
 					game.launchGame(); // Launch the game!
+					endTimer = scheduler.startSyncTask(new Runnable()
+					{
+						@Override
+						public void run()
+						{
+							cancelGame();
+						}
+					}, matchLength * 60);
 				}
 				catch (GameException exception)
 				{
@@ -47,14 +55,21 @@ public class GameMonitor implements IConfigurationChanged
 		{
 			for (Map.Entry<String, Integer> score : killManager.getScoreList().entrySet())
 				if (score.getValue() >= winScore)
-					game.cancelGame(); // Stop the game!
+					cancelGame(); // Stop the game!
 		}
+	}
+
+	private void cancelGame()
+	{
+		game.cancelGame(); // Cancel the game.
+		scheduler.cancelTask(endTimer); // Remove the timer.
 	}
 
 	@Override
 	public void OnConfigurationChanged(IConfiguration configuration)
 	{
 		winScore = configuration.getConfigValueAsInt("winScore");
+		matchLength = configuration.getConfigValueAsInt("matchLength");
 	}
 
 	private final IScheduler scheduler;
@@ -64,4 +79,5 @@ public class GameMonitor implements IConfigurationChanged
 	private final IConsole console;
 	private int endTimer;
 	private int winScore;
+	private int matchLength;
 }

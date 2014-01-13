@@ -8,6 +8,7 @@ import no.runsafe.mergic.magic.CooldownManager;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class Game implements IConfigurationChanged
 {
@@ -96,15 +97,12 @@ public class Game implements IConfigurationChanged
 			graveyard.removeAllTimers(); // Cancel any outstanding graveyard timers.
 			cooldownManager.resetCooldowns(); // Reset all cooldowns.
 
-			// We don't want to reset data for the tournament.
-			//this.killManager.wipeAllData();
-
 			// Everything reset, let's give the players now in the lobby a list of what just went down.
 
 			// Generate the score list.
-			Map<String, Integer> scores = killManager.getScoreList();
+			TreeMap<String, Integer> scores = killManager.getScoreList();
+			HashMap<String, Integer> top = new HashMap<String, Integer>(6);
 
-			Map<String, Integer> top = new HashMap<String, Integer>();
 			int current = 1;
 			for (Map.Entry<String, Integer> node : scores.entrySet())
 			{
@@ -124,6 +122,8 @@ public class Game implements IConfigurationChanged
 
 				player.sendColouredMessage("You are currently at &a%d&f kills.", killManager.getPlayerKills(player));
 			}
+
+			killManager.wipeAllData(); // Wipe all of the data before the next match.
 		}
 	}
 

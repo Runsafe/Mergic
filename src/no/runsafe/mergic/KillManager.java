@@ -9,6 +9,7 @@ import no.runsafe.framework.minecraft.event.entity.RunsafeEntityDamageByEntityEv
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class KillManager implements IEntityDamageByEntityEvent
 {
@@ -91,12 +92,12 @@ public class KillManager implements IEntityDamageByEntityEvent
 		return killCount.containsKey(playerName) ? killCount.get(playerName) : 0;
 	}
 
-	public Map<String, Integer> getScoreList()
+	public TreeMap<String, Integer> getScoreList()
 	{
-		return MapUtil.sortByValue(killCount);
+		return killCount;
 	}
 
 	private final IServer server;
 	private HashMap<String, String> lastDamage = new HashMap<String, String>();
-	private HashMap<String, Integer> killCount = new HashMap<String, Integer>();
+	private TreeMap<String, Integer> killCount = new TreeMap<String, Integer>();
 }

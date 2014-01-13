@@ -2,15 +2,18 @@ package no.runsafe.mergic;
 
 import no.runsafe.framework.api.IConfiguration;
 import no.runsafe.framework.api.IScheduler;
+import no.runsafe.framework.api.IServer;
 import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
 import no.runsafe.framework.api.player.IPlayer;
+import no.runsafe.mergic.achievements.ApprenticeWizard;
+import no.runsafe.mergic.achievements.MasterOfMagic;
 import no.runsafe.mergic.magic.CooldownManager;
 
 import java.util.*;
 
 public class Game implements IConfigurationChanged
 {
-	public Game(Graveyard graveyard, Lobby lobby, Arena arena, IScheduler scheduler, CooldownManager cooldownManager, KillManager killManager)
+	public Game(Graveyard graveyard, Lobby lobby, Arena arena, IScheduler scheduler, CooldownManager cooldownManager, KillManager killManager, IServer server)
 	{
 		this.graveyard = graveyard;
 		this.lobby = lobby;
@@ -18,11 +21,17 @@ public class Game implements IConfigurationChanged
 		this.scheduler = scheduler;
 		this.cooldownManager = cooldownManager;
 		this.killManager = killManager;
+		this.server = server;
 	}
 
 	public boolean gameInProgress()
 	{
 		return gameInProgress;
+	}
+
+	public boolean gameHasStarted()
+	{
+		return gameHasStarted;
 	}
 
 	public void launchGame() throws GameException
@@ -91,6 +100,7 @@ public class Game implements IConfigurationChanged
 		{
 			currentPreMatchStep = -1; // Signal for the pre-match countdown (if running) to cancel.
 			gameInProgress = false; // Flag the game as not running.
+			gameHasStarted = false; // Flag the game as not started;
 			arena.removeAllPlayers(); // Remove all players from the game.
 			lobby.teleportPlayersToLobby(arena.getPlayers()); // Move players from arena to lobby.
 			graveyard.removeAllTimers(); // Cancel any outstanding graveyard timers.
@@ -100,16 +110,25 @@ public class Game implements IConfigurationChanged
 			// Everything reset, let's give the players now in the lobby a list of what just went down.
 
 			// Generate the score list.
-			TreeMap<String, Integer> scores = killManager.getScoreList();
-			HashMap<String, Integer> top = new HashMap<String, Integer>(6);
+			SortedSet<Map.Entry<String, Integer>> scores = MapUtil.entriesSortedByValues(killManager.getScoreList());
+			LinkedHashMap<String, Integer> top = new LinkedHashMap<String, Integer>(6);
 
 			int current = 1;
-			for (Map.Entry<String, Integer> node : scores.entrySet())
+			for (Map.Entry<String, Integer> node : scores)
 			{
+				String playerName = node.getKey();
+				IPlayer player = server.getPlayerExact(playerName);
+
 				if (current == 6)
 					break;
 
-				top.put(node.getKey(), node.getValue());
+				if (current == 1)
+					new MasterOfMagic(player).Fire();
+
+				if (current < 4)
+					new ApprenticeWizard(player).Fire();
+
+				top.put(playerName, node.getValue());
 				current++;
 			}
 
@@ -142,6 +161,7 @@ public class Game implements IConfigurationChanged
 		// Teleport all the players from the lobby into the arena.
 		arena.teleportPlayersIntoArena(lobby.getPlayersInLobby());
 		lobby.playStartSound(); // Play that funky gong, white boy!
+		gameHasStarted = true;
 	}
 
 	@Override
@@ -151,14 +171,16 @@ public class Game implements IConfigurationChanged
 		preMatchDelay = configuration.getConfigValueAsInt("preMatch.delay");
 	}
 
-	private Graveyard graveyard;
-	private Lobby lobby;
-	private Arena arena;
+	private final Graveyard graveyard;
+	private final Lobby lobby;
+	private final Arena arena;
 	private boolean gameInProgress = false;
+	private boolean gameHasStarted = false;
 	private int preMatchLength = -1;
 	private int preMatchDelay = -1;
 	private int currentPreMatchStep = 0;
-	private IScheduler scheduler;
-	private CooldownManager cooldownManager;
-	private KillManager killManager;
+	private final IScheduler scheduler;
+	private final CooldownManager cooldownManager;
+	private final KillManager killManager;
+	private final IServer server;
 }

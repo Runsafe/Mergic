@@ -30,7 +30,7 @@ public class GameMonitor implements IConfigurationChanged
 
 	private void runCycle()
 	{
-		if (!game.gameInProgress()) // Is there already a game in progress?
+		if (!game.gameInProgress() && !game.gameHasStarted()) // Is there already a game in progress?
 		{
 			if (lobby.getPlayersInLobby().size() > 1) // Do we have at least two players?
 			{
@@ -52,7 +52,7 @@ public class GameMonitor implements IConfigurationChanged
 				}
 			}
 		}
-		else
+		else if (game.gameHasStarted())
 		{
 			if (arena.getPlayers().size() < 2)
 			{

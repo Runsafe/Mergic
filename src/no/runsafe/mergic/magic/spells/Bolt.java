@@ -85,8 +85,8 @@ public abstract class Bolt implements Spell, IEntityChangeBlockEvent
 					if (!closePlayer.getName().equals(player.getName())) // Check the player is different to the caster.
 					{
 						hit = true; // Mark this projectile as hit.
-						closePlayer.damage(3); // Damage the player.
 						killManager.registerAttack(closePlayer, player); // Register a hit.
+						closePlayer.damage(3); // Damage the player.
 						location.playEffect(effect, 0.3F, 100, 50); // Create a dust effect using the storm block.
 						location.playSound(Sound.Creature.Ghast.Fireball, 1, 0); // Play a slow-thrash sound.
 					}

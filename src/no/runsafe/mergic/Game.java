@@ -146,7 +146,12 @@ public class Game implements IConfigurationChanged
 					new ApprenticeWizard(player).Fire();
 
 					if (pos == 1)
+					{
 						new MasterOfMagic(player).Fire();
+
+						if (player != null)
+							server.broadcastMessage("&b" + player.getName() + " has triumphed at Wizard PvP!");
+					}
 				}
 				else if (pos == 6)
 				{

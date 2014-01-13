@@ -57,11 +57,9 @@ public class SpellHandler
 
 	public void givePlayerAllSpells(IPlayer player)
 	{
-		MagicSchool playerSchool = classHandler.getPlayerSchool(player); // The magic school the player is using.
-
 		// Loop every spell in the handler and give it to the player.
 		for (Spell spell : spellList.values())
-			if (spell.getSchool() == playerSchool)
+			if (classHandler.playerCanUse(player, spell.getSchool()))
 				givePlayerSpellBook(player, spell);
 	}
 

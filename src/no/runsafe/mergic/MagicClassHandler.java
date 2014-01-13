@@ -5,7 +5,12 @@ import no.runsafe.mergic.magic.MagicSchool;
 
 public class MagicClassHandler
 {
-	public MagicSchool getPlayerSchool(IPlayer player)
+	public boolean playerCanUse(IPlayer player, MagicSchool school)
+	{
+		return school == MagicSchool.FIRE || school == MagicSchool.GENERIC;
+	}
+
+	private MagicSchool getPlayerSchool(IPlayer player)
 	{
 		return MagicSchool.FIRE;
 	}

@@ -7,7 +7,7 @@ public class MagicClassHandler
 {
 	public boolean playerCanUse(IPlayer player, MagicSchool school)
 	{
-		return school == MagicSchool.FIRE || school == MagicSchool.GENERIC;
+		return school == getPlayerSchool(player) || school == MagicSchool.GENERIC;
 	}
 
 	private MagicSchool getPlayerSchool(IPlayer player)

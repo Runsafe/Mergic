@@ -14,7 +14,6 @@ import no.runsafe.framework.minecraft.event.entity.RunsafeEntityDamageByEntityEv
 import no.runsafe.framework.minecraft.event.entity.RunsafeEntityDamageEvent;
 
 import java.util.HashMap;
-import java.util.TreeMap;
 
 public class KillManager implements IEntityDamageByEntityEvent, IPlayerDamageEvent
 {
@@ -151,7 +150,7 @@ public class KillManager implements IEntityDamageByEntityEvent, IPlayerDamageEve
 		return killCount.containsKey(playerName) ? killCount.get(playerName) : 0;
 	}
 
-	public TreeMap<String, Integer> getScoreList()
+	public HashMap<String, Integer> getScoreList()
 	{
 		return killCount;
 	}
@@ -160,6 +159,6 @@ public class KillManager implements IEntityDamageByEntityEvent, IPlayerDamageEve
 	private final Graveyard graveyard;
 	private final Arena arena;
 	private HashMap<String, String> lastDamage = new HashMap<String, String>();
-	private TreeMap<String, Integer> killCount = new TreeMap<String, Integer>();
+	private HashMap<String, Integer> killCount = new HashMap<String, Integer>();
 	private final static WorldBlockEffect bloodEffect = new WorldBlockEffect(WorldBlockEffectType.BLOCK_DUST, Item.BuildingBlock.Wool.Red);
 }

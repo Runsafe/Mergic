@@ -110,38 +110,52 @@ public class Game implements IConfigurationChanged
 			// Everything reset, let's give the players now in the lobby a list of what just went down.
 
 			// Generate the score list.
-			SortedSet<Map.Entry<String, Integer>> scores = MapUtil.entriesSortedByValues(killManager.getScoreList());
-			LinkedHashMap<String, Integer> top = new LinkedHashMap<String, Integer>(6);
+			HashMap<String, Integer> scores = killManager.getScoreList();
+			List<Map.Entry<String, Integer>> top = new ArrayList<Map.Entry<String, Integer>>(scores.size());
 
-			int current = 1;
-			for (Map.Entry<String, Integer> node : scores)
+			for (Map.Entry<String, Integer> node : scores.entrySet())
 			{
-				String playerName = node.getKey();
-				IPlayer player = server.getPlayerExact(playerName);
-
-				if (current == 6)
-					break;
-
-				if (current == 1)
-					new MasterOfMagic(player).Fire();
-
-				if (current < 4)
-					new ApprenticeWizard(player).Fire();
-
-				top.put(playerName, node.getValue());
-				current++;
+				if (top.isEmpty())
+				{
+					top.add(0, node);
+				}
+				else
+				{
+					int index = 0;
+					for (Map.Entry<String, Integer> compareNode : top)
+					{
+						if (node.getValue() > compareNode.getValue())
+						{
+							top.add(index, node);
+							break;
+						}
+						index++;
+					}
+				}
 			}
 
 			List<String> output = new ArrayList<String>(2 + top.size());
 			output.add("&cThe match has ended!");
 
 			int pos = 1;
-			for (Map.Entry<String, Integer> node : top.entrySet())
+			for (Map.Entry<String, Integer> node : top)
 			{
+				if (pos < 4)
+				{
+					IPlayer player = server.getPlayerExact(node.getKey());
+					new ApprenticeWizard(player).Fire();
+
+					if (pos == 1)
+						new MasterOfMagic(player).Fire();
+				}
+				else if (pos == 6)
+				{
+					break;
+				}
+
 				output.add(String.format("%d. &b%s &f- &a%d&f kills.", pos, node.getKey(), node.getValue()));
 				pos++;
 			}
-
 
 			// Loop every player now in the lobby and give them their score and the top 5.
 			for (IPlayer player : lobby.getPlayersInLobby())

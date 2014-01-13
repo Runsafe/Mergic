@@ -24,7 +24,7 @@ public class Heal implements Spell
 	@Override
 	public MagicSchool getSchool()
 	{
-		return MagicSchool.NATURE;
+		return MagicSchool.GENERIC;
 	}
 
 	@Override

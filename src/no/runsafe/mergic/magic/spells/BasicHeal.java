@@ -23,7 +23,7 @@ public class BasicHeal implements Spell
 	@Override
 	public MagicSchool getSchool()
 	{
-		return MagicSchool.NATURE;
+		return MagicSchool.GENERIC;
 	}
 
 	@Override

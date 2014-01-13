@@ -7,9 +7,9 @@ import no.runsafe.mergic.magic.MagicSchool;
 
 public class ShadowStorm extends Storm
 {
-	public ShadowStorm(IServer server, KillManager killManager)
+	public ShadowStorm(IServer server, KillManager manager)
 	{
-		super(server, Item.BuildingBlock.StainedClay.Blue, killManager);
+		super(server, Item.BuildingBlock.StainedClay.Blue, manager);
 	}
 
 	@Override

@@ -1,21 +1,28 @@
 package no.runsafe.mergic;
 
+import no.runsafe.framework.api.ILocation;
 import no.runsafe.framework.api.IServer;
 import no.runsafe.framework.api.event.entity.IEntityDamageByEntityEvent;
+import no.runsafe.framework.api.event.player.IPlayerDamageEvent;
 import no.runsafe.framework.api.player.IPlayer;
+import no.runsafe.framework.minecraft.Item;
+import no.runsafe.framework.minecraft.WorldBlockEffect;
+import no.runsafe.framework.minecraft.WorldBlockEffectType;
 import no.runsafe.framework.minecraft.entity.RunsafeEntity;
 import no.runsafe.framework.minecraft.entity.RunsafeProjectile;
 import no.runsafe.framework.minecraft.event.entity.RunsafeEntityDamageByEntityEvent;
+import no.runsafe.framework.minecraft.event.entity.RunsafeEntityDamageEvent;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.TreeMap;
 
-public class KillManager implements IEntityDamageByEntityEvent
+public class KillManager implements IEntityDamageByEntityEvent, IPlayerDamageEvent
 {
-	public KillManager(IServer server)
+	public KillManager(IServer server, Graveyard graveyard, Arena arena)
 	{
 		this.server = server;
+		this.graveyard = graveyard;
+		this.arena = arena;
 	}
 
 	@Override
@@ -41,6 +48,55 @@ public class KillManager implements IEntityDamageByEntityEvent
 				if (shooterPlayer != null)
 					registerAttack(victim, shooterPlayer);
 			}
+		}
+	}
+
+	@Override
+	public void OnPlayerDamage(IPlayer player, RunsafeEntityDamageEvent event)
+	{
+		if (arena.playerIsInGame(player))
+		{
+			handlePlayerDamage(player, event.getDamage());
+			event.setDamage(0);
+		}
+	}
+
+	public void attackPlayer(IPlayer player, IPlayer attacker, double damage)
+	{
+		ILocation playerLocation = player.getLocation();
+		if (playerLocation != null)
+			playerLocation.playEffect(bloodEffect, 0.3F, 100, 50); // Blood splash!
+
+		registerAttack(player, attacker);
+		handlePlayerDamage(player, damage);
+	}
+
+	private void handlePlayerDamage(IPlayer player, double damage)
+	{
+		if (player.getHealth() - damage <= 0D)
+		{
+			graveyard.teleportPlayerToGraveyard(player); // Teleport player to graveyard.
+			player.setHealth(20D); // Heal the player to full.
+			player.setFireTicks(0); // Stop the fire from burning if they are.
+			player.setFoodLevel(20); // Fill the hunger bar back to full.
+			EquipmentManager.repairBoots(player); // Repair the players boots.
+
+			// If we can confirm they were killed, tell them who by, otherwise default message.
+			IPlayer killer = getKiller(player);
+			if (killer == null)
+			{
+				player.sendColouredMessage("&cYou have died! You will respawn shortly.");
+			}
+			else
+			{
+				player.sendColouredMessage("&cYou were killed by %s! You will respawn shortly.", killer.getName());
+				killer.sendColouredMessage("&aYou killed killed %s, +1 point.", player.getName());
+			}
+			OnPlayerKilled(player); // Trigger event in kill manager to tally score.
+		}
+		else
+		{
+			player.damage(damage);
 		}
 	}
 
@@ -98,6 +154,9 @@ public class KillManager implements IEntityDamageByEntityEvent
 	}
 
 	private final IServer server;
+	private final Graveyard graveyard;
+	private final Arena arena;
 	private HashMap<String, String> lastDamage = new HashMap<String, String>();
 	private TreeMap<String, Integer> killCount = new TreeMap<String, Integer>();
+	private final static WorldBlockEffect bloodEffect = new WorldBlockEffect(WorldBlockEffectType.BLOCK_DUST, Item.BuildingBlock.Wool.Red);
 }

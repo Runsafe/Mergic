@@ -114,8 +114,7 @@ public abstract class Storm implements Spell, IEntityChangeBlockEvent
 					if (player != null && player.getName().equals(victim.getName()))
 						continue;
 
-					killManager.registerAttack(victim, player); // Register the attack.
-					victim.damage(3D, player); // Three hearts of damage.
+					killManager.attackPlayer(victim, player, 3);
 				}
 			}
 
@@ -136,6 +135,6 @@ public abstract class Storm implements Spell, IEntityChangeBlockEvent
 	private final Item blockType;
 	private final IWorldEffect effect;
 	private final IServer server;
-	private final ConcurrentHashMap<Integer, String> blocks = new ConcurrentHashMap<Integer, String>();
 	private final KillManager killManager;
+	private final ConcurrentHashMap<Integer, String> blocks = new ConcurrentHashMap<Integer, String>();
 }

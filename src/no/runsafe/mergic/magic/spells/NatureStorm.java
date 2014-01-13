@@ -7,9 +7,9 @@ import no.runsafe.mergic.magic.MagicSchool;
 
 public class NatureStorm extends Storm
 {
-	public NatureStorm(IServer server, KillManager killManager)
+	public NatureStorm(IServer server, KillManager manager)
 	{
-		super(server, Item.BuildingBlock.Wood.Oak, killManager);
+		super(server, Item.BuildingBlock.Wood.Oak, manager);
 	}
 
 	@Override

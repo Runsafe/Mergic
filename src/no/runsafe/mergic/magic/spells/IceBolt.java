@@ -7,9 +7,9 @@ import no.runsafe.mergic.magic.MagicSchool;
 
 public class IceBolt extends Bolt
 {
-	public IceBolt(IScheduler scheduler, KillManager killManager)
+	public IceBolt(IScheduler scheduler, KillManager manager)
 	{
-		super(Item.BuildingBlock.Ice, scheduler, killManager);
+		super(Item.BuildingBlock.Ice, scheduler, manager);
 	}
 
 	@Override

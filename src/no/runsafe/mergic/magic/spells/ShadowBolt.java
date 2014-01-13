@@ -7,9 +7,9 @@ import no.runsafe.mergic.magic.MagicSchool;
 
 public class ShadowBolt extends Bolt
 {
-	public ShadowBolt(IScheduler scheduler, KillManager killManager)
+	public ShadowBolt(IScheduler scheduler, KillManager manager)
 	{
-		super(Item.BuildingBlock.StainedClay.Blue, scheduler, killManager);
+		super(Item.BuildingBlock.StainedClay.Blue, scheduler, manager);
 	}
 
 	@Override

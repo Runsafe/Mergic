@@ -15,6 +15,7 @@ import no.runsafe.framework.minecraft.entity.RunsafeFallingBlock;
 import no.runsafe.framework.minecraft.event.entity.RunsafeEntityChangeBlockEvent;
 import no.runsafe.mergic.ControlledEntityCleaner;
 import no.runsafe.mergic.KillManager;
+import no.runsafe.mergic.PlayerMonitor;
 import no.runsafe.mergic.magic.Spell;
 import no.runsafe.mergic.magic.SpellType;
 import org.bukkit.util.Vector;
@@ -85,8 +86,7 @@ public abstract class Bolt implements Spell, IEntityChangeBlockEvent
 					if (!closePlayer.getName().equals(player.getName())) // Check the player is different to the caster.
 					{
 						hit = true; // Mark this projectile as hit.
-						killManager.registerAttack(closePlayer, player); // Register a hit.
-						closePlayer.damage(3); // Damage the player.
+						killManager.attackPlayer(closePlayer, player, 3); // Damage the player.
 						location.playEffect(effect, 0.3F, 100, 50); // Create a dust effect using the storm block.
 						location.playSound(Sound.Creature.Ghast.Fireball, 1, 0); // Play a slow-thrash sound.
 					}
@@ -142,6 +142,6 @@ public abstract class Bolt implements Spell, IEntityChangeBlockEvent
 	private final Item blockType;
 	private final ConcurrentHashMap<Integer, Integer> blocks = new ConcurrentHashMap<Integer, Integer>(0);
 	private final IScheduler scheduler;
-	private final KillManager killManager;
 	private final WorldBlockEffect effect;
+	private final KillManager killManager;
 }

@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPlayerInteractEvent, IPluginDisabled, IPlayerDamageEvent
+public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPlayerInteractEvent, IPluginDisabled
 {
 	public PlayerMonitor(Graveyard graveyard, Arena arena, Game game, Lobby lobby, SpellHandler spellHandler, CooldownManager cooldownManager, KillManager killManager)
 	{
@@ -72,34 +72,6 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 		// Check if the player is inside the arena when they shouldn't be.
 		if (!arena.playerIsInGame(player) && arena.playerIsInPhysicalArena(player))
 			lobby.teleportPlayerToLobby(player); // Teleport them to the lobby!
-	}
-
-	@Override
-	public void OnPlayerDamage(IPlayer player, RunsafeEntityDamageEvent event)
-	{
-		if (arena.playerIsInGame(player) && player.getHealth() - event.getDamage() <= 0D)
-		{
-			event.setDamage(0); // Cancel the incoming damage.
-			graveyard.teleportPlayerToGraveyard(player); // Teleport player to graveyard.
-			player.setHealth(20D); // Heal the player to full.
-			player.setFireTicks(0); // Stop the fire from burning if they are.
-			player.setFoodLevel(20); // Fill the hunger bar back to full.
-			EquipmentManager.repairBoots(player); // Repair the players boots.
-
-			// If we can confirm they were killed, tell them who by, otherwise default message.
-			IPlayer killer = killManager.getKiller(player);
-			if (killer == null)
-			{
-				player.sendColouredMessage("&cYou have died! You will respawn shortly.");
-			}
-			else
-			{
-				player.sendColouredMessage("&cYou were killed by %s! You will respawn shortly.", killer.getName());
-				killer.sendColouredMessage("&aYou killed killed %s, +1 point.", player.getName());
-			}
-
-			killManager.OnPlayerKilled(player); // Trigger event in kill manager to tally score.
-		}
 	}
 
 	@Override

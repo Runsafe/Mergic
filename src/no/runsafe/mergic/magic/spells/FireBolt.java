@@ -7,9 +7,9 @@ import no.runsafe.mergic.magic.MagicSchool;
 
 public class FireBolt extends Bolt
 {
-	public FireBolt(IScheduler scheduler, KillManager killManager)
+	public FireBolt(IScheduler scheduler, KillManager manager)
 	{
-		super(Item.Unavailable.Fire, scheduler, killManager);
+		super(Item.Unavailable.Fire, scheduler, manager);
 	}
 
 	@Override

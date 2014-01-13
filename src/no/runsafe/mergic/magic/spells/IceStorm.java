@@ -7,9 +7,9 @@ import no.runsafe.mergic.magic.MagicSchool;
 
 public class IceStorm extends Storm
 {
-	public IceStorm(IServer server, KillManager killManager)
+	public IceStorm(IServer server, KillManager manager)
 	{
-		super(server, Item.BuildingBlock.Ice, killManager);
+		super(server, Item.BuildingBlock.Ice, manager);
 	}
 
 	@Override

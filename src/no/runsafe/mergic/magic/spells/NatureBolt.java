@@ -7,9 +7,9 @@ import no.runsafe.mergic.magic.MagicSchool;
 
 public class NatureBolt extends Bolt
 {
-	public NatureBolt(IScheduler scheduler, KillManager killManager)
+	public NatureBolt(IScheduler scheduler, KillManager manager)
 	{
-		super(Item.BuildingBlock.Wood.Oak, scheduler, killManager);
+		super(Item.BuildingBlock.Wood.Oak, scheduler, manager);
 	}
 
 	@Override

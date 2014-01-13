@@ -7,9 +7,9 @@ import no.runsafe.mergic.magic.MagicSchool;
 
 public class FireStorm extends Storm
 {
-	public FireStorm(IServer server, KillManager killManager)
+	public FireStorm(IServer server, KillManager manager)
 	{
-		super(server, Item.Unavailable.StationaryLava, killManager);
+		super(server, Item.Unavailable.StationaryLava, manager);
 	}
 
 	@Override

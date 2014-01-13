@@ -6,9 +6,7 @@ import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.mergic.magic.CooldownManager;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class Game implements IConfigurationChanged
 {
@@ -82,6 +80,7 @@ public class Game implements IConfigurationChanged
 	{
 		lobby.teleportPlayerToLobby(player); // Teleport them to the lobby.
 		arena.removePlayer(player); // Remove them from the arena list.
+		killManager.wipePlayerData(player); // Wipe player data.
 		player.sendColouredMessage("You have been removed from the match."); // Send them a message explaining.
 	}
 
@@ -113,12 +112,22 @@ public class Game implements IConfigurationChanged
 				current++;
 			}
 
+			List<String> output = new ArrayList<String>(2 + top.size());
+			output.add("&cThe match has ended!");
+
+			int pos = 1;
+			for (Map.Entry<String, Integer> node : top.entrySet())
+			{
+				output.add(String.format("%d. &b%s &f- &a%d&f kills.", pos, node.getKey(), node.getValue()));
+				pos++;
+			}
+
+
 			// Loop every player now in the lobby and give them their score and the top 5.
 			for (IPlayer player : lobby.getPlayersInLobby())
 			{
-				player.sendColouredMessage("&cThe match has ended!");
-				for (Map.Entry<String, Integer> node : top.entrySet())
-					player.sendColouredMessage("%d. &b%s &f- &a%d&f kills.", current, node.getKey(), node.getValue());
+				for (String line : output)
+					player.sendColouredMessage(line);
 
 				player.sendColouredMessage("You are currently at &a%d&f kills.", killManager.getPlayerKills(player));
 			}

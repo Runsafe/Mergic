@@ -30,6 +30,7 @@ public class Mergic extends RunsafeConfigurablePlugin
 
 		addComponent(CooldownManager.class);
 		addComponent(PlayerMonitor.class);
+		addComponent(GameMonitor.class);
 
 		// Spell related things.
 		addComponent(SpellHandler.class);

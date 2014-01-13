@@ -1,15 +1,12 @@
 package no.runsafe.mergic;
 
-import no.runsafe.framework.api.event.player.IPlayerCustomEvent;
-import no.runsafe.framework.api.event.player.IPlayerDamageEvent;
-import no.runsafe.framework.api.event.player.IPlayerInteractEvent;
-import no.runsafe.framework.api.event.player.IPlayerJoinEvent;
+import no.runsafe.framework.api.event.player.*;
 import no.runsafe.framework.api.event.plugin.IPluginDisabled;
 import no.runsafe.framework.api.player.IPlayer;
-import no.runsafe.framework.minecraft.event.entity.RunsafeEntityDamageEvent;
 import no.runsafe.framework.minecraft.event.player.RunsafeCustomEvent;
 import no.runsafe.framework.minecraft.event.player.RunsafePlayerInteractEvent;
 import no.runsafe.framework.minecraft.event.player.RunsafePlayerJoinEvent;
+import no.runsafe.framework.minecraft.event.player.RunsafePlayerQuitEvent;
 import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
 import no.runsafe.mergic.magic.*;
 
@@ -17,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPlayerInteractEvent, IPluginDisabled
+public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPlayerInteractEvent, IPluginDisabled, IPlayerQuitEvent
 {
 	public PlayerMonitor(Graveyard graveyard, Arena arena, Game game, Lobby lobby, SpellHandler spellHandler, CooldownManager cooldownManager, KillManager killManager)
 	{
@@ -28,6 +25,14 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 		this.spellHandler = spellHandler;
 		this.cooldownManager = cooldownManager;
 		this.killManager = killManager;
+	}
+
+	@Override
+	public void OnPlayerQuit(RunsafePlayerQuitEvent event)
+	{
+		IPlayer player = event.getPlayer();
+		if (arena.playerIsInGame(player))
+			game.removePlayerFromGame(player);
 	}
 
 	@SuppressWarnings("unchecked")

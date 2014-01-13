@@ -46,12 +46,8 @@ public class GameMonitor implements IConfigurationChanged
 		else
 		{
 			for (Map.Entry<String, Integer> score : killManager.getScoreList().entrySet())
-			{
 				if (score.getValue() >= winScore)
-				{
-
-				}
-			}
+					game.cancelGame(); // Stop the game!
 		}
 	}
 

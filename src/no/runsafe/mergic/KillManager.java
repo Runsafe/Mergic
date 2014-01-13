@@ -103,11 +103,14 @@ public class KillManager implements IEntityDamageByEntityEvent, IPlayerDamageEve
 	public void wipeAllData()
 	{
 		lastDamage.clear();
+		killCount.clear();
 	}
 
 	public void wipePlayerData(IPlayer player)
 	{
-		lastDamage.remove(player.getName());
+		String playerName = player.getName();
+		lastDamage.remove(playerName);
+		killCount.remove(playerName);
 	}
 
 	public void registerAttack(IPlayer victim, IPlayer attacker)

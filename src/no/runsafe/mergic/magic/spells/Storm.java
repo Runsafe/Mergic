@@ -108,7 +108,7 @@ public abstract class Storm implements Spell, IEntityChangeBlockEvent
 				IPlayer player = server.getPlayerExact(blocks.get(entityID));
 
 				location.playEffect(effect, 0.3F, 100, 50); // Create a dust effect using the storm block.
-				location.playSound(Sound.Creature.Ghast.Fireball, 1, 0); // Play a slow-thrash sound.
+				location.playSound(Sound.Environment.Explode, 1, 1); // Play a slow-thrash sound.
 
 				for (IPlayer victim : location.getPlayersInRange(4))
 				{

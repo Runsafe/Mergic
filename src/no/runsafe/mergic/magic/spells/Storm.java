@@ -12,6 +12,7 @@ import no.runsafe.framework.minecraft.entity.RunsafeEntity;
 import no.runsafe.framework.minecraft.entity.RunsafeFallingBlock;
 import no.runsafe.framework.minecraft.event.entity.RunsafeEntityChangeBlockEvent;
 import no.runsafe.mergic.ControlledEntityCleaner;
+import no.runsafe.mergic.KillManager;
 import no.runsafe.mergic.magic.Spell;
 import no.runsafe.mergic.magic.SpellHandler;
 import no.runsafe.mergic.magic.SpellType;
@@ -20,10 +21,11 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class Storm implements Spell, IEntityChangeBlockEvent
 {
-	public Storm(IServer server, Item blockType)
+	public Storm(IServer server, Item blockType, KillManager killManager)
 	{
 		this.server = server;
 		this.blockType = blockType;
+		this.killManager = killManager;
 		this.effect = new WorldBlockEffect(WorldBlockEffectType.BLOCK_DUST, blockType);
 	}
 
@@ -112,6 +114,7 @@ public abstract class Storm implements Spell, IEntityChangeBlockEvent
 					if (player != null && player.getName().equals(victim.getName()))
 						continue;
 
+					killManager.registerAttack(victim, player); // Register the attack.
 					victim.damage(3D, player); // Three hearts of damage.
 				}
 			}
@@ -134,4 +137,5 @@ public abstract class Storm implements Spell, IEntityChangeBlockEvent
 	private final IWorldEffect effect;
 	private final IServer server;
 	private final ConcurrentHashMap<Integer, String> blocks = new ConcurrentHashMap<Integer, String>();
+	private final KillManager killManager;
 }

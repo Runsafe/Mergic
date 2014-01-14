@@ -98,6 +98,7 @@ public class Game implements IConfigurationChanged
 		// Do we have a game running?
 		if (gameInProgress())
 		{
+			HashMap<String, Integer> scores = killManager.getScoreList(); // Grab the score list for the match.
 			currentPreMatchStep = -1; // Signal for the pre-match countdown (if running) to cancel.
 			gameInProgress = false; // Flag the game as not running.
 			gameHasStarted = false; // Flag the game as not started;
@@ -110,7 +111,6 @@ public class Game implements IConfigurationChanged
 			// Everything reset, let's give the players now in the lobby a list of what just went down.
 
 			// Generate the score list.
-			HashMap<String, Integer> scores = killManager.getScoreList();
 			List<Map.Entry<String, Integer>> top = new ArrayList<Map.Entry<String, Integer>>(scores.size());
 
 			for (Map.Entry<String, Integer> node : scores.entrySet())

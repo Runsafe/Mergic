@@ -102,7 +102,7 @@ public class KillManager implements IEntityDamageByEntityEvent, IPlayerDamageEve
 	public void wipeAllData()
 	{
 		lastDamage.clear();
-		killCount.clear();
+		killCount = new HashMap<String, Integer>(0);
 	}
 
 	public void wipePlayerData(IPlayer player)

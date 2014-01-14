@@ -1,12 +1,11 @@
 package no.runsafe.mergic.commands;
 
+import no.runsafe.framework.api.command.argument.IArgumentList;
 import no.runsafe.framework.api.command.argument.TrailingArgument;
 import no.runsafe.framework.api.command.player.PlayerCommand;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.mergic.magic.Spell;
 import no.runsafe.mergic.magic.SpellHandler;
-
-import java.util.Map;
 
 public class CreateSpellBook extends PlayerCommand
 {
@@ -17,7 +16,7 @@ public class CreateSpellBook extends PlayerCommand
 	}
 
 	@Override
-	public String OnExecute(IPlayer executor, Map<String, String> parameters)
+	public String OnExecute(IPlayer executor, IArgumentList parameters)
 	{
 		Spell spell = spellHandler.getSpellByName(parameters.get("spell"));
 		if (spell == null)

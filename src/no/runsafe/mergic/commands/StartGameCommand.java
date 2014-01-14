@@ -2,10 +2,9 @@ package no.runsafe.mergic.commands;
 
 import no.runsafe.framework.api.command.ExecutableCommand;
 import no.runsafe.framework.api.command.ICommandExecutor;
+import no.runsafe.framework.api.command.argument.IArgumentList;
 import no.runsafe.mergic.Game;
 import no.runsafe.mergic.GameException;
-
-import java.util.Map;
 
 public class StartGameCommand extends ExecutableCommand
 {
@@ -16,7 +15,7 @@ public class StartGameCommand extends ExecutableCommand
 	}
 
 	@Override
-	public String OnExecute(ICommandExecutor executor, Map<String, String> parameters)
+	public String OnExecute(ICommandExecutor executor, IArgumentList parameters)
 	{
 		// Check if the game is running, if it is, throw an error back.
 		if (game.gameInProgress())

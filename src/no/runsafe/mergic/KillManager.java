@@ -55,7 +55,9 @@ public class KillManager implements IEntityDamageByEntityEvent, IPlayerDamageEve
 	{
 		if (arena.playerIsInGame(player))
 		{
-			handlePlayerDamage(player, event.getDamage());
+			if (!graveyard.playerIsInGraveyard(player))
+				handlePlayerDamage(player, event.getDamage());
+
 			event.setDamage(0);
 		}
 	}

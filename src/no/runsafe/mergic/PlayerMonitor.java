@@ -3,10 +3,7 @@ package no.runsafe.mergic;
 import no.runsafe.framework.api.event.player.*;
 import no.runsafe.framework.api.event.plugin.IPluginDisabled;
 import no.runsafe.framework.api.player.IPlayer;
-import no.runsafe.framework.minecraft.event.player.RunsafeCustomEvent;
-import no.runsafe.framework.minecraft.event.player.RunsafePlayerInteractEvent;
-import no.runsafe.framework.minecraft.event.player.RunsafePlayerJoinEvent;
-import no.runsafe.framework.minecraft.event.player.RunsafePlayerQuitEvent;
+import no.runsafe.framework.minecraft.event.player.*;
 import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
 import no.runsafe.mergic.magic.*;
 
@@ -14,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPlayerInteractEvent, IPluginDisabled, IPlayerQuitEvent
+public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPlayerInteractEvent, IPluginDisabled, IPlayerQuitEvent, IPlayerDropItemEvent
 {
 	public PlayerMonitor(Graveyard graveyard, Arena arena, Game game, Lobby lobby, SpellHandler spellHandler, CooldownManager cooldownManager, KillManager killManager, MagicClassHandler classHandler)
 	{
@@ -121,6 +118,14 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 	{
 		// If the server shuts down, we should cancel the game just to make sure.
 		game.cancelGame();
+	}
+
+	@Override
+	public void OnPlayerDropItem(RunsafePlayerDropItemEvent event)
+	{
+		IPlayer player = event.getPlayer();
+		if (arena.playerIsInPhysicalArena(player) || lobby.playerIsInLobby(player))
+			event.getItem().remove(); // Remove the item.
 	}
 
 	public boolean isDebugging(IPlayer player)

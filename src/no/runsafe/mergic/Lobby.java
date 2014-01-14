@@ -118,6 +118,19 @@ public class Lobby implements IConfigurationChanged
 		location.playSound(Sound.Player.LevelUp, 1000, 0); // Play a ding when the match ends.
 	}
 
+	public boolean playerIsInLobby(IPlayer player)
+	{
+		if (!isAvailable())
+			return false;
+
+		IWorld playerWorld = player.getWorld(); // The world of the player.
+		if (playerWorld == null || !playerWorld.isWorld(lobbyWorld))
+			return false;
+
+		List<String> playerRegions = worldGuard.getApplicableRegions(player);
+		return playerRegions != null && playerRegions.contains(lobbyRegion);
+	}
+
 	private boolean lobbySetup;
 	private IWorld lobbyWorld;
 	private String lobbyRegion;

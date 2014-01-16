@@ -80,7 +80,7 @@ public abstract class Storm implements Spell, IEntityChangeBlockEvent
 				blocks.put(block.getEntityId(), playerName); // Track the block.
 				ControlledEntityCleaner.registerEntity(block); // Register for clean-up.
 			}
-		}, 3L, 3L);
+		}, 10L, 10L);
 
 		SpellHandler.scheduler.startSyncTask(new Runnable()
 		{
@@ -115,7 +115,7 @@ public abstract class Storm implements Spell, IEntityChangeBlockEvent
 					if (player != null && player.getName().equals(victim.getName()))
 						continue;
 
-					killManager.attackPlayer(victim, player, 3);
+					killManager.attackPlayer(victim, player, 4);
 				}
 			}
 

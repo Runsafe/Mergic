@@ -121,6 +121,7 @@ public abstract class Bolt implements Spell, IEntityChangeBlockEvent
 
 			removeBolt(entityID); // Remove the bolt from our tracking.
 			ControlledEntityCleaner.unregisterEntity(entity); // Unregister from cleaner.
+			entity.remove(); // Remove the entity.
 
 			try
 			{

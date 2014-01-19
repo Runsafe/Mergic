@@ -121,6 +121,7 @@ public abstract class Storm implements Spell, IEntityChangeBlockEvent
 
 			blocks.remove(entityID); // Remove the entity ID from our tracker.
 			ControlledEntityCleaner.unregisterEntity(entity); // Remove entity from cleaner
+			entity.remove(); // Remove the entity.
 
 			try
 			{

@@ -1,5 +1,6 @@
 package no.runsafe.mergic;
 
+import no.runsafe.framework.api.IScheduler;
 import no.runsafe.framework.api.event.player.*;
 import no.runsafe.framework.api.event.plugin.IPluginDisabled;
 import no.runsafe.framework.api.player.IPlayer;
@@ -13,7 +14,7 @@ import java.util.Map;
 
 public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPlayerInteractEvent, IPluginDisabled, IPlayerQuitEvent, IPlayerDropItemEvent
 {
-	public PlayerMonitor(Graveyard graveyard, Arena arena, Game game, Lobby lobby, SpellHandler spellHandler, CooldownManager cooldownManager, KillManager killManager, MagicClassHandler classHandler)
+	public PlayerMonitor(Graveyard graveyard, Arena arena, Game game, Lobby lobby, SpellHandler spellHandler, CooldownManager cooldownManager, KillManager killManager, MagicClassHandler classHandler, IScheduler scheduler)
 	{
 		this.graveyard = graveyard;
 		this.arena = arena;
@@ -23,6 +24,7 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 		this.cooldownManager = cooldownManager;
 		this.killManager = killManager;
 		this.classHandler = classHandler;
+		this.scheduler = scheduler;
 	}
 
 	@Override
@@ -44,11 +46,20 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 			Map<String, String> data = (Map<String, String>) event.getData();
 			if (arena.getArenaRegionString().equals(String.format("%s-%s", data.get("world"), data.get("region"))))
 			{
-				IPlayer player = event.getPlayer();
+				final IPlayer player = event.getPlayer();
 
 				// Check if the player is actually in the game.
 				if (arena.playerIsInGame(player))
-					game.removePlayerFromGame(player); // Throw them from the game.
+				{
+					scheduler.runNow(new Runnable()
+					{
+						@Override
+						public void run()
+						{
+							game.removePlayerFromGame(player); // Throw them from the game.
+						}
+					});
+				}
 			}
 		}
 		else if (event.getEvent().equals("region.enter")) // Or maybe an enter?
@@ -57,13 +68,20 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 			Map<String, String> data = (Map<String, String>) event.getData();
 			if (lobby.getLobbyRegionString().equals(String.format("%s-%s", data.get("world"), data.get("region"))))
 			{
-				IPlayer player = event.getPlayer();
+				final IPlayer player = event.getPlayer();
 
-				player.getInventory().clear(); // Clear the players inventory.
-				classHandler.applyRandomClass(player); // Set a random school of magic for the player.
-				spellHandler.givePlayerAllSpells(player); // Give the player all spells.
-				EquipmentManager.givePlayerWizardBoots(player); // Give the player some magic boots!
-				player.setLevel(killManager.getPlayerKills(player)); // Update the players level.
+				scheduler.runNow(new Runnable()
+				{
+					@Override
+					public void run()
+					{
+						player.getInventory().clear(); // Clear the players inventory.
+						classHandler.applyRandomClass(player); // Set a random school of magic for the player.
+						spellHandler.givePlayerAllSpells(player); // Give the player all spells.
+						EquipmentManager.givePlayerWizardBoots(player); // Give the player some magic boots!
+						player.setLevel(killManager.getPlayerKills(player)); // Update the players level.
+					}
+				});
 			}
 		}
 	}
@@ -155,4 +173,5 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 	private KillManager killManager;
 	private final MagicClassHandler classHandler;
 	private final List<String> debuggers = new ArrayList<String>();
+	private final IScheduler scheduler;
 }

@@ -9,7 +9,7 @@ public class FireBolt extends Bolt
 {
 	public FireBolt(IScheduler scheduler, KillManager manager)
 	{
-		super(Item.Unavailable.Fire, scheduler, manager);
+		super(Item.Unavailable.StationaryLava, scheduler, manager);
 	}
 
 	@Override

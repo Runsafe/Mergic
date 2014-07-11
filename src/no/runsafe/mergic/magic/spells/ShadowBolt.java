@@ -9,7 +9,7 @@ public class ShadowBolt extends Bolt
 {
 	public ShadowBolt(IScheduler scheduler, KillManager manager)
 	{
-		super(Item.BuildingBlock.StainedClay.Blue, scheduler, manager);
+		super(Item.BuildingBlock.CoalBlock, scheduler, manager);
 	}
 
 	@Override

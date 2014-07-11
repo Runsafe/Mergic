@@ -9,7 +9,7 @@ public class ShadowStorm extends Storm
 {
 	public ShadowStorm(IServer server, KillManager manager)
 	{
-		super(server, Item.BuildingBlock.StainedClay.Blue, manager);
+		super(server, Item.BuildingBlock.CoalBlock, manager);
 	}
 
 	@Override

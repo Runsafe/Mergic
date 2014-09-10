@@ -21,6 +21,6 @@ public class EarthStorm extends Storm
 	@Override
 	public MagicSchool getSchool()
 	{
-		return MagicSchool.NATURE;
+		return MagicSchool.EARTH;
 	}
 }

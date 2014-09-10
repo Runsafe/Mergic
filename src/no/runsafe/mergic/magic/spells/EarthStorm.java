@@ -7,7 +7,7 @@ import no.runsafe.mergic.magic.MagicSchool;
 
 public class EarthStorm extends Storm
 {
-	public NatureStorm(IServer server, KillManager manager)
+	public EarthStorm(IServer server, KillManager manager)
 	{
 		super(server, Item.BuildingBlock.Grass, manager);
 	}

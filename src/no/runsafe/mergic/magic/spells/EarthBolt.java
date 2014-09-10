@@ -7,7 +7,7 @@ import no.runsafe.mergic.magic.MagicSchool;
 
 public class EarthBolt extends Bolt
 {
-	public NatureBolt(IScheduler scheduler, KillManager manager)
+	public EarthBolt(IScheduler scheduler, KillManager manager)
 	{
 		super(Item.BuildingBlock.Grass, scheduler, manager);
 	}

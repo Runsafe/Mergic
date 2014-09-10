@@ -42,6 +42,7 @@ public class Mergic extends RunsafeConfigurablePlugin
 		addComponent(NatureStorm.class);
 		addComponent(ShadowStorm.class);
 		addComponent(WaterStorm.class);
+		addComponent(EarthStorm.class);
 
 		// Bolt spells
 		addComponent(FireBolt.class);
@@ -49,6 +50,7 @@ public class Mergic extends RunsafeConfigurablePlugin
 		addComponent(NatureBolt.class);
 		addComponent(ShadowBolt.class);
 		addComponent(WaterBolt.class);
+		addComponent(EarthBolt.class);	
 
 		// Healing spells
 		addComponent(Heal.class);

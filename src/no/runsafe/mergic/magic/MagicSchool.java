@@ -7,5 +7,6 @@ public enum MagicSchool
 	SHADOW,
 	NATURE,
 	WATER,
+	EARTH,
 	GENERIC
 }

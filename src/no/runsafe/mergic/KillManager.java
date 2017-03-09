@@ -43,7 +43,7 @@ public class KillManager implements IEntityDamageByEntityEvent, IPlayerDamageEve
 			else if (attackingEntity instanceof RunsafeProjectile)
 			{
 				RunsafeProjectile projectile = (RunsafeProjectile) attackingEntity;
-				IPlayer shooterPlayer = projectile.getShooterPlayer();
+				IPlayer shooterPlayer = projectile.getShootingPlayer();
 
 				if (shooterPlayer != null)
 					registerAttack(victim, shooterPlayer);

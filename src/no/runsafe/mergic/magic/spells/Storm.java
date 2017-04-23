@@ -48,7 +48,7 @@ public abstract class Storm implements Spell, IEntityChangeBlockEvent
 	}
 
 	@Override
-	public void onCast(IPlayer player)
+	public void onCast(final IPlayer player)
 	{
 		int radius = 6; // Will be doubled in a square radius.
 		ILocation location = player.getLocation();
@@ -56,8 +56,6 @@ public abstract class Storm implements Spell, IEntityChangeBlockEvent
 
 		if (location == null || world == null)
 			return; // If we've got an invalid location, cancel.
-
-		final String playerName = player.getName();
 
 		final double highX = location.getBlockX() + radius;
 		final double highZ = location.getBlockZ() + radius;
@@ -77,7 +75,7 @@ public abstract class Storm implements Spell, IEntityChangeBlockEvent
 				IEntity block = world.spawnFallingBlock(world.getLocation(x, high, z), blockType);
 				((RunsafeFallingBlock)block).setDropItem(false);
 
-				blocks.put(block.getEntityId(), playerName); // Track the block.
+				blocks.put(block.getEntityId(), player); // Track the block.
 				ControlledEntityCleaner.registerEntity(block); // Register for clean-up.
 			}
 		}, 10L, 10L);
@@ -105,14 +103,14 @@ public abstract class Storm implements Spell, IEntityChangeBlockEvent
 
 			if (location != null)
 			{
-				IPlayer player = server.getPlayerExact(blocks.get(entityID));
+				IPlayer player = blocks.get(entityID);
 
 				location.playEffect(effect, 0.3F, 100, 50); // Create a dust effect using the storm block.
 				location.playSound(Sound.Environment.Explode, 1, 1); // Play a slow-thrash sound.
 
 				for (IPlayer victim : location.getPlayersInRange(4))
 				{
-					if (player != null && player.getName().equals(victim.getName()))
+					if (player != null && player.equals(victim))
 						continue;
 
 					killManager.attackPlayer(victim, player, 4);
@@ -138,5 +136,5 @@ public abstract class Storm implements Spell, IEntityChangeBlockEvent
 	private final IWorldEffect effect;
 	private final IServer server;
 	private final KillManager killManager;
-	private final ConcurrentHashMap<Integer, String> blocks = new ConcurrentHashMap<Integer, String>();
+	private final ConcurrentHashMap<Integer, IPlayer> blocks = new ConcurrentHashMap<Integer, IPlayer>();
 }

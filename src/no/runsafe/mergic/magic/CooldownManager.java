@@ -16,35 +16,33 @@ public class CooldownManager
 
 	public boolean canCastSpell(IPlayer player, Spell spell)
 	{
-		String playerName = player.getName();
-		return !cooldowns.containsKey(playerName) || !cooldowns.get(playerName).contains(spell.getType());
+		return !cooldowns.containsKey(player) || !cooldowns.get(player).contains(spell.getType());
 	}
 
-	public void applySchoolCooldown(IPlayer player, Spell spell)
+	public void applySchoolCooldown(final IPlayer player, Spell spell)
 	{
-		final String playerName = player.getName();
 		final SpellType spellType = spell.getType();
 
 		// If we lack a key for the player, create one.
-		if (!cooldowns.containsKey(playerName))
-			cooldowns.put(playerName, new ArrayList<SpellType>(0));
+		if (!cooldowns.containsKey(player))
+			cooldowns.put(player, new ArrayList<SpellType>(0));
 
-		cooldowns.get(playerName).add(spellType); // Add the school to the cooldown list.
+		cooldowns.get(player).add(spellType); // Add the school to the cooldown list.
 		scheduler.startAsyncTask(new Runnable()
 		{
 			@Override
 			public void run()
 			{
-				removeSchoolCooldown(playerName, spellType);
+				removeSchoolCooldown(player, spellType);
 			}
 		}, spell.getCooldown()); // Create a cooldown timer.
 	}
 
-	public void removeSchoolCooldown(String playerName, SpellType spellType)
+	public void removeSchoolCooldown(IPlayer player, SpellType spellType)
 	{
 		// Remove the school from the players cooldown list if it exists.
-		if (cooldowns.containsKey(playerName))
-			cooldowns.get(playerName).remove(spellType);
+		if (cooldowns.containsKey(player))
+			cooldowns.get(player).remove(spellType);
 	}
 
 	public void resetCooldowns()
@@ -52,6 +50,6 @@ public class CooldownManager
 		cooldowns.clear(); // Remove all cooldowns.
 	}
 
-	private ConcurrentHashMap<String, List<SpellType>> cooldowns = new ConcurrentHashMap<String, List<SpellType>>(0);
+	private ConcurrentHashMap<IPlayer, List<SpellType>> cooldowns = new ConcurrentHashMap<IPlayer, List<SpellType>>(0);
 	private IScheduler scheduler;
 }

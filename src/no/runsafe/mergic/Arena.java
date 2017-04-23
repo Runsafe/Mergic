@@ -78,7 +78,7 @@ public class Arena implements IConfigurationChanged
 	public void teleportPlayerIntoArena(IPlayer player)
 	{
 		// Register the player as in-game in the arena instance.
-		players.add(player.getName());
+		players.add(player);
 
 		// Create random X and Z co-ordinates within the region.
 		double randomX = getRandomBetween(teleportRegion.getMinimumPoint().getBlockX(), teleportRegion.getMaximumPoint().getBlockX());
@@ -134,12 +134,12 @@ public class Arena implements IConfigurationChanged
 
 	public boolean playerIsInGame(IPlayer player)
 	{
-		return players.contains(player.getName());
+		return players.contains(player);
 	}
 
 	public void removePlayer(IPlayer player)
 	{
-		players.remove(player.getName());
+		players.remove(player);
 	}
 
 	public void removeAllPlayers()
@@ -169,5 +169,5 @@ public class Arena implements IConfigurationChanged
 	private IRegionControl worldGuard;
 	private ProtectedRegion teleportRegion;
 	private String region;
-	private List<String> players = new ArrayList<String>();
+	private List<IPlayer> players = new ArrayList<IPlayer>();
 }

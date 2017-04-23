@@ -4,6 +4,7 @@ import no.runsafe.framework.api.IConfiguration;
 import no.runsafe.framework.api.IScheduler;
 import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
 import no.runsafe.framework.api.log.IConsole;
+import no.runsafe.framework.api.player.IPlayer;
 
 import java.util.Map;
 
@@ -64,7 +65,7 @@ public class GameMonitor implements IConfigurationChanged
 				return;
 			}
 
-			for (Map.Entry<String, Integer> score : killManager.getScoreList().entrySet())
+			for (Map.Entry<IPlayer, Integer> score : killManager.getScoreList().entrySet())
 				if (score.getValue() >= winScore)
 					cancelGame(); // Stop the game!
 		}

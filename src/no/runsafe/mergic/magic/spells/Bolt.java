@@ -83,7 +83,7 @@ public abstract class Bolt implements Spell, IEntityChangeBlockEvent
 				// Check all the players we have in range.
 				for (IPlayer closePlayer : location.getPlayersInRange(3D))
 				{
-					if (!closePlayer.getName().equals(player.getName())) // Check the player is different to the caster.
+					if (!closePlayer.equals(player)) // Check the player is different to the caster.
 					{
 						hit = true; // Mark this projectile as hit.
 						killManager.attackPlayer(closePlayer, player, 7); // Damage the player.

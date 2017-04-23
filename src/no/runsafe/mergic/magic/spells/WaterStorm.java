@@ -9,7 +9,7 @@ public class WaterStorm extends Storm
 {
 	public WaterStorm(IServer server, KillManager manager)
 	{
-		super(server, Item.Unavailable.StationaryWater, manager);
+		super(server, Item.BuildingBlock.LapisLazuli, manager);
 	}
 
 	@Override

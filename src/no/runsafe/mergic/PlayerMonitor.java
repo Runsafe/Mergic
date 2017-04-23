@@ -148,18 +148,17 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 
 	public boolean isDebugging(IPlayer player)
 	{
-		return debuggers.contains(player.getName());
+		return debuggers.contains(player);
 	}
 
 	public boolean toggleDebugging(IPlayer player)
 	{
 		boolean isDebugging = isDebugging(player);
-		String playerName = player.getName();
 
 		if (isDebugging)
-			debuggers.remove(playerName);
+			debuggers.remove(player);
 		else
-			debuggers.add(playerName);
+			debuggers.add(player);
 
 		return !isDebugging;
 	}
@@ -172,6 +171,6 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 	private CooldownManager cooldownManager;
 	private KillManager killManager;
 	private final MagicClassHandler classHandler;
-	private final List<String> debuggers = new ArrayList<String>();
+	private final List<IPlayer> debuggers = new ArrayList<IPlayer>();
 	private final IScheduler scheduler;
 }

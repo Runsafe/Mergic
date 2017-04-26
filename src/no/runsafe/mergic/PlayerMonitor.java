@@ -11,6 +11,7 @@ import no.runsafe.mergic.magic.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPlayerInteractEvent, IPluginDisabled, IPlayerQuitEvent, IPlayerDropItemEvent
 {
@@ -148,7 +149,7 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 
 	public boolean isDebugging(IPlayer player)
 	{
-		return debuggers.contains(player);
+		return debuggers.contains(player.getUniqueId());
 	}
 
 	public boolean toggleDebugging(IPlayer player)
@@ -156,9 +157,9 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 		boolean isDebugging = isDebugging(player);
 
 		if (isDebugging)
-			debuggers.remove(player);
+			debuggers.remove(player.getUniqueId());
 		else
-			debuggers.add(player);
+			debuggers.add(player.getUniqueId());
 
 		return !isDebugging;
 	}
@@ -171,6 +172,6 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 	private CooldownManager cooldownManager;
 	private KillManager killManager;
 	private final MagicClassHandler classHandler;
-	private final List<IPlayer> debuggers = new ArrayList<IPlayer>();
+	private final List<UUID> debuggers = new ArrayList<UUID>();
 	private final IScheduler scheduler;
 }

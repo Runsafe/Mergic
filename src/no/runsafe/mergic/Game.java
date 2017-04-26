@@ -141,9 +141,9 @@ public class Game implements IConfigurationChanged
 			int pos = 1;
 			for (Map.Entry<UUID, Integer> node : top)
 			{
+				IPlayer player = server.getPlayer(node.getKey());
 				if (pos < 4)
 				{
-					IPlayer player = server.getPlayer(node.getKey());
 					new ApprenticeWizard(player).Fire();
 
 					if (pos == 1)
@@ -151,15 +151,18 @@ public class Game implements IConfigurationChanged
 						new MasterOfMagic(player).Fire();
 
 						if (player != null)
+						{
 							server.broadcastMessage("&b" + player.getName() + " has triumphed at Wizard PvP!");
+							player.sendTitle("§AYou Win!", "Score: §C"+node.getValue().toString());
+						}
 					}
 				}
 				else if (pos == 6)
 				{
 					break;
 				}
-
-				output.add(String.format("%d. &b%s &f- &a%d&f kills.", pos, server.getPlayer(node.getKey()).getName(), node.getValue()));
+				if (player != null)
+					output.add(String.format("%d. &b%s &f- &a%d&f kills.", pos, player.getName(), node.getValue()));
 				pos++;
 			}
 

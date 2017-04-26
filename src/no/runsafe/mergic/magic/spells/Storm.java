@@ -17,6 +17,7 @@ import no.runsafe.mergic.magic.Spell;
 import no.runsafe.mergic.magic.SpellHandler;
 import no.runsafe.mergic.magic.SpellType;
 
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class Storm implements Spell, IEntityChangeBlockEvent
@@ -75,7 +76,7 @@ public abstract class Storm implements Spell, IEntityChangeBlockEvent
 				IEntity block = world.spawnFallingBlock(world.getLocation(x, high, z), blockType);
 				((RunsafeFallingBlock)block).setDropItem(false);
 
-				blocks.put(block.getEntityId(), player); // Track the block.
+				blocks.put(block.getEntityId(), player.getUniqueId()); // Track the block.
 				ControlledEntityCleaner.registerEntity(block); // Register for clean-up.
 			}
 		}, 10L, 10L);
@@ -103,7 +104,7 @@ public abstract class Storm implements Spell, IEntityChangeBlockEvent
 
 			if (location != null)
 			{
-				IPlayer player = blocks.get(entityID);
+				IPlayer player = server.getPlayer(blocks.get(entityID));
 
 				location.playEffect(effect, 0.3F, 100, 50); // Create a dust effect using the storm block.
 				location.playSound(Sound.Environment.Explode, 1, 1); // Play a slow-thrash sound.
@@ -136,5 +137,5 @@ public abstract class Storm implements Spell, IEntityChangeBlockEvent
 	private final IWorldEffect effect;
 	private final IServer server;
 	private final KillManager killManager;
-	private final ConcurrentHashMap<Integer, IPlayer> blocks = new ConcurrentHashMap<Integer, IPlayer>();
+	private final ConcurrentHashMap<Integer, UUID> blocks = new ConcurrentHashMap<Integer, UUID>();
 }

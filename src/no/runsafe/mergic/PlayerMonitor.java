@@ -80,7 +80,7 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 						classHandler.applyRandomClass(player); // Set a random school of magic for the player.
 						spellHandler.givePlayerAllSpells(player); // Give the player all spells.
 						EquipmentManager.givePlayerWizardBoots(player); // Give the player some magic boots!
-						player.setLevel(killManager.getPlayerKills(player)); // Update the players level.
+						player.setLevel(killManager.getPlayerKills(player.getUniqueId())); // Update the players level.
 					}
 				});
 			}

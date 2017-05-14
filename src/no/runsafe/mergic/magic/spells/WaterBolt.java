@@ -9,7 +9,7 @@ public class WaterBolt extends Bolt
 {
 	public WaterBolt(IScheduler scheduler, KillManager manager)
 	{
-		super(Item.Unavailable.Water, scheduler, manager);
+		super(Item.BuildingBlock.LapisLazuli, scheduler, manager);
 	}
 
 	@Override

@@ -4,6 +4,7 @@ import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.mergic.magic.MagicSchool;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class MagicClassHandler
 {
@@ -21,19 +22,18 @@ public class MagicClassHandler
 
 	private MagicSchool getPlayerSchool(IPlayer player)
 	{
-		String playerName = player.getName();
-		if (!schools.containsKey(playerName))
+		if (!schools.containsKey(player.getUniqueId()))
 			applyRandomClass(player);
 
-		return schools.get(playerName);
+		return schools.get(player.getUniqueId());
 	}
 
 	public void applyRandomClass(IPlayer player)
 	{
-		schools.put(player.getName(), availableSchools.get(random.nextInt(availableSchools.size())));
+		schools.put(player.getUniqueId(), availableSchools.get(random.nextInt(availableSchools.size())));
 	}
 
 	private final Random random = new Random();
-	private final HashMap<String, MagicSchool> schools = new HashMap<String, MagicSchool>(0);
+	private final ConcurrentHashMap<UUID, MagicSchool> schools = new ConcurrentHashMap<UUID, MagicSchool>(0);
 	private final List<MagicSchool> availableSchools;
 }

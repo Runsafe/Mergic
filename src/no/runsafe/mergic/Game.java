@@ -10,6 +10,7 @@ import no.runsafe.mergic.achievements.MasterOfMagic;
 import no.runsafe.mergic.magic.CooldownManager;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Game implements IConfigurationChanged
 {
@@ -98,7 +99,7 @@ public class Game implements IConfigurationChanged
 		// Do we have a game running?
 		if (gameInProgress())
 		{
-			HashMap<String, Integer> scores = killManager.getScoreList(); // Grab the score list for the match.
+			ConcurrentHashMap<UUID, Integer> scores = killManager.getScoreList(); // Grab the score list for the match.
 			currentPreMatchStep = -1; // Signal for the pre-match countdown (if running) to cancel.
 			gameInProgress = false; // Flag the game as not running.
 			gameHasStarted = false; // Flag the game as not started;
@@ -111,9 +112,9 @@ public class Game implements IConfigurationChanged
 			// Everything reset, let's give the players now in the lobby a list of what just went down.
 
 			// Generate the score list.
-			List<Map.Entry<String, Integer>> top = new ArrayList<Map.Entry<String, Integer>>(scores.size());
+			List<Map.Entry<UUID, Integer>> top = new ArrayList<Map.Entry<UUID, Integer>>(scores.size());
 
-			for (Map.Entry<String, Integer> node : scores.entrySet())
+			for (Map.Entry<UUID, Integer> node : scores.entrySet())
 			{
 				if (top.isEmpty())
 				{
@@ -122,7 +123,7 @@ public class Game implements IConfigurationChanged
 				else
 				{
 					int index = 0;
-					for (Map.Entry<String, Integer> compareNode : top)
+					for (Map.Entry<UUID, Integer> compareNode : top)
 					{
 						if (node.getValue() > compareNode.getValue())
 						{
@@ -138,11 +139,11 @@ public class Game implements IConfigurationChanged
 			output.add("&cThe match has ended!");
 
 			int pos = 1;
-			for (Map.Entry<String, Integer> node : top)
+			for (Map.Entry<UUID, Integer> node : top)
 			{
+				IPlayer player = server.getPlayer(node.getKey());
 				if (pos < 4)
 				{
-					IPlayer player = server.getPlayerExact(node.getKey());
 					new ApprenticeWizard(player).Fire();
 
 					if (pos == 1)
@@ -150,15 +151,18 @@ public class Game implements IConfigurationChanged
 						new MasterOfMagic(player).Fire();
 
 						if (player != null)
+						{
 							server.broadcastMessage("&b" + player.getName() + " has triumphed at Wizard PvP!");
+							player.sendTitle("§AYou Win!", "Score: §C"+node.getValue().toString());
+						}
 					}
 				}
 				else if (pos == 6)
 				{
 					break;
 				}
-
-				output.add(String.format("%d. &b%s &f- &a%d&f kills.", pos, node.getKey(), node.getValue()));
+				if (player != null)
+					output.add(String.format("%d. &b%s &f- &a%d&f kills.", pos, player.getName(), node.getValue()));
 				pos++;
 			}
 
@@ -168,7 +172,7 @@ public class Game implements IConfigurationChanged
 				for (String line : output)
 					player.sendColouredMessage(line);
 
-				player.sendColouredMessage("You are currently at &a%d&f kills.", killManager.getPlayerKills(player));
+				player.sendColouredMessage("You are currently at &a%d&f kills.", killManager.getPlayerKills(player.getUniqueId()));
 			}
 
 			killManager.wipeAllData(); // Wipe all of the data before the next match.

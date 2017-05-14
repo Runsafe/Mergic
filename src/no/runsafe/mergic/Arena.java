@@ -11,6 +11,7 @@ import no.runsafe.worldguardbridge.IRegionControl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Arena implements IConfigurationChanged
 {
@@ -78,7 +79,7 @@ public class Arena implements IConfigurationChanged
 	public void teleportPlayerIntoArena(IPlayer player)
 	{
 		// Register the player as in-game in the arena instance.
-		players.add(player.getName());
+		players.add(player.getUniqueId());
 
 		// Create random X and Z co-ordinates within the region.
 		double randomX = getRandomBetween(teleportRegion.getMinimumPoint().getBlockX(), teleportRegion.getMaximumPoint().getBlockX());
@@ -134,12 +135,12 @@ public class Arena implements IConfigurationChanged
 
 	public boolean playerIsInGame(IPlayer player)
 	{
-		return players.contains(player.getName());
+		return players.contains(player.getUniqueId());
 	}
 
 	public void removePlayer(IPlayer player)
 	{
-		players.remove(player.getName());
+		players.remove(player.getUniqueId());
 	}
 
 	public void removeAllPlayers()
@@ -169,5 +170,5 @@ public class Arena implements IConfigurationChanged
 	private IRegionControl worldGuard;
 	private ProtectedRegion teleportRegion;
 	private String region;
-	private List<String> players = new ArrayList<String>();
+	private List<UUID> players = new ArrayList<UUID>();
 }

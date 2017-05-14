@@ -11,6 +11,7 @@ import no.runsafe.worldguardbridge.IRegionControl;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Graveyard implements IConfigurationChanged
@@ -74,18 +75,16 @@ public class Graveyard implements IConfigurationChanged
 
 	public boolean playerIsInGraveyard(IPlayer player)
 	{
-		return deadTimers.containsKey(player.getName());
+		return deadTimers.containsKey(player.getUniqueId());
 	}
 
 	public void removePlayer(IPlayer player)
 	{
-		String playerName = player.getName();
-
 		// Check if we have a timer for the player in the graveyard.
-		if (deadTimers.containsKey(playerName))
+		if (deadTimers.containsKey(player.getUniqueId()))
 		{
-			scheduler.cancelTask(deadTimers.get(playerName)); // Cancel the timer.
-			deadTimers.remove(playerName); // Remove the players timer.
+			scheduler.cancelTask(deadTimers.get(player.getUniqueId())); // Cancel the timer.
+			deadTimers.remove(player.getUniqueId()); // Remove the players timer.
 			arena.teleportPlayerIntoArena(player); // Teleport the player back into the arena.
 		}
 	}
@@ -98,7 +97,7 @@ public class Graveyard implements IConfigurationChanged
 	public void removeAllTimers()
 	{
 		// Loop every timer, cancel it and remove it.
-		for (Map.Entry<String, Integer> node : deadTimers.entrySet())
+		for (Map.Entry<UUID, Integer> node : deadTimers.entrySet())
 		{
 			scheduler.cancelTask(node.getValue()); // Cancel the timer.
 			deadTimers.remove(node.getKey()); // Remove the timer node.
@@ -111,7 +110,7 @@ public class Graveyard implements IConfigurationChanged
 		player.teleport(location);
 
 		// Store a new timer for the player to respawn them.
-		deadTimers.put(player.getName(), scheduler.startSyncTask(new Runnable()
+		deadTimers.put(player.getUniqueId(), scheduler.startSyncTask(new Runnable()
 		{
 			@Override
 			public void run()
@@ -128,7 +127,7 @@ public class Graveyard implements IConfigurationChanged
 
 	private Arena arena;
 	private IScheduler scheduler;
-	private ConcurrentHashMap<String, Integer> deadTimers = new ConcurrentHashMap<String, Integer>();
+	private ConcurrentHashMap<UUID, Integer> deadTimers = new ConcurrentHashMap<UUID, Integer>();
 	private int deadTime = -1;
 	private IWorld world;
 	private String region;

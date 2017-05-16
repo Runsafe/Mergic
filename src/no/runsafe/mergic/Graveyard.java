@@ -55,7 +55,7 @@ public class Graveyard implements IConfigurationChanged
 		}
 
 		// Check the region exists, if not throw an error and return.
-		if (worldGuard.getRegion(this.world, this.region) == null)
+		if (worldGuard.getRectangle(this.world, this.region) == null)
 		{
 			console.logError("Graveyard region invalid in configuration.");
 			return;

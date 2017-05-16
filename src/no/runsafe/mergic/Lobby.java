@@ -51,7 +51,7 @@ public class Lobby implements IConfigurationChanged
 		}
 
 		// Check that the region exists, if not, throw an error.
-		if (worldGuard.getRegion(lobbyWorld, lobbyRegion) == null)
+		if (worldGuard.getRectangle(lobbyWorld, lobbyRegion) == null)
 		{
 			output.logError("Lobby region invalid in configuration.");
 			return;

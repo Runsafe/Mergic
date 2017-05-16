@@ -1,6 +1,5 @@
 package no.runsafe.mergic;
 
-import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import no.runsafe.framework.api.IConfiguration;
 import no.runsafe.framework.api.ILocation;
 import no.runsafe.framework.api.IWorld;
@@ -9,6 +8,7 @@ import no.runsafe.framework.api.log.IConsole;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.worldguardbridge.IRegionControl;
 
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -59,7 +59,7 @@ public class Arena implements IConfigurationChanged
 		}
 
 		// Grab the teleport region, throw an error and return if we fail like idiots.
-		this.teleportRegion = worldGuard.getRegion(world, teleportRegion);
+		this.teleportRegion = worldGuard.getRectangle(world, teleportRegion);
 		if (this.teleportRegion == null)
 		{
 			this.console.logError("Arena teleport region from configuration does not exist.");
@@ -82,8 +82,8 @@ public class Arena implements IConfigurationChanged
 		players.add(player.getUniqueId());
 
 		// Create random X and Z co-ordinates within the region.
-		double randomX = getRandomBetween(teleportRegion.getMinimumPoint().getBlockX(), teleportRegion.getMaximumPoint().getBlockX());
-		double randomZ = getRandomBetween(teleportRegion.getMinimumPoint().getBlockZ(), teleportRegion.getMaximumPoint().getBlockZ());
+		double randomX = getRandomBetween(((Number) teleportRegion.getMinX()).intValue(), ((Number) teleportRegion.getMaxX()).intValue());
+		double randomZ = getRandomBetween(((Number) teleportRegion.getMinY()).intValue(), ((Number) teleportRegion.getMaxY()).intValue());
 
 
 		// Get a safe spot at the co-ordinates we generated.
@@ -168,7 +168,7 @@ public class Arena implements IConfigurationChanged
 	private double teleportY;
 	private IConsole console;
 	private IRegionControl worldGuard;
-	private ProtectedRegion teleportRegion;
+	private Rectangle2D teleportRegion;
 	private String region;
 	private List<UUID> players = new ArrayList<UUID>();
 }

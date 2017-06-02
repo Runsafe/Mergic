@@ -1,15 +1,14 @@
 package no.runsafe.mergic.magic.spells;
 
-import no.runsafe.framework.api.IServer;
 import no.runsafe.framework.minecraft.Item;
 import no.runsafe.mergic.KillManager;
 import no.runsafe.mergic.magic.MagicSchool;
 
 public class ShadowStorm extends Storm
 {
-	public ShadowStorm(IServer server, KillManager manager)
+	public ShadowStorm(KillManager manager)
 	{
-		super(server, Item.BuildingBlock.CoalBlock, manager);
+		super(Item.BuildingBlock.CoalBlock, manager);
 	}
 
 	@Override

@@ -99,7 +99,7 @@ public class Game implements IConfigurationChanged
 		// Do we have a game running?
 		if (gameInProgress())
 		{
-			ConcurrentHashMap<UUID, Integer> scores = killManager.getScoreList(); // Grab the score list for the match.
+			ConcurrentHashMap<IPlayer, Integer> scores = killManager.getScoreList(); // Grab the score list for the match.
 			currentPreMatchStep = -1; // Signal for the pre-match countdown (if running) to cancel.
 			gameInProgress = false; // Flag the game as not running.
 			gameHasStarted = false; // Flag the game as not started;
@@ -112,9 +112,9 @@ public class Game implements IConfigurationChanged
 			// Everything reset, let's give the players now in the lobby a list of what just went down.
 
 			// Generate the score list.
-			List<Map.Entry<UUID, Integer>> top = new ArrayList<Map.Entry<UUID, Integer>>(scores.size());
+			List<Map.Entry<IPlayer, Integer>> top = new ArrayList<>(scores.size());
 
-			for (Map.Entry<UUID, Integer> node : scores.entrySet())
+			for (Map.Entry<IPlayer, Integer> node : scores.entrySet())
 			{
 				if (top.isEmpty())
 				{
@@ -123,7 +123,7 @@ public class Game implements IConfigurationChanged
 				else
 				{
 					int index = 0;
-					for (Map.Entry<UUID, Integer> compareNode : top)
+					for (Map.Entry<IPlayer, Integer> compareNode : top)
 					{
 						if (node.getValue() > compareNode.getValue())
 						{
@@ -139,9 +139,9 @@ public class Game implements IConfigurationChanged
 			output.add("&cThe match has ended!");
 
 			int pos = 1;
-			for (Map.Entry<UUID, Integer> node : top)
+			for (Map.Entry<IPlayer, Integer> node : top)
 			{
-				IPlayer player = server.getPlayer(node.getKey());
+				IPlayer player = node.getKey();
 				if (pos < 4)
 				{
 					new ApprenticeWizard(player).Fire();
@@ -172,7 +172,7 @@ public class Game implements IConfigurationChanged
 				for (String line : output)
 					player.sendColouredMessage(line);
 
-				player.sendColouredMessage("You are currently at &a%d&f kills.", killManager.getPlayerKills(player.getUniqueId()));
+				player.sendColouredMessage("You are currently at &a%d&f kills.", killManager.getPlayerKills(player));
 			}
 
 			killManager.wipeAllData(); // Wipe all of the data before the next match.

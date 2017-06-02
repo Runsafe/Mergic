@@ -22,18 +22,18 @@ public class MagicClassHandler
 
 	private MagicSchool getPlayerSchool(IPlayer player)
 	{
-		if (!schools.containsKey(player.getUniqueId()))
+		if (!schools.containsKey(player))
 			applyRandomClass(player);
 
-		return schools.get(player.getUniqueId());
+		return schools.get(player);
 	}
 
 	public void applyRandomClass(IPlayer player)
 	{
-		schools.put(player.getUniqueId(), availableSchools.get(random.nextInt(availableSchools.size())));
+		schools.put(player, availableSchools.get(random.nextInt(availableSchools.size())));
 	}
 
 	private final Random random = new Random();
-	private final ConcurrentHashMap<UUID, MagicSchool> schools = new ConcurrentHashMap<UUID, MagicSchool>(0);
+	private final ConcurrentHashMap<IPlayer, MagicSchool> schools = new ConcurrentHashMap<>(0);
 	private final List<MagicSchool> availableSchools;
 }

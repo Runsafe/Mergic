@@ -2,9 +2,9 @@ package no.runsafe.mergic;
 
 import no.runsafe.framework.api.IConfiguration;
 import no.runsafe.framework.api.IScheduler;
-import no.runsafe.framework.api.IServer;
 import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
 import no.runsafe.framework.api.player.IPlayer;
+import no.runsafe.framework.api.server.IBroadcast;
 import no.runsafe.mergic.achievements.ApprenticeWizard;
 import no.runsafe.mergic.achievements.MasterOfMagic;
 import no.runsafe.mergic.magic.CooldownManager;
@@ -14,7 +14,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class Game implements IConfigurationChanged
 {
-	public Game(Graveyard graveyard, Lobby lobby, Arena arena, IScheduler scheduler, CooldownManager cooldownManager, KillManager killManager, IServer server)
+	public Game(Graveyard graveyard, Lobby lobby, Arena arena, IScheduler scheduler, CooldownManager cooldownManager, KillManager killManager, IBroadcast broadcaster)
 	{
 		this.graveyard = graveyard;
 		this.lobby = lobby;
@@ -22,7 +22,7 @@ public class Game implements IConfigurationChanged
 		this.scheduler = scheduler;
 		this.cooldownManager = cooldownManager;
 		this.killManager = killManager;
-		this.server = server;
+		this.broadcaster = broadcaster;
 	}
 
 	public boolean gameInProgress()
@@ -152,7 +152,7 @@ public class Game implements IConfigurationChanged
 
 						if (player != null)
 						{
-							server.broadcastMessage("&b" + player.getName() + " has triumphed at Wizard PvP!");
+							broadcaster.broadcastMessage("&b" + player.getName() + " has triumphed at Wizard PvP!");
 							player.sendTitle("§AYou Win!", "Score: §C"+node.getValue().toString());
 						}
 					}
@@ -205,5 +205,5 @@ public class Game implements IConfigurationChanged
 	private final IScheduler scheduler;
 	private final CooldownManager cooldownManager;
 	private final KillManager killManager;
-	private final IServer server;
+	private final IBroadcast broadcaster;
 }

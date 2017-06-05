@@ -1,15 +1,14 @@
 package no.runsafe.mergic.magic.spells;
 
-import no.runsafe.framework.api.IServer;
 import no.runsafe.framework.minecraft.Item;
 import no.runsafe.mergic.KillManager;
 import no.runsafe.mergic.magic.MagicSchool;
 
 public class IceStorm extends Storm
 {
-	public IceStorm(IServer server, KillManager manager)
+	public IceStorm(KillManager manager)
 	{
-		super(server, Item.BuildingBlock.Ice, manager);
+		super(Item.BuildingBlock.Ice, manager);
 	}
 
 	@Override

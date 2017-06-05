@@ -1,6 +1,11 @@
 lobby:
   world: wizpvp
   region: lobby
+  location:
+    world: wizardpvp
+    x: 1029
+    y: 5
+    z: 4
 preMatch:
   length: 30
   delay: 5
@@ -13,5 +18,10 @@ graveyard:
   world: wizpvp
   region: graveyard
   deadTime: 20
+  location:
+    world: wizardpvp
+    x: 1245
+    y: 4
+    z: 159
 winScore: 5
 matchLength: 1

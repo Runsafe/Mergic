@@ -1,15 +1,14 @@
 package no.runsafe.mergic.magic.spells;
 
-import no.runsafe.framework.api.IServer;
 import no.runsafe.framework.minecraft.Item;
 import no.runsafe.mergic.KillManager;
 import no.runsafe.mergic.magic.MagicSchool;
 
 public class EarthStorm extends Storm
 {
-	public EarthStorm(IServer server, KillManager manager)
+	public EarthStorm(KillManager manager)
 	{
-		super(server, Item.BuildingBlock.Grass, manager);
+		super(Item.BuildingBlock.Grass, manager);
 	}
 
 	@Override

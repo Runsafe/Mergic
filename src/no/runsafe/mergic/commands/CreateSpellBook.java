@@ -18,7 +18,7 @@ public class CreateSpellBook extends PlayerCommand
 	@Override
 	public String OnExecute(IPlayer executor, IArgumentList parameters)
 	{
-		Spell spell = spellHandler.getSpellByName(parameters.get("spell"));
+		Spell spell = spellHandler.getSpellByName(parameters.getValue("spell"));
 		if (spell == null)
 			return "&cUnable to find spell with that name.";
 

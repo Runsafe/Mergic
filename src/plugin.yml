@@ -2,7 +2,7 @@ name: Mergic
 main: no.runsafe.mergic.Mergic
 version: 1.0.@BUILD@
 author: Kruithne
-depend: [RunsafeWorldGuardBridge]
+depend: [RunsafeWorldGuardBridge, WorldGuard]
 description:
 commands:
   mergic:

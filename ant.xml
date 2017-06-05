@@ -8,10 +8,8 @@
     <property name="runsafe.dir" value="${framework.dir}/lastStable/archive/build/jar"/>
     <property name="lib.dir" value="${framework.dir}/workspace/lib"/>
 	<property name="worldguard.dir" value="../../WorldGuardBridge/lastStable/archive/build/jar"/>
-    <property name="worldedit.dir" value="../../WorldEditBridge/lastStable/archive/build/jar"/>
 
     <path id="classpath">
-        <fileset dir="${worldedit.dir}" includes="*.jar"/>
         <fileset dir="${worldguard.dir}" includes="*.jar"/>
         <fileset dir="${runsafe.dir}" includes="framework.jar"/>
         <fileset dir="${lib.dir}" includes="*.jar"/>
@@ -29,7 +27,7 @@
     <target name="compile" depends="clean">
         <buildnumber/>
         <mkdir dir="${classes.dir}"/>
-        <javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath" debug="true" debuglevel="lines,vars,source" deprecation="true"/>
+        <javac includeantruntime="false" srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath" debug="true" debuglevel="lines,vars,source" deprecation="true"/>
     </target>
 
     <target name="jar" depends="compile,injectVersion">

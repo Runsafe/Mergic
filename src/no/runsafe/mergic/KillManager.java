@@ -1,7 +1,6 @@
 package no.runsafe.mergic;
 
 import no.runsafe.framework.api.ILocation;
-import no.runsafe.framework.api.IServer;
 import no.runsafe.framework.api.event.entity.IEntityDamageByEntityEvent;
 import no.runsafe.framework.api.event.player.IPlayerDamageEvent;
 import no.runsafe.framework.api.player.IPlayer;
@@ -14,14 +13,12 @@ import no.runsafe.framework.minecraft.event.entity.RunsafeEntityDamageByEntityEv
 import no.runsafe.framework.minecraft.event.entity.RunsafeEntityDamageEvent;
 import no.runsafe.mergic.achievements.TouchOfDeath;
 
-import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class KillManager implements IEntityDamageByEntityEvent, IPlayerDamageEvent
 {
-	public KillManager(IServer server, Graveyard graveyard, Arena arena)
+	public KillManager(Graveyard graveyard, Arena arena)
 	{
-		this.server = server;
 		this.graveyard = graveyard;
 		this.arena = arena;
 	}
@@ -109,31 +106,31 @@ public class KillManager implements IEntityDamageByEntityEvent, IPlayerDamageEve
 	public void wipeAllData()
 	{
 		lastDamage.clear();
-		killCount = new ConcurrentHashMap<UUID, Integer>(0);
+		killCount = new ConcurrentHashMap<>(0);
 	}
 
 	public void wipePlayerData(IPlayer player)
 	{
-		lastDamage.remove(player.getUniqueId());
-		killCount.remove(player.getUniqueId());
+		lastDamage.remove(player);
+		killCount.remove(player);
 	}
 
 	public void registerAttack(IPlayer victim, IPlayer attacker)
 	{
 		if (!attacker.isVanished() && !victim.isVanished())
-			lastDamage.put(victim.getUniqueId(), attacker.getUniqueId());
+			lastDamage.put(victim, attacker);
 	}
 
 	public void OnPlayerKilled(IPlayer player)
 	{
-		if (lastDamage.containsKey(player.getUniqueId()))
+		if (lastDamage.containsKey(player))
 		{
-			IPlayer killer = server.getPlayer(lastDamage.get(player.getUniqueId()));
+			IPlayer killer = lastDamage.get(player);
 
 			if (killer != null)
 			{
-				int newKills = getPlayerKills(killer.getUniqueId()) + 1;
-				killCount.put(killer.getUniqueId(), newKills);
+				int newKills = getPlayerKills(killer) + 1;
+				killCount.put(killer, newKills);
 				killer.setLevel(newKills);
 			}
 		}
@@ -141,23 +138,22 @@ public class KillManager implements IEntityDamageByEntityEvent, IPlayerDamageEve
 
 	public IPlayer getKiller(IPlayer player)
 	{
-		return server.getPlayer(lastDamage.get(player.getUniqueId()));
+		return lastDamage.get(player);
 	}
 
-	public int getPlayerKills(UUID player)
+	public int getPlayerKills(IPlayer player)
 	{
 		return killCount.containsKey(player) ? killCount.get(player) : 0;
 	}
 
-	public ConcurrentHashMap<UUID, Integer> getScoreList()
+	public ConcurrentHashMap<IPlayer, Integer> getScoreList()
 	{
 		return killCount;
 	}
 
-	private final IServer server;
 	private final Graveyard graveyard;
 	private final Arena arena;
-	private ConcurrentHashMap<UUID, UUID> lastDamage = new ConcurrentHashMap<UUID, UUID>();
-	private ConcurrentHashMap<UUID, Integer> killCount = new ConcurrentHashMap<UUID, Integer>();
+	private ConcurrentHashMap<IPlayer, IPlayer> lastDamage = new ConcurrentHashMap<>();
+	private ConcurrentHashMap<IPlayer, Integer> killCount = new ConcurrentHashMap<>();
 	private final static WorldBlockEffect bloodEffect = new WorldBlockEffect(WorldBlockEffectType.BLOCK_DUST, Item.BuildingBlock.Wool.Red);
 }

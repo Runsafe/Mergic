@@ -11,7 +11,6 @@ import no.runsafe.mergic.magic.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPlayerInteractEvent, IPluginDisabled, IPlayerQuitEvent, IPlayerDropItemEvent
 {
@@ -80,7 +79,7 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 						classHandler.applyRandomClass(player); // Set a random school of magic for the player.
 						spellHandler.givePlayerAllSpells(player); // Give the player all spells.
 						EquipmentManager.givePlayerWizardBoots(player); // Give the player some magic boots!
-						player.setLevel(killManager.getPlayerKills(player.getUniqueId())); // Update the players level.
+						player.setLevel(killManager.getPlayerKills(player)); // Update the players level.
 					}
 				});
 			}
@@ -149,7 +148,7 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 
 	public boolean isDebugging(IPlayer player)
 	{
-		return debuggers.contains(player.getUniqueId());
+		return debuggers.contains(player);
 	}
 
 	public boolean toggleDebugging(IPlayer player)
@@ -157,9 +156,9 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 		boolean isDebugging = isDebugging(player);
 
 		if (isDebugging)
-			debuggers.remove(player.getUniqueId());
+			debuggers.remove(player);
 		else
-			debuggers.add(player.getUniqueId());
+			debuggers.add(player);
 
 		return !isDebugging;
 	}
@@ -172,6 +171,6 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 	private CooldownManager cooldownManager;
 	private KillManager killManager;
 	private final MagicClassHandler classHandler;
-	private final List<UUID> debuggers = new ArrayList<UUID>();
+	private final List<IPlayer> debuggers = new ArrayList<>();
 	private final IScheduler scheduler;
 }

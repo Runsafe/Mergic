@@ -22,9 +22,13 @@ jobs:
       - shell: bash
         run: |
           mkdir -p /home/runner/work/Framework/lastStable/archive/build/jar
+          mkdir -p /home/runner/work/WorldGuardBridge
           curl https://jenkins.runsafe.no/job/Framework/lastSuccessfulBuild/artifact/build/jar/framework.jar -o ../../Framework/lastStable/archive/build/jar/framework.jar
           cd /home/runner/work/Framework
           git clone https://github.com/Runsafe/Framework.git
           mv Framework workspace
+          cd /home/runner/work/WorldGuardBridge
+          git clone https://github.com/Runsafe/WorldGuardBridge.git
+          mv WorldGuardBridge workspace
       - name: Build with Ant
         run: ant -noinput -buildfile ant.xml

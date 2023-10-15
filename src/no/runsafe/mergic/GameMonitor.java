@@ -31,29 +31,27 @@ public class GameMonitor implements IConfigurationChanged
 
 	private void runCycle()
 	{
-		if (!game.gameInProgress() && !game.gameHasStarted()) // Is there already a game in progress?
+		// Is there already a game in progress and do we have at least two players?
+		if (!game.gameInProgress() && !game.gameHasStarted() && lobby.getPlayersInLobby().size() > 1)
 		{
-			if (lobby.getPlayersInLobby().size() > 1) // Do we have at least two players?
+			try
 			{
-				try
+				game.launchGame(); // Launch the game!
+				endTimer = scheduler.startSyncTask(new Runnable()
 				{
-					game.launchGame(); // Launch the game!
-					endTimer = scheduler.startSyncTask(new Runnable()
+					@Override
+					public void run()
 					{
-						@Override
-						public void run()
-						{
-							cancelGame();
-						}
-					}, matchLength * 60);
-				}
-				catch (GameException exception)
-				{
-					if (!hasThrown)
-					{
-						console.logException(exception); // Log the exception to the console.
-						hasThrown = true;
+						cancelGame();
 					}
+				}, matchLength * 60);
+			}
+			catch (GameException exception)
+			{
+				if (!hasThrown)
+				{
+					console.logException(exception); // Log the exception to the console.
+					hasThrown = true;
 				}
 			}
 		}

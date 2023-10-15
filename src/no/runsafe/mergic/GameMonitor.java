@@ -19,14 +19,7 @@ public class GameMonitor implements IConfigurationChanged
 		this.killManager = killManager;
 		this.console = console;
 
-		this.scheduler.startSyncRepeatingTask(new Runnable()
-		{
-			@Override
-			public void run()
-			{
-				runCycle();
-			}
-		}, 5, 5);
+		this.scheduler.startSyncRepeatingTask(this::runCycle, 5, 5);
 	}
 
 	private void runCycle()
@@ -37,14 +30,7 @@ public class GameMonitor implements IConfigurationChanged
 			try
 			{
 				game.launchGame(); // Launch the game!
-				endTimer = scheduler.startSyncTask(new Runnable()
-				{
-					@Override
-					public void run()
-					{
-						cancelGame();
-					}
-				}, matchLength * 60);
+				endTimer = scheduler.startSyncTask(this::cancelGame, matchLength * 60);
 			}
 			catch (GameException exception)
 			{

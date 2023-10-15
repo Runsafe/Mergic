@@ -52,14 +52,7 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 			// Check if the player is actually in the game.
 			if (arena.playerIsInGame(player))
 			{
-				scheduler.runNow(new Runnable()
-				{
-					@Override
-					public void run()
-						{
-							game.removePlayerFromGame(player); // Throw them from the game.
-						}
-				});
+				scheduler.runNow(() -> game.removePlayerFromGame(player)); // Throw them from the game.
 			}
 		}
 		else if (event.getEvent().equals("region.enter")) // Or maybe an enter?
@@ -71,18 +64,14 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 
 			final IPlayer player = event.getPlayer();
 
-			scheduler.runNow(new Runnable()
+			scheduler.runNow(() ->
 			{
-				@Override
-				public void run()
-				{
-					player.getInventory().clear(); // Clear the players inventory.
-					classHandler.applyRandomClass(player); // Set a random school of magic for the player.
-					spellHandler.givePlayerAllSpells(player); // Give the player all spells.
-					EquipmentManager.givePlayerWizardBoots(player); // Give the player some magic boots!
-					player.setLevel(killManager.getPlayerKills(player)); // Update the players level.
-				}
-			});
+                player.getInventory().clear(); // Clear the players inventory.
+                classHandler.applyRandomClass(player); // Set a random school of magic for the player.
+                spellHandler.givePlayerAllSpells(player); // Give the player all spells.
+                EquipmentManager.givePlayerWizardBoots(player); // Give the player some magic boots!
+                player.setLevel(killManager.getPlayerKills(player)); // Update the players level.
+            });
 		}
 	}
 

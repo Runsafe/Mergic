@@ -61,31 +61,20 @@ public abstract class Storm implements Spell, IEntityChangeBlockEvent
 		final double lowZ = location.getBlockZ() - radius;
 		final double high = location.getBlockY() + 20;
 
-		final int ticker = SpellHandler.scheduler.startSyncRepeatingTask(new Runnable()
+		final int ticker = SpellHandler.scheduler.startSyncRepeatingTask(() ->
 		{
-			@Override
-			public void run()
-			{
-				double x = lowX + (int) (Math.random() * ((highX - lowX) + 1));
-				double z = lowZ + (int) (Math.random() * ((highZ - lowZ) + 1));
+            double x = lowX + (int) (Math.random() * ((highX - lowX) + 1));
+            double z = lowZ + (int) (Math.random() * ((highZ - lowZ) + 1));
 
-				// Spawn a falling ice block randomly within the radius.
-				IEntity block = world.spawnFallingBlock(world.getLocation(x, high, z), blockType);
-				((RunsafeFallingBlock)block).setDropItem(false);
+            // Spawn a falling ice block randomly within the radius.
+            IEntity block = world.spawnFallingBlock(world.getLocation(x, high, z), blockType);
+            ((RunsafeFallingBlock)block).setDropItem(false);
 
-				blocks.put(block.getEntityId(), player); // Track the block.
-				ControlledEntityCleaner.registerEntity(block); // Register for clean-up.
-			}
-		}, 10L, 10L);
+            blocks.put(block.getEntityId(), player); // Track the block.
+            ControlledEntityCleaner.registerEntity(block); // Register for clean-up.
+        }, 10L, 10L);
 
-		SpellHandler.scheduler.startSyncTask(new Runnable()
-		{
-			@Override
-			public void run()
-			{
-				SpellHandler.scheduler.cancelTask(ticker); // Cancel the blizzard.
-			}
-		}, 10);
+		SpellHandler.scheduler.startSyncTask(() -> SpellHandler.scheduler.cancelTask(ticker), 10); // Cancel the blizzard.
 	}
 
 	@Override

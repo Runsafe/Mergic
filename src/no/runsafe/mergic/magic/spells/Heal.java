@@ -45,15 +45,11 @@ public class Heal implements Spell
 		int current = 0;
 		while (current < 7)
 		{
-			SpellHandler.scheduler.startSyncTask(new Runnable()
+			SpellHandler.scheduler.startSyncTask(() ->
 			{
-				@Override
-				public void run()
-				{
-					player.heal(2); // Heal one heart of damage
-					player.getEyeLocation().playEffect(WorldEffect.HEART, 1, 2, 50); // Play heart effect.
-				}
-			}, current);
+                player.heal(2); // Heal one heart of damage
+                player.getEyeLocation().playEffect(WorldEffect.HEART, 1, 2, 50); // Play heart effect.
+            }, current);
 			current++;
 		}
 	}

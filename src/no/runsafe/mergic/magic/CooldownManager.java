@@ -28,14 +28,7 @@ public class CooldownManager
 			cooldowns.put(player, new ArrayList<SpellType>(0));
 
 		cooldowns.get(player).add(spellType); // Add the school to the cooldown list.
-		scheduler.startAsyncTask(new Runnable()
-		{
-			@Override
-			public void run()
-			{
-				removeSchoolCooldown(player, spellType);
-			}
-		}, spell.getCooldown()); // Create a cooldown timer.
+		scheduler.startAsyncTask(() -> removeSchoolCooldown(player, spellType), spell.getCooldown()); // Create a cooldown timer.
 	}
 
 	public void removeSchoolCooldown(IPlayer player, SpellType spellType)

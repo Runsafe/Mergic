@@ -75,12 +75,7 @@ public class Game implements IConfigurationChanged
 		lobby.broadcastToLobby(String.format("&3New match starting in %d seconds.", currentPreMatchStep));
 
 		// Start a timer for the next pre-match step. This could be a repeating timer, but it's not for now.
-		scheduler.startAsyncTask(new Runnable() {
-			@Override
-			public void run() {
-				preMatchStep();
-			}
-		}, preMatchDelay);
+		scheduler.startAsyncTask(() -> preMatchStep(), preMatchDelay);
 
 		// Lower the current step by the delay amount.
 		currentPreMatchStep = currentPreMatchStep - preMatchDelay;

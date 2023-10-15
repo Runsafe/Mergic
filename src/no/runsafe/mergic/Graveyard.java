@@ -109,14 +109,7 @@ public class Graveyard implements IConfigurationChanged
 		player.teleport(location);
 
 		// Store a new timer for the player to respawn them.
-		deadTimers.put(player, scheduler.startSyncTask(new Runnable()
-		{
-			@Override
-			public void run()
-			{
-				removePlayer(player);
-			}
-		}, deadTime));
+		deadTimers.put(player, scheduler.startSyncTask(() -> removePlayer(player), deadTime));
 	}
 
 	public boolean isAvailable()

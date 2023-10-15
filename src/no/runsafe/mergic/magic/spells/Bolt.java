@@ -69,37 +69,33 @@ public abstract class Bolt implements Spell, IEntityChangeBlockEvent
 		fallingBlock.setDropItem(false); // Prevent block-dropping.
 		fallingBlock.setVelocity(direction.multiply(0.8F)); // Fire the block forward.
 
-		int timerID = scheduler.startSyncRepeatingTask(new Runnable()
+		int timerID = scheduler.startSyncRepeatingTask(() ->
 		{
-			@Override
-			public void run()
-			{
-				ILocation location = fallingBlock.getLocation(); // Current location of the block.
-				if (location == null) // If we lack a location, stop here.
-					return;
+            ILocation fallingBlockLocation = fallingBlock.getLocation(); // Current location of the block.
+            if (fallingBlockLocation == null) // If we lack a location, stop here.
+                return;
 
-				boolean hit = false;
+            boolean hit = false;
 
-				// Check all the players we have in range.
-				for (IPlayer closePlayer : location.getPlayersInRange(3D))
-				{
-					if (!closePlayer.equals(player)) // Check the player is different to the caster.
-					{
-						hit = true; // Mark this projectile as hit.
-						killManager.attackPlayer(closePlayer, player, 7); // Damage the player.
-						location.playEffect(effect, 0.3F, 100, 50); // Create a dust effect using the storm block.
-						location.playSound(Sound.Creature.Ghast.Fireball, 1, 0); // Play a slow-thrash sound.
-					}
-				}
+            // Check all the players we have in range.
+            for (IPlayer closePlayer : fallingBlockLocation.getPlayersInRange(3D))
+            {
+                if (!closePlayer.equals(player)) // Check the player is different to the caster.
+                {
+                    hit = true; // Mark this projectile as hit.
+                    killManager.attackPlayer(closePlayer, player, 7); // Damage the player.
+					fallingBlockLocation.playEffect(effect, 0.3F, 100, 50); // Create a dust effect using the storm block.
+					fallingBlockLocation.playSound(Sound.Creature.Ghast.Fireball, 1, 0); // Play a slow-thrash sound.
+                }
+            }
 
-				if (hit)
-				{
-					removeBolt(fallingBlock.getEntityId()); // Remove thy bolt.
-					ControlledEntityCleaner.unregisterEntity(fallingBlock); // Unregister from cleaner.
-					fallingBlock.remove(); // Remove the projectile.
-				}
-			}
-		}, 2L, 2L);
+            if (hit)
+            {
+                removeBolt(fallingBlock.getEntityId()); // Remove thy bolt.
+                ControlledEntityCleaner.unregisterEntity(fallingBlock); // Unregister from cleaner.
+                fallingBlock.remove(); // Remove the projectile.
+            }
+        }, 2L, 2L);
 
 		blocks.put(fallingBlock.getEntityId(), timerID); // Monitor the block.
 		ControlledEntityCleaner.registerEntity(fallingBlock); // Register for clean-up.

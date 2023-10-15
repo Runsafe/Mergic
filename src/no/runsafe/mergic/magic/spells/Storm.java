@@ -84,38 +84,38 @@ public abstract class Storm implements Spell, IEntityChangeBlockEvent
 		int entityID = entity.getEntityId();
 
 		// Are we tracking this entity?
-		if (blocks.containsKey(entityID))
+		if (!blocks.containsKey(entityID))
+			return;
+
+		ILocation location = entity.getLocation();
+
+		if (location != null)
 		{
-			ILocation location = entity.getLocation();
+			IPlayer player = blocks.get(entityID);
 
-			if (location != null)
+			location.playEffect(effect, 0.3F, 100, 50); // Create a dust effect using the storm block.
+			location.playSound(Sound.Environment.Explode, 1, 1); // Play a slow-thrash sound.
+
+			for (IPlayer victim : location.getPlayersInRange(4))
 			{
-				IPlayer player = blocks.get(entityID);
+				if (player != null && player.equals(victim))
+					continue;
 
-				location.playEffect(effect, 0.3F, 100, 50); // Create a dust effect using the storm block.
-				location.playSound(Sound.Environment.Explode, 1, 1); // Play a slow-thrash sound.
-
-				for (IPlayer victim : location.getPlayersInRange(4))
-				{
-					if (player != null && player.equals(victim))
-						continue;
-
-					killManager.attackPlayer(victim, player, 4);
-				}
+				killManager.attackPlayer(victim, player, 4);
 			}
+		}
 
-			blocks.remove(entityID); // Remove the entity ID from our tracker.
-			ControlledEntityCleaner.unregisterEntity(entity); // Remove entity from cleaner
-			entity.remove(); // Remove the entity.
+		blocks.remove(entityID); // Remove the entity ID from our tracker.
+		ControlledEntityCleaner.unregisterEntity(entity); // Remove entity from cleaner
+		entity.remove(); // Remove the entity.
 
-			try
-			{
-				event.cancel(); // Try to cancel the event
-			}
-			catch (NullPointerException e)
-			{
-				// Can we just ignore this?
-			}
+		try
+		{
+			event.cancel(); // Try to cancel the event
+		}
+		catch (NullPointerException e)
+		{
+			// Can we just ignore this?
 		}
 	}
 

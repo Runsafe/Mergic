@@ -80,13 +80,13 @@ public abstract class Bolt implements Spell, IEntityChangeBlockEvent
             // Check all the players we have in range.
             for (IPlayer closePlayer : fallingBlockLocation.getPlayersInRange(3D))
             {
-                if (!closePlayer.equals(player)) // Check the player is different to the caster.
-                {
-                    hit = true; // Mark this projectile as hit.
-                    killManager.attackPlayer(closePlayer, player, 7); // Damage the player.
-					fallingBlockLocation.playEffect(effect, 0.3F, 100, 50); // Create a dust effect using the storm block.
-					fallingBlockLocation.playSound(Sound.Creature.Ghast.Fireball, 1, 0); // Play a slow-thrash sound.
-                }
+                if (closePlayer.equals(player)) // Check the player is different to the caster.
+					continue;
+
+				hit = true; // Mark this projectile as hit.
+				killManager.attackPlayer(closePlayer, player, 7); // Damage the player.
+				fallingBlockLocation.playEffect(effect, 0.3F, 100, 50); // Create a dust effect using the storm block.
+				fallingBlockLocation.playSound(Sound.Creature.Ghast.Fireball, 1, 0); // Play a slow-thrash sound.
             }
 
             if (hit)

@@ -33,7 +33,7 @@ public enum SpellType
 		return this.type;
 	}
 
-	private String text;
-	private Item castItem;
-	private InteractType type;
+	private final String text;
+	private final Item castItem;
+	private final InteractType type;
 }

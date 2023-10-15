@@ -165,9 +165,9 @@ public class Arena implements IConfigurationChanged
 	private boolean isSetup;
 	private IWorld world;
 	private double teleportY;
-	private IConsole console;
-	private IRegionControl worldGuard;
+	private final IConsole console;
+	private final IRegionControl worldGuard;
 	private Rectangle2D teleportRegion;
 	private String region;
-	private List<IPlayer> players = new ArrayList<>();
+	private final List<IPlayer> players = new ArrayList<>();
 }

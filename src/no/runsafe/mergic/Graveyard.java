@@ -117,14 +117,14 @@ public class Graveyard implements IConfigurationChanged
 		return isSetup;
 	}
 
-	private Arena arena;
-	private IScheduler scheduler;
-	private ConcurrentHashMap<IPlayer, Integer> deadTimers = new ConcurrentHashMap<>();
+	private final Arena arena;
+	private final IScheduler scheduler;
+	private final ConcurrentHashMap<IPlayer, Integer> deadTimers = new ConcurrentHashMap<>();
 	private int deadTime = -1;
 	private IWorld world;
 	private String region;
 	private ILocation location;
 	private boolean isSetup;
-	private IConsole console;
-	private IRegionControl worldGuard;
+	private final IConsole console;
+	private final IRegionControl worldGuard;
 }

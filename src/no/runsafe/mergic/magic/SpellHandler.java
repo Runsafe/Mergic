@@ -64,8 +64,8 @@ public class SpellHandler
 				givePlayerSpellBook(player, spell);
 	}
 
-	private HashMap<String, Spell> spellList = new HashMap<String, Spell>(0);
+	private final HashMap<String, Spell> spellList = new HashMap<String, Spell>(0);
 	public static IScheduler scheduler;
 	public static KillManager killManager;
-	private MagicClassHandler classHandler;
+	private final MagicClassHandler classHandler;
 }

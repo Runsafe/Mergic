@@ -152,13 +152,13 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 		return !isDebugging;
 	}
 
-	private Graveyard graveyard;
-	private Arena arena;
-	private Game game;
-	private Lobby lobby;
-	private SpellHandler spellHandler;
-	private CooldownManager cooldownManager;
-	private KillManager killManager;
+	private final Graveyard graveyard;
+	private final Arena arena;
+	private final Game game;
+	private final Lobby lobby;
+	private final SpellHandler spellHandler;
+	private final CooldownManager cooldownManager;
+	private final KillManager killManager;
 	private final MagicClassHandler classHandler;
 	private final List<IPlayer> debuggers = new ArrayList<>();
 	private final IScheduler scheduler;

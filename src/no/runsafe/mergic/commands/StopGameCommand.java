@@ -24,5 +24,5 @@ public class StopGameCommand extends ExecutableCommand
 		return "&2The current game has been stopped.";
 	}
 
-	private Game game;
+	private final Game game;
 }

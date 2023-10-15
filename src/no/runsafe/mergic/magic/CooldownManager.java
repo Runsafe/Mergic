@@ -43,6 +43,6 @@ public class CooldownManager
 		cooldowns.clear(); // Remove all cooldowns.
 	}
 
-	private ConcurrentHashMap<IPlayer, List<SpellType>> cooldowns = new ConcurrentHashMap<>(0);
-	private IScheduler scheduler;
+	private final ConcurrentHashMap<IPlayer, List<SpellType>> cooldowns = new ConcurrentHashMap<>(0);
+	private final IScheduler scheduler;
 }

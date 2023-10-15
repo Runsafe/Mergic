@@ -134,7 +134,7 @@ public class Lobby implements IConfigurationChanged
 	private boolean lobbySetup;
 	private IWorld lobbyWorld;
 	private String lobbyRegion;
-	private IRegionControl worldGuard;
-	private IConsole output;
+	private final IRegionControl worldGuard;
+	private final IConsole output;
 	private ILocation location;
 }

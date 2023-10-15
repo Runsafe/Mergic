@@ -151,7 +151,7 @@ public class KillManager implements IEntityDamageByEntityEvent, IPlayerDamageEve
 
 	private final Graveyard graveyard;
 	private final Arena arena;
-	private ConcurrentHashMap<IPlayer, IPlayer> lastDamage = new ConcurrentHashMap<>();
+	private final ConcurrentHashMap<IPlayer, IPlayer> lastDamage = new ConcurrentHashMap<>();
 	private ConcurrentHashMap<IPlayer, Integer> killCount = new ConcurrentHashMap<>();
 	private final static WorldBlockEffect bloodEffect = new WorldBlockEffect(WorldBlockEffectType.BLOCK_DUST, Item.BuildingBlock.Wool.Red);
 }

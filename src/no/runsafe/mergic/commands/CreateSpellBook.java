@@ -26,5 +26,5 @@ public class CreateSpellBook extends PlayerCommand
 		return "&2Created spell-book: " + spell.getName();
 	}
 
-	private SpellHandler spellHandler;
+	private final SpellHandler spellHandler;
 }

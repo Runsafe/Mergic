@@ -34,5 +34,5 @@ public class StartGameCommand extends ExecutableCommand
 		}
 	}
 
-	private Game game;
+	private final Game game;
 }

@@ -60,5 +60,5 @@ public class ControlledEntityCleaner implements IPluginDisabled
 	}
 
 	private final IWorldManager worldManager;
-	private static ConcurrentHashMap<String, List<Integer>> entities = new ConcurrentHashMap<String, List<Integer>>();
+	private static final ConcurrentHashMap<String, List<Integer>> entities = new ConcurrentHashMap<String, List<Integer>>();
 }

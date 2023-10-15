@@ -61,31 +61,20 @@ public abstract class Storm implements Spell, IEntityChangeBlockEvent
 		final double lowZ = location.getBlockZ() - radius;
 		final double high = location.getBlockY() + 20;
 
-		final int ticker = SpellHandler.scheduler.startSyncRepeatingTask(new Runnable()
+		final int ticker = SpellHandler.scheduler.startSyncRepeatingTask(() ->
 		{
-			@Override
-			public void run()
-			{
-				double x = lowX + (int) (Math.random() * ((highX - lowX) + 1));
-				double z = lowZ + (int) (Math.random() * ((highZ - lowZ) + 1));
+            double x = lowX + (int) (Math.random() * ((highX - lowX) + 1));
+            double z = lowZ + (int) (Math.random() * ((highZ - lowZ) + 1));
 
-				// Spawn a falling ice block randomly within the radius.
-				IEntity block = world.spawnFallingBlock(world.getLocation(x, high, z), blockType);
-				((RunsafeFallingBlock)block).setDropItem(false);
+            // Spawn a falling ice block randomly within the radius.
+            IEntity block = world.spawnFallingBlock(world.getLocation(x, high, z), blockType);
+            ((RunsafeFallingBlock)block).setDropItem(false);
 
-				blocks.put(block.getEntityId(), player); // Track the block.
-				ControlledEntityCleaner.registerEntity(block); // Register for clean-up.
-			}
-		}, 10L, 10L);
+            blocks.put(block.getEntityId(), player); // Track the block.
+            ControlledEntityCleaner.registerEntity(block); // Register for clean-up.
+        }, 10L, 10L);
 
-		SpellHandler.scheduler.startSyncTask(new Runnable()
-		{
-			@Override
-			public void run()
-			{
-				SpellHandler.scheduler.cancelTask(ticker); // Cancel the blizzard.
-			}
-		}, 10);
+		SpellHandler.scheduler.startSyncTask(() -> SpellHandler.scheduler.cancelTask(ticker), 10); // Cancel the blizzard.
 	}
 
 	@Override
@@ -95,38 +84,38 @@ public abstract class Storm implements Spell, IEntityChangeBlockEvent
 		int entityID = entity.getEntityId();
 
 		// Are we tracking this entity?
-		if (blocks.containsKey(entityID))
+		if (!blocks.containsKey(entityID))
+			return;
+
+		ILocation location = entity.getLocation();
+
+		if (location != null)
 		{
-			ILocation location = entity.getLocation();
+			IPlayer player = blocks.get(entityID);
 
-			if (location != null)
+			location.playEffect(effect, 0.3F, 100, 50); // Create a dust effect using the storm block.
+			location.playSound(Sound.Environment.Explode, 1, 1); // Play a slow-thrash sound.
+
+			for (IPlayer victim : location.getPlayersInRange(4))
 			{
-				IPlayer player = blocks.get(entityID);
+				if (player != null && player.equals(victim))
+					continue;
 
-				location.playEffect(effect, 0.3F, 100, 50); // Create a dust effect using the storm block.
-				location.playSound(Sound.Environment.Explode, 1, 1); // Play a slow-thrash sound.
-
-				for (IPlayer victim : location.getPlayersInRange(4))
-				{
-					if (player != null && player.equals(victim))
-						continue;
-
-					killManager.attackPlayer(victim, player, 4);
-				}
+				killManager.attackPlayer(victim, player, 4);
 			}
+		}
 
-			blocks.remove(entityID); // Remove the entity ID from our tracker.
-			ControlledEntityCleaner.unregisterEntity(entity); // Remove entity from cleaner
-			entity.remove(); // Remove the entity.
+		blocks.remove(entityID); // Remove the entity ID from our tracker.
+		ControlledEntityCleaner.unregisterEntity(entity); // Remove entity from cleaner
+		entity.remove(); // Remove the entity.
 
-			try
-			{
-				event.cancel(); // Try to cancel the event
-			}
-			catch (NullPointerException e)
-			{
-				// Can we just ignore this?
-			}
+		try
+		{
+			event.cancel(); // Try to cancel the event
+		}
+		catch (NullPointerException e)
+		{
+			// Can we just ignore this?
 		}
 	}
 

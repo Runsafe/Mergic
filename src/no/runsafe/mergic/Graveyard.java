@@ -80,12 +80,12 @@ public class Graveyard implements IConfigurationChanged
 	public void removePlayer(IPlayer player)
 	{
 		// Check if we have a timer for the player in the graveyard.
-		if (deadTimers.containsKey(player))
-		{
-			scheduler.cancelTask(deadTimers.get(player)); // Cancel the timer.
-			deadTimers.remove(player); // Remove the players timer.
-			arena.teleportPlayerIntoArena(player); // Teleport the player back into the arena.
-		}
+		if (!deadTimers.containsKey(player))
+			return;
+
+		scheduler.cancelTask(deadTimers.get(player)); // Cancel the timer.
+		deadTimers.remove(player); // Remove the players timer.
+		arena.teleportPlayerIntoArena(player); // Teleport the player back into the arena.
 	}
 
 	public List<IPlayer> getPlayers()
@@ -109,14 +109,7 @@ public class Graveyard implements IConfigurationChanged
 		player.teleport(location);
 
 		// Store a new timer for the player to respawn them.
-		deadTimers.put(player, scheduler.startSyncTask(new Runnable()
-		{
-			@Override
-			public void run()
-			{
-				removePlayer(player);
-			}
-		}, deadTime));
+		deadTimers.put(player, scheduler.startSyncTask(() -> removePlayer(player), deadTime));
 	}
 
 	public boolean isAvailable()
@@ -124,14 +117,14 @@ public class Graveyard implements IConfigurationChanged
 		return isSetup;
 	}
 
-	private Arena arena;
-	private IScheduler scheduler;
-	private ConcurrentHashMap<IPlayer, Integer> deadTimers = new ConcurrentHashMap<>();
+	private final Arena arena;
+	private final IScheduler scheduler;
+	private final ConcurrentHashMap<IPlayer, Integer> deadTimers = new ConcurrentHashMap<>();
 	private int deadTime = -1;
 	private IWorld world;
 	private String region;
 	private ILocation location;
 	private boolean isSetup;
-	private IConsole console;
-	private IRegionControl worldGuard;
+	private final IConsole console;
+	private final IRegionControl worldGuard;
 }

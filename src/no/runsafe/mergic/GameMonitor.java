@@ -19,41 +19,25 @@ public class GameMonitor implements IConfigurationChanged
 		this.killManager = killManager;
 		this.console = console;
 
-		this.scheduler.startSyncRepeatingTask(new Runnable()
-		{
-			@Override
-			public void run()
-			{
-				runCycle();
-			}
-		}, 5, 5);
+		this.scheduler.startSyncRepeatingTask(this::runCycle, 5, 5);
 	}
 
 	private void runCycle()
 	{
-		if (!game.gameInProgress() && !game.gameHasStarted()) // Is there already a game in progress?
+		// Is there already a game in progress and do we have at least two players?
+		if (!game.gameInProgress() && !game.gameHasStarted() && lobby.getPlayersInLobby().size() > 1)
 		{
-			if (lobby.getPlayersInLobby().size() > 1) // Do we have at least two players?
+			try
 			{
-				try
+				game.launchGame(); // Launch the game!
+				endTimer = scheduler.startSyncTask(this::cancelGame, matchLength * 60);
+			}
+			catch (GameException exception)
+			{
+				if (!hasThrown)
 				{
-					game.launchGame(); // Launch the game!
-					endTimer = scheduler.startSyncTask(new Runnable()
-					{
-						@Override
-						public void run()
-						{
-							cancelGame();
-						}
-					}, matchLength * 60);
-				}
-				catch (GameException exception)
-				{
-					if (!hasThrown)
-					{
-						console.logException(exception); // Log the exception to the console.
-						hasThrown = true;
-					}
+					console.logException(exception); // Log the exception to the console.
+					hasThrown = true;
 				}
 			}
 		}

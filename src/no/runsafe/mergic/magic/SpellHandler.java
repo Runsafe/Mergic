@@ -31,7 +31,7 @@ public class SpellHandler
 		RunsafeMeta item = spellType.getCastItem().getItem(); // Create whatever item we cast with.
 		item.setDisplayName(spell.getName()); // Rename the book to match the spell.
 
-		List<String> lore = new ArrayList<String>(5); // Create en empty holder for the lore text.
+		List<String> lore = new ArrayList<>(5); // Create en empty holder for the lore text.
 		lore.add("§7" + spell.getDescription()); // Add a short description to the item.
 		lore.add("§8School:§7 " + spell.getSchool().name()); // Add the magic school.
 		lore.add("§8Type:§7 " + spell.getType().name()); // Add the magic school.
@@ -64,8 +64,8 @@ public class SpellHandler
 				givePlayerSpellBook(player, spell);
 	}
 
-	private HashMap<String, Spell> spellList = new HashMap<String, Spell>(0);
+	private final HashMap<String, Spell> spellList = new HashMap<>(0);
 	public static IScheduler scheduler;
 	public static KillManager killManager;
-	private MagicClassHandler classHandler;
+	private final MagicClassHandler classHandler;
 }

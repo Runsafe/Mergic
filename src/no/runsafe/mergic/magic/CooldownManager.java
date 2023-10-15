@@ -25,17 +25,10 @@ public class CooldownManager
 
 		// If we lack a key for the player, create one.
 		if (!cooldowns.containsKey(player))
-			cooldowns.put(player, new ArrayList<SpellType>(0));
+			cooldowns.put(player, new ArrayList<>(0));
 
 		cooldowns.get(player).add(spellType); // Add the school to the cooldown list.
-		scheduler.startAsyncTask(new Runnable()
-		{
-			@Override
-			public void run()
-			{
-				removeSchoolCooldown(player, spellType);
-			}
-		}, spell.getCooldown()); // Create a cooldown timer.
+		scheduler.startAsyncTask(() -> removeSchoolCooldown(player, spellType), spell.getCooldown()); // Create a cooldown timer.
 	}
 
 	public void removeSchoolCooldown(IPlayer player, SpellType spellType)
@@ -50,6 +43,6 @@ public class CooldownManager
 		cooldowns.clear(); // Remove all cooldowns.
 	}
 
-	private ConcurrentHashMap<IPlayer, List<SpellType>> cooldowns = new ConcurrentHashMap<>(0);
-	private IScheduler scheduler;
+	private final ConcurrentHashMap<IPlayer, List<SpellType>> cooldowns = new ConcurrentHashMap<>(0);
+	private final IScheduler scheduler;
 }

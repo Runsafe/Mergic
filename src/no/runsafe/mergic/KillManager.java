@@ -75,7 +75,7 @@ public class KillManager implements IEntityDamageByEntityEvent, IPlayerDamageEve
 	{
 		if (player.getHealth() - damage > 0D)
 		{
-			player.damage(damage);
+			player.setHealth(player.getHealth() - damage);
 			return;
 		}
 

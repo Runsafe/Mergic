@@ -174,10 +174,14 @@ public class Game implements IConfigurationChanged
 
 	private void startGame()
 	{
+		List<IPlayer> lobbyPlayers = lobby.getPlayersInLobby();
 		// Teleport all the players from the lobby into the arena.
-		arena.teleportPlayersIntoArena(lobby.getPlayersInLobby());
+		arena.teleportPlayersIntoArena(lobbyPlayers);
 		lobby.playStartSound(); // Play that funky gong, white boy!
 		gameHasStarted = true;
+
+		for (IPlayer player : lobbyPlayers)
+			player.sendColouredMessage("&3The game has started! get &4%d&3 kills to win!", winScore);
 	}
 
 	@Override
@@ -185,6 +189,7 @@ public class Game implements IConfigurationChanged
 	{
 		preMatchLength = configuration.getConfigValueAsInt("preMatch.length");
 		preMatchDelay = configuration.getConfigValueAsInt("preMatch.delay");
+		winScore = configuration.getConfigValueAsInt("winScore");
 	}
 
 	private final Graveyard graveyard;
@@ -195,6 +200,7 @@ public class Game implements IConfigurationChanged
 	private int preMatchLength = -1;
 	private int preMatchDelay = -1;
 	private int currentPreMatchStep = 0;
+	private int winScore;
 	private final IScheduler scheduler;
 	private final CooldownManager cooldownManager;
 	private final KillManager killManager;

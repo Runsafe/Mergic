@@ -80,12 +80,12 @@ public class Graveyard implements IConfigurationChanged
 	public void removePlayer(IPlayer player)
 	{
 		// Check if we have a timer for the player in the graveyard.
-		if (deadTimers.containsKey(player))
-		{
-			scheduler.cancelTask(deadTimers.get(player)); // Cancel the timer.
-			deadTimers.remove(player); // Remove the players timer.
-			arena.teleportPlayerIntoArena(player); // Teleport the player back into the arena.
-		}
+		if (!deadTimers.containsKey(player))
+			return;
+
+		scheduler.cancelTask(deadTimers.get(player)); // Cancel the timer.
+		deadTimers.remove(player); // Remove the players timer.
+		arena.teleportPlayerIntoArena(player); // Teleport the player back into the arena.
 	}
 
 	public List<IPlayer> getPlayers()

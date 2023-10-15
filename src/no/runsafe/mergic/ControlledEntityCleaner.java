@@ -23,14 +23,14 @@ public class ControlledEntityCleaner implements IPluginDisabled
 		for (Map.Entry<String, List<Integer>> node : entities.entrySet())
 		{
 			IWorld world = worldManager.getWorld(node.getKey());
-			if (world != null)
+			if (world == null)
+				continue;
+
+			for (Integer entityID : node.getValue())
 			{
-				for (Integer entityID : node.getValue())
-				{
-					IEntity entity = world.getEntityById(entityID);
-					if (entity != null)
-						entity.remove(); // Remove entity from the world.
-				}
+				IEntity entity = world.getEntityById(entityID);
+				if (entity != null)
+					entity.remove(); // Remove entity from the world.
 			}
 		}
 	}
@@ -38,25 +38,25 @@ public class ControlledEntityCleaner implements IPluginDisabled
 	public static void registerEntity(IEntity entity)
 	{
 		IWorld world = entity.getWorld();
-		if (world != null)
-		{
-			String worldName = world.getName();
-			if (!entities.containsKey(worldName)) // Check if we have a container for this world.
-				entities.put(worldName, new ArrayList<Integer>()); // Create one if not.
+		if (world == null)
+			return;
 
-			entities.get(worldName).add(entity.getEntityId()); // Add the entity ID to the world object.
-		}
+		String worldName = world.getName();
+		if (!entities.containsKey(worldName)) // Check if we have a container for this world.
+			entities.put(worldName, new ArrayList<Integer>()); // Create one if not.
+
+		entities.get(worldName).add(entity.getEntityId()); // Add the entity ID to the world object.
 	}
 
 	public static void unregisterEntity(IEntity entity)
 	{
 		IWorld world = entity.getWorld();
-		if (world != null)
-		{
-			String worldName = world.getName();
-			if (entities.containsKey(worldName)) // Check if we have a container for this world.
-				entities.get(worldName).remove((Object) entity.getEntityId()); // Remove the entity.
-		}
+		if (world == null)
+			return;
+
+		String worldName = world.getName();
+		if (entities.containsKey(worldName)) // Check if we have a container for this world.
+			entities.get(worldName).remove((Object) entity.getEntityId()); // Remove the entity.
 	}
 
 	private final IWorldManager worldManager;

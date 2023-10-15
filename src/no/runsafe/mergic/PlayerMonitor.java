@@ -44,45 +44,45 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 		{
 			// See if the region the player left is the arena region.
 			Map<String, String> data = (Map<String, String>) event.getData();
-			if (arena.getArenaRegionString().equals(String.format("%s-%s", data.get("world"), data.get("region"))))
-			{
-				final IPlayer player = event.getPlayer();
+			if (!arena.getArenaRegionString().equals(String.format("%s-%s", data.get("world"), data.get("region"))))
+				return;
 
-				// Check if the player is actually in the game.
-				if (arena.playerIsInGame(player))
+			final IPlayer player = event.getPlayer();
+
+			// Check if the player is actually in the game.
+			if (arena.playerIsInGame(player))
+			{
+				scheduler.runNow(new Runnable()
 				{
-					scheduler.runNow(new Runnable()
-					{
-						@Override
-						public void run()
+					@Override
+					public void run()
 						{
 							game.removePlayerFromGame(player); // Throw them from the game.
 						}
-					});
-				}
+				});
 			}
 		}
 		else if (event.getEvent().equals("region.enter")) // Or maybe an enter?
 		{
 			// See if the region the player entered is the arena region.
 			Map<String, String> data = (Map<String, String>) event.getData();
-			if (lobby.getLobbyRegionString().equals(String.format("%s-%s", data.get("world"), data.get("region"))))
-			{
-				final IPlayer player = event.getPlayer();
+			if (!lobby.getLobbyRegionString().equals(String.format("%s-%s", data.get("world"), data.get("region"))))
+				return;
 
-				scheduler.runNow(new Runnable()
+			final IPlayer player = event.getPlayer();
+
+			scheduler.runNow(new Runnable()
+			{
+				@Override
+				public void run()
 				{
-					@Override
-					public void run()
-					{
-						player.getInventory().clear(); // Clear the players inventory.
-						classHandler.applyRandomClass(player); // Set a random school of magic for the player.
-						spellHandler.givePlayerAllSpells(player); // Give the player all spells.
-						EquipmentManager.givePlayerWizardBoots(player); // Give the player some magic boots!
-						player.setLevel(killManager.getPlayerKills(player)); // Update the players level.
-					}
-				});
-			}
+					player.getInventory().clear(); // Clear the players inventory.
+					classHandler.applyRandomClass(player); // Set a random school of magic for the player.
+					spellHandler.givePlayerAllSpells(player); // Give the player all spells.
+					EquipmentManager.givePlayerWizardBoots(player); // Give the player some magic boots!
+					player.setLevel(killManager.getPlayerKills(player)); // Update the players level.
+				}
+			});
 		}
 	}
 
@@ -102,32 +102,32 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 		IPlayer player = event.getPlayer();
 
 		// Check the player is registered as playing the game.
-		if (isDebugging(player) || (arena.playerIsInGame(player) && !graveyard.playerIsInGraveyard(player)))
+		if (!(isDebugging(player) || (arena.playerIsInGame(player) && !graveyard.playerIsInGraveyard(player))))
+			return;
+
+		RunsafeMeta item = event.getItemStack();
+		if (item == null)
+			return;
+
+		Spell spell = spellHandler.getSpellByName(item.getDisplayName()); // Grab the spell.
+		if (spell == null)
+			return;
+
+		SpellType type = spell.getType(); // Get the spell type.
+
+		// If we want a left click but we're not getting it, return to cancel processing here.
+		if (type.getInteractType() == InteractType.LEFT_CLICK && !event.isLeftClick())
+			return;
+
+		// If we want a right click but we're not getting it, return to cancel processing here.
+		if (type.getInteractType() == InteractType.RIGHT_CLICK && !event.isRightClick())
+			return;
+
+		// Check if we have the right item and are not on cooldown for that school.
+		if (item.is(type.getCastItem()) && cooldownManager.canCastSpell(player, spell))
 		{
-			RunsafeMeta item = event.getItemStack();
-			if (item == null)
-				return;
-
-			Spell spell = spellHandler.getSpellByName(item.getDisplayName()); // Grab the spell.
-			if (spell != null)
-			{
-				SpellType type = spell.getType(); // Get the spell type.
-
-				// If we want a left click but we're not getting it, return to cancel processing here.
-				if (type.getInteractType() == InteractType.LEFT_CLICK && !event.isLeftClick())
-					return;
-
-				// If we want a right click but we're not getting it, return to cancel processing here.
-				if (type.getInteractType() == InteractType.RIGHT_CLICK && !event.isRightClick())
-					return;
-
-				// Check if we have the right item and are not on cooldown for that school.
-				if (item.is(type.getCastItem()) && cooldownManager.canCastSpell(player, spell))
-				{
-					spell.onCast(player); // Make the player cast the spell.
-					cooldownManager.applySchoolCooldown(player, spell); // Apply school cooldown.
-				}
-			}
+			spell.onCast(player); // Make the player cast the spell.
+			cooldownManager.applySchoolCooldown(player, spell); // Apply school cooldown.
 		}
 	}
 

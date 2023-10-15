@@ -97,86 +97,84 @@ public class Game implements IConfigurationChanged
 	public void cancelGame()
 	{
 		// Do we have a game running?
-		if (gameInProgress())
+		if (!gameInProgress())
+			return;
+
+		ConcurrentHashMap<IPlayer, Integer> scores = killManager.getScoreList(); // Grab the score list for the match.
+		currentPreMatchStep = -1; // Signal for the pre-match countdown (if running) to cancel.
+		gameInProgress = false; // Flag the game as not running.
+		gameHasStarted = false; // Flag the game as not started;
+		arena.removeAllPlayers(); // Remove all players from the game.
+		lobby.teleportPlayersToLobby(arena.getPlayers()); // Move players from arena to lobby.
+		graveyard.removeAllTimers(); // Cancel any outstanding graveyard timers.
+		cooldownManager.resetCooldowns(); // Reset all cooldowns.
+		lobby.playEndSound(); // Play the end-of-game sound.
+
+		// Everything reset, let's give the players now in the lobby a list of what just went down.
+
+		// Generate the score list.
+		List<Map.Entry<IPlayer, Integer>> top = new ArrayList<>(scores.size());
+
+		for (Map.Entry<IPlayer, Integer> node : scores.entrySet())
 		{
-			ConcurrentHashMap<IPlayer, Integer> scores = killManager.getScoreList(); // Grab the score list for the match.
-			currentPreMatchStep = -1; // Signal for the pre-match countdown (if running) to cancel.
-			gameInProgress = false; // Flag the game as not running.
-			gameHasStarted = false; // Flag the game as not started;
-			arena.removeAllPlayers(); // Remove all players from the game.
-			lobby.teleportPlayersToLobby(arena.getPlayers()); // Move players from arena to lobby.
-			graveyard.removeAllTimers(); // Cancel any outstanding graveyard timers.
-			cooldownManager.resetCooldowns(); // Reset all cooldowns.
-			lobby.playEndSound(); // Play the end-of-game sound.
-
-			// Everything reset, let's give the players now in the lobby a list of what just went down.
-
-			// Generate the score list.
-			List<Map.Entry<IPlayer, Integer>> top = new ArrayList<>(scores.size());
-
-			for (Map.Entry<IPlayer, Integer> node : scores.entrySet())
+			if (top.isEmpty())
 			{
-				if (top.isEmpty())
-				{
-					top.add(0, node);
-				}
-				else
-				{
-					int index = 0;
-					for (Map.Entry<IPlayer, Integer> compareNode : top)
-					{
-						if (node.getValue() > compareNode.getValue())
-						{
-							top.add(index, node);
-							break;
-						}
-						index++;
-					}
-				}
+				top.add(0, node);
+				continue;
 			}
 
-			List<String> output = new ArrayList<String>(2 + top.size());
-			output.add("&cThe match has ended!");
-
-			int pos = 1;
-			for (Map.Entry<IPlayer, Integer> node : top)
+			int index = 0;
+			for (Map.Entry<IPlayer, Integer> compareNode : top)
 			{
-				IPlayer player = node.getKey();
-				if (pos < 4)
+				if (node.getValue() > compareNode.getValue())
 				{
-					new ApprenticeWizard(player).Fire();
-
-					if (pos == 1)
-					{
-						new MasterOfMagic(player).Fire();
-
-						if (player != null)
-						{
-							broadcaster.broadcastMessage("&b" + player.getName() + " has triumphed at Wizard PvP!");
-							player.sendTitle("§AYou Win!", "Score: §C"+node.getValue().toString());
-						}
-					}
-				}
-				else if (pos == 6)
-				{
+					top.add(index, node);
 					break;
 				}
-				if (player != null)
-					output.add(String.format("%d. &b%s &f- &a%d&f kills.", pos, player.getName(), node.getValue()));
-				pos++;
+				index++;
 			}
-
-			// Loop every player now in the lobby and give them their score and the top 5.
-			for (IPlayer player : lobby.getPlayersInLobby())
-			{
-				for (String line : output)
-					player.sendColouredMessage(line);
-
-				player.sendColouredMessage("You are currently at &a%d&f kills.", killManager.getPlayerKills(player));
-			}
-
-			killManager.wipeAllData(); // Wipe all of the data before the next match.
 		}
+
+		List<String> output = new ArrayList<String>(2 + top.size());
+		output.add("&cThe match has ended!");
+
+		int pos = 1;
+		for (Map.Entry<IPlayer, Integer> node : top)
+		{
+			IPlayer player = node.getKey();
+			if (player == null)
+			{
+				pos++;
+				continue;
+			}
+
+			if (pos == 6)
+				break;
+
+			if (pos < 4)
+				new ApprenticeWizard(player).Fire();
+
+			if (pos == 1)
+			{
+				new MasterOfMagic(player).Fire();
+
+				broadcaster.broadcastMessage("&b" + player.getName() + " has triumphed at Wizard PvP!");
+				player.sendTitle("§AYou Win!", "Score: §C"+node.getValue().toString());
+			}
+			output.add(String.format("%d. &b%s &f- &a%d&f kills.", pos, player.getName(), node.getValue()));
+			pos++;
+		}
+
+		// Loop every player now in the lobby and give them their score and the top 5.
+		for (IPlayer player : lobby.getPlayersInLobby())
+		{
+			for (String line : output)
+				player.sendColouredMessage(line);
+
+			player.sendColouredMessage("You are currently at &a%d&f kills.", killManager.getPlayerKills(player));
+		}
+
+		killManager.wipeAllData(); // Wipe all of the data before the next match.
 	}
 
 	private void startGame()

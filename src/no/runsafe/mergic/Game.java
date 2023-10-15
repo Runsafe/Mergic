@@ -67,7 +67,10 @@ public class Game implements IConfigurationChanged
 		// If we are at zero, the pre-match expired, we can push into a match.
 		if (currentPreMatchStep == 0)
 		{
-			startGame();
+			if (lobby.getPlayersInLobby().size() < 2)
+				for (IPlayer player : lobby.getPlayersInLobby()) // send message to our one player if exists
+					player.sendColouredMessage("&3Not enough players. &cMatch cancelled&3.");
+			else startGame();
 			return;
 		}
 

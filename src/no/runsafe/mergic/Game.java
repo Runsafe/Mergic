@@ -75,7 +75,7 @@ public class Game implements IConfigurationChanged
 		lobby.broadcastToLobby(String.format("&3New match starting in %d seconds.", currentPreMatchStep));
 
 		// Start a timer for the next pre-match step. This could be a repeating timer, but it's not for now.
-		scheduler.startAsyncTask(() -> preMatchStep(), preMatchDelay);
+		scheduler.startAsyncTask(this::preMatchStep, preMatchDelay);
 
 		// Lower the current step by the delay amount.
 		currentPreMatchStep = currentPreMatchStep - preMatchDelay;
@@ -130,7 +130,7 @@ public class Game implements IConfigurationChanged
 			}
 		}
 
-		List<String> output = new ArrayList<String>(2 + top.size());
+		List<String> output = new ArrayList<>(2 + top.size());
 		output.add("&cThe match has ended!");
 
 		int pos = 1;

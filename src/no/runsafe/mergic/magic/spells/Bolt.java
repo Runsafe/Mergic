@@ -15,7 +15,6 @@ import no.runsafe.framework.minecraft.entity.RunsafeFallingBlock;
 import no.runsafe.framework.minecraft.event.entity.RunsafeEntityChangeBlockEvent;
 import no.runsafe.mergic.ControlledEntityCleaner;
 import no.runsafe.mergic.KillManager;
-import no.runsafe.mergic.PlayerMonitor;
 import no.runsafe.mergic.magic.Spell;
 import no.runsafe.mergic.magic.SpellType;
 import org.bukkit.util.Vector;
@@ -137,7 +136,7 @@ public abstract class Bolt implements Spell, IEntityChangeBlockEvent
 	}
 
 	private final Item blockType;
-	private final ConcurrentHashMap<Integer, Integer> blocks = new ConcurrentHashMap<Integer, Integer>(0);
+	private final ConcurrentHashMap<Integer, Integer> blocks = new ConcurrentHashMap<>(0);
 	private final IScheduler scheduler;
 	private final WorldBlockEffect effect;
 	private final KillManager killManager;

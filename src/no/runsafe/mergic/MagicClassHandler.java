@@ -10,7 +10,7 @@ public class MagicClassHandler
 {
 	public MagicClassHandler()
 	{
-		availableSchools = new ArrayList<MagicSchool>();
+		availableSchools = new ArrayList<>();
 		availableSchools.addAll(Arrays.asList(MagicSchool.values()));
 		availableSchools.remove(MagicSchool.GENERIC);
 	}

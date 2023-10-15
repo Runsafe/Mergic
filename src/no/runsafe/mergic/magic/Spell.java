@@ -4,10 +4,10 @@ import no.runsafe.framework.api.player.IPlayer;
 
 public interface Spell
 {
-	public int getCooldown();
-	public String getName();
-	public MagicSchool getSchool();
-	public SpellType getType();
-	public String getDescription();
-	public void onCast(IPlayer player);
+	int getCooldown();
+	String getName();
+	MagicSchool getSchool();
+	SpellType getType();
+	String getDescription();
+	void onCast(IPlayer player);
 }

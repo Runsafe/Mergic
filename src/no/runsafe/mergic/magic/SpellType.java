@@ -11,7 +11,7 @@ public enum SpellType
 	GUARDIAN("Right click to summon this guardian.", Item.Special.Crafted.EnchantedBook, InteractType.RIGHT_CLICK),
 	HEAL("Right click to heal using this spell.", Item.Special.Crafted.EnchantedBook, InteractType.RIGHT_CLICK);
 
-	private SpellType(String text, Item castItem, InteractType type)
+	SpellType(String text, Item castItem, InteractType type)
 	{
 		this.text = text;
 		this.castItem = castItem;

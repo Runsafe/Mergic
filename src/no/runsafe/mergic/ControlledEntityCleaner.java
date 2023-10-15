@@ -43,7 +43,7 @@ public class ControlledEntityCleaner implements IPluginDisabled
 
 		String worldName = world.getName();
 		if (!entities.containsKey(worldName)) // Check if we have a container for this world.
-			entities.put(worldName, new ArrayList<Integer>()); // Create one if not.
+			entities.put(worldName, new ArrayList<>()); // Create one if not.
 
 		entities.get(worldName).add(entity.getEntityId()); // Add the entity ID to the world object.
 	}
@@ -60,5 +60,5 @@ public class ControlledEntityCleaner implements IPluginDisabled
 	}
 
 	private final IWorldManager worldManager;
-	private static final ConcurrentHashMap<String, List<Integer>> entities = new ConcurrentHashMap<String, List<Integer>>();
+	private static final ConcurrentHashMap<String, List<Integer>> entities = new ConcurrentHashMap<>();
 }

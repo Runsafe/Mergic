@@ -25,7 +25,7 @@ public class CooldownManager
 
 		// If we lack a key for the player, create one.
 		if (!cooldowns.containsKey(player))
-			cooldowns.put(player, new ArrayList<SpellType>(0));
+			cooldowns.put(player, new ArrayList<>(0));
 
 		cooldowns.get(player).add(spellType); // Add the school to the cooldown list.
 		scheduler.startAsyncTask(() -> removeSchoolCooldown(player, spellType), spell.getCooldown()); // Create a cooldown timer.

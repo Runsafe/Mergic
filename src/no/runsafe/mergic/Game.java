@@ -68,8 +68,11 @@ public class Game implements IConfigurationChanged
 		if (currentPreMatchStep == 0)
 		{
 			if (lobby.getPlayersInLobby().size() < 2)
+			{
 				for (IPlayer player : lobby.getPlayersInLobby()) // send message to our one player if exists
 					player.sendColouredMessage("&3Not enough players. &cMatch cancelled&3.");
+				gameInProgress = false;
+			}
 			else startGame();
 			return;
 		}

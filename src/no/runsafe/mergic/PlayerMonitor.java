@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPlayerInteractEvent, IPluginDisabled, IPlayerQuitEvent, IPlayerDropItemEvent
 {
-	public PlayerMonitor(Graveyard graveyard, Arena arena, Game game, Lobby lobby, SpellHandler spellHandler, CooldownManager cooldownManager, KillManager killManager, MagicClassHandler classHandler, IScheduler scheduler)
+	public PlayerMonitor(Graveyard graveyard, Arena arena, Game game, Lobby lobby, SpellHandler spellHandler, CooldownManager cooldownManager, KillManager killManager, MagicClassHandler classHandler)
 	{
 		this.graveyard = graveyard;
 		this.arena = arena;
@@ -24,7 +24,6 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 		this.cooldownManager = cooldownManager;
 		this.killManager = killManager;
 		this.classHandler = classHandler;
-		this.scheduler = scheduler;
 	}
 
 	@Override
@@ -52,7 +51,7 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 			// Check if the player is actually in the game.
 			if (arena.playerIsInGame(player))
 			{
-				scheduler.runNow(() -> game.removePlayerFromGame(player)); // Throw them from the game.
+				game.removePlayerFromGame(player); // Throw them from the game.
 			}
 		}
 		else if (event.getEvent().equals("region.enter")) // Or maybe an enter?
@@ -64,14 +63,11 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 
 			final IPlayer player = event.getPlayer();
 
-			scheduler.runNow(() ->
-			{
-                player.getInventory().clear(); // Clear the players inventory.
-                classHandler.applyRandomClass(player); // Set a random school of magic for the player.
-                spellHandler.givePlayerAllSpells(player); // Give the player all spells.
-                EquipmentManager.givePlayerWizardBoots(player); // Give the player some magic boots!
-                player.setLevel(killManager.getPlayerKills(player)); // Update the players level.
-            });
+			player.getInventory().clear(); // Clear the players inventory.
+			classHandler.applyRandomClass(player); // Set a random school of magic for the player.
+			spellHandler.givePlayerAllSpells(player); // Give the player all spells.
+			EquipmentManager.givePlayerWizardBoots(player); // Give the player some magic boots!
+			player.setLevel(killManager.getPlayerKills(player)); // Update the players level.
 		}
 	}
 
@@ -161,5 +157,4 @@ public class PlayerMonitor implements IPlayerCustomEvent, IPlayerJoinEvent, IPla
 	private final KillManager killManager;
 	private final MagicClassHandler classHandler;
 	private final List<IPlayer> debuggers = new ArrayList<>();
-	private final IScheduler scheduler;
 }

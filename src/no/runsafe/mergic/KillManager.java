@@ -141,7 +141,7 @@ public class KillManager implements IEntityDamageByEntityEvent, IPlayerDamageEve
 
 	public int getPlayerKills(IPlayer player)
 	{
-		return killCount.containsKey(player) ? killCount.get(player) : 0;
+		return killCount.getOrDefault(player, 0);
 	}
 
 	public ConcurrentHashMap<IPlayer, Integer> getScoreList()

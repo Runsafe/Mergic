@@ -1,6 +1,5 @@
 package no.runsafe.mergic;
 
-import no.runsafe.framework.api.IScheduler;
 import no.runsafe.framework.api.event.player.*;
 import no.runsafe.framework.api.event.plugin.IPluginDisabled;
 import no.runsafe.framework.api.player.IPlayer;

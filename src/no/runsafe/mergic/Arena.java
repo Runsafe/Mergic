@@ -11,6 +11,7 @@ import no.runsafe.worldguardbridge.IRegionControl;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Arena implements IConfigurationChanged
 {
@@ -84,9 +85,8 @@ public class Arena implements IConfigurationChanged
 		double randomX = getRandomBetween(((Number) teleportRegion.getMinX()).intValue(), ((Number) teleportRegion.getMaxX()).intValue());
 		double randomZ = getRandomBetween(((Number) teleportRegion.getMinY()).intValue(), ((Number) teleportRegion.getMaxY()).intValue());
 
-
 		// Get a safe spot at the co-ordinates we generated.
-		ILocation loc = getSafeSpot(world.getLocation(randomX, teleportY, randomZ));
+		ILocation loc = getSafeSpot(Objects.requireNonNull(world.getLocation(randomX, teleportY, randomZ)));
 
 		// Adjust the location to be at the centre of the block.
 		loc.incrementX(0.5D);
@@ -115,10 +115,12 @@ public class Arena implements IConfigurationChanged
 		if (!isAvailable())
 			return false;
 
+		IWorld world = player.getWorld();
+
 		// Note: If a player is in the graveyard, they will also be in the arena as
 		// the graveyard should be a sub-region of the arena if set-up right.
 		// Check if the player is in the correct world, if not we can be sure they are not in the arena.
-		if (!player.getWorld().getName().equals(world.getName()))
+		if (world == null || !world.getName().equals(world.getName()))
 			return false;
 
 		// Grab a list of the regions the player is currently in.

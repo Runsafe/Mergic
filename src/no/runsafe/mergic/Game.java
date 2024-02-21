@@ -42,7 +42,7 @@ public class Game implements IConfigurationChanged
 			throw new GameException("Lobby is not available. Check errors on startup.");
 
 		// Check if the arena has been set-up without problems.
-		if (!arena.isAvailable())
+		if (arena.isUnavailable())
 			throw new GameException("Arena is not available. Check errors on startup.");
 
 		// Check if the graveyard has been set-up without problems.

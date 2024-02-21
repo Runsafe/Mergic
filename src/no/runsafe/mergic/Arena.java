@@ -112,7 +112,7 @@ public class Arena implements IConfigurationChanged
 
 	public boolean playerIsInPhysicalArena(IPlayer player)
 	{
-		if (!isAvailable())
+		if (isUnavailable())
 			return false;
 
 		IWorld world = player.getWorld();
@@ -159,9 +159,9 @@ public class Arena implements IConfigurationChanged
 		return low + (int) (Math.random() * ((high - low) + 1));
 	}
 
-	public boolean isAvailable()
+	public boolean isUnavailable()
 	{
-		return isSetup;
+		return !isSetup;
 	}
 
 	private boolean isSetup;

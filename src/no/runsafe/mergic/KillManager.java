@@ -96,7 +96,7 @@ public class KillManager implements IEntityDamageByEntityEvent, IPlayerDamageEve
 			player.sendColouredMessage("&cYou were killed by %s! You will respawn shortly.", killer.getName());
 			killer.sendColouredMessage("&aYou killed %s, +1 point.", player.getName());
 
-			if (graveyard.playerIsInGraveyard(killer)) // If the killer is in the graveyard..
+			if (graveyard.playerIsInGraveyard(killer)) // If the killer is in the graveyard...
 				new TouchOfDeath(killer).Fire(); // Award this achievement.
 		}
 		OnPlayerKilled(player); // Trigger event in kill manager to tally score.

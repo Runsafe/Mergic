@@ -68,7 +68,7 @@ public class Lobby implements IConfigurationChanged
 
 	public List<IPlayer> getPlayersInLobby()
 	{
-		// Check if the lobby is set-up, if so return a list of players inside the region.
+		// Check if the lobby is set up, if so return a list of players inside the region.
 		if (isAvailable())
 			return worldGuard.getPlayersInRegion(lobbyWorld, lobbyRegion);
 

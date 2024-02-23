@@ -84,7 +84,7 @@ public class Graveyard implements IConfigurationChanged
 			return;
 
 		scheduler.cancelTask(deadTimers.get(player)); // Cancel the timer.
-		deadTimers.remove(player); // Remove the players timer.
+		deadTimers.remove(player); // Remove the players' timer.
 		arena.teleportPlayerIntoArena(player); // Teleport the player back into the arena.
 	}
 

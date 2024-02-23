@@ -37,15 +37,15 @@ public class Game implements IConfigurationChanged
 
 	public void launchGame() throws GameException
 	{
-		// Check if the lobby has been set-up without problems.
+		// Check if the lobby has been set up without problems.
 		if (!lobby.isAvailable())
 			throw new GameException("Lobby is not available. Check errors on startup.");
 
-		// Check if the arena has been set-up without problems.
+		// Check if the arena has been set up without problems.
 		if (arena.isUnavailable())
 			throw new GameException("Arena is not available. Check errors on startup.");
 
-		// Check if the graveyard has been set-up without problems.
+		// Check if the graveyard has been set up without problems.
 		if (!graveyard.isAvailable())
 			throw new GameException("Graveyard is not available. Check errors on startup");
 
@@ -77,7 +77,7 @@ public class Game implements IConfigurationChanged
 			return;
 		}
 
-		// Send a message to all the players, be like, yo.. match starting.
+		// Send a message to all the players, be like, yo... match starting.
 		lobby.broadcastToLobby(String.format("&3New match starting in %d seconds.", currentPreMatchStep));
 
 		// Start a timer for the next pre-match step. This could be a repeating timer, but it's not for now.
@@ -175,7 +175,7 @@ public class Game implements IConfigurationChanged
 			player.sendColouredMessage("You are currently at &a%d&f kills.", killManager.getPlayerKills(player));
 		}
 
-		killManager.wipeAllData(); // Wipe all of the data before the next match.
+		killManager.wipeAllData(); // Wipe all the data before the next match.
 	}
 
 	private void startGame()

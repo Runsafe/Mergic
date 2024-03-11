@@ -3,7 +3,7 @@ main: no.runsafe.mergic.Mergic
 version: 1.0.@BUILD@
 author: Kruithne
 depend: [RunsafeWorldGuardBridge, WorldGuard]
-description:
+description: 'Just some past time'
 commands:
   mergic:
     description: Wizard PvP commands
